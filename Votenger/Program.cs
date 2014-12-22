@@ -1,6 +1,7 @@
 ﻿namespace Votenger
 {
     using System;
+    using Nancy;
     using Nancy.Hosting.Self;
 
     class Program

@@ -63,6 +63,102 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".bowerrc" />
+    <None Include="app.config" />
+    <None Include="bower-dependencies\bootstrap\.bower.json" />
+    <None Include="bower-dependencies\bootstrap\bower.json" />
+    <None Include="bower-dependencies\bootstrap\dist\css\bootstrap-theme.css.map" />
+    <None Include="bower-dependencies\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="bower-dependencies\bootstrap\dist\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="bower-dependencies\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="bower-dependencies\bootstrap\dist\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="bower-dependencies\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="bower-dependencies\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="bower-dependencies\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="bower-dependencies\bootstrap\grunt\.jshintrc" />
+    <None Include="bower-dependencies\bootstrap\grunt\configBridge.json" />
+    <None Include="bower-dependencies\bootstrap\grunt\sauce_browsers.yml" />
+    <None Include="bower-dependencies\bootstrap\js\.jscsrc" />
+    <None Include="bower-dependencies\bootstrap\js\.jshintrc" />
+    <None Include="bower-dependencies\bootstrap\less\.csscomb.json" />
+    <None Include="bower-dependencies\bootstrap\less\.csslintrc" />
+    <None Include="bower-dependencies\bootstrap\less\alerts.less" />
+    <None Include="bower-dependencies\bootstrap\less\badges.less" />
+    <None Include="bower-dependencies\bootstrap\less\bootstrap.less" />
+    <None Include="bower-dependencies\bootstrap\less\breadcrumbs.less" />
+    <None Include="bower-dependencies\bootstrap\less\button-groups.less" />
+    <None Include="bower-dependencies\bootstrap\less\buttons.less" />
+    <None Include="bower-dependencies\bootstrap\less\carousel.less" />
+    <None Include="bower-dependencies\bootstrap\less\close.less" />
+    <None Include="bower-dependencies\bootstrap\less\code.less" />
+    <None Include="bower-dependencies\bootstrap\less\component-animations.less" />
+    <None Include="bower-dependencies\bootstrap\less\dropdowns.less" />
+    <None Include="bower-dependencies\bootstrap\less\forms.less" />
+    <None Include="bower-dependencies\bootstrap\less\glyphicons.less" />
+    <None Include="bower-dependencies\bootstrap\less\grid.less" />
+    <None Include="bower-dependencies\bootstrap\less\input-groups.less" />
+    <None Include="bower-dependencies\bootstrap\less\jumbotron.less" />
+    <None Include="bower-dependencies\bootstrap\less\labels.less" />
+    <None Include="bower-dependencies\bootstrap\less\list-group.less" />
+    <None Include="bower-dependencies\bootstrap\less\media.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\alerts.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\background-variant.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\border-radius.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\buttons.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\center-block.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\clearfix.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\forms.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\gradients.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\grid-framework.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\grid.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\hide-text.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\image.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\labels.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\list-group.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\nav-divider.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\nav-vertical-align.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\opacity.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\pagination.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\panels.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\progress-bar.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\reset-filter.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\resize.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\responsive-visibility.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\size.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\tab-focus.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\table-row.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\text-emphasis.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\text-overflow.less" />
+    <None Include="bower-dependencies\bootstrap\less\mixins\vendor-prefixes.less" />
+    <None Include="bower-dependencies\bootstrap\less\modals.less" />
+    <None Include="bower-dependencies\bootstrap\less\navbar.less" />
+    <None Include="bower-dependencies\bootstrap\less\navs.less" />
+    <None Include="bower-dependencies\bootstrap\less\normalize.less" />
+    <None Include="bower-dependencies\bootstrap\less\pager.less" />
+    <None Include="bower-dependencies\bootstrap\less\pagination.less" />
+    <None Include="bower-dependencies\bootstrap\less\panels.less" />
+    <None Include="bower-dependencies\bootstrap\less\popovers.less" />
+    <None Include="bower-dependencies\bootstrap\less\print.less" />
+    <None Include="bower-dependencies\bootstrap\less\progress-bars.less" />
+    <None Include="bower-dependencies\bootstrap\less\responsive-embed.less" />
+    <None Include="bower-dependencies\bootstrap\less\responsive-utilities.less" />
+    <None Include="bower-dependencies\bootstrap\less\scaffolding.less" />
+    <None Include="bower-dependencies\bootstrap\less\tables.less" />
+    <None Include="bower-dependencies\bootstrap\less\theme.less" />
+    <None Include="bower-dependencies\bootstrap\less\thumbnails.less" />
+    <None Include="bower-dependencies\bootstrap\less\tooltip.less" />
+    <None Include="bower-dependencies\bootstrap\less\type.less" />
+    <None Include="bower-dependencies\bootstrap\less\utilities.less" />
+    <None Include="bower-dependencies\bootstrap\less\variables.less" />
+    <None Include="bower-dependencies\bootstrap\less\wells.less" />
+    <None Include="bower-dependencies\bootstrap\LICENSE" />
+    <None Include="bower-dependencies\bootstrap\package.json" />
+    <None Include="bower-dependencies\bootstrap\README.md" />
+    <None Include="bower-dependencies\jquery\.bower.json" />
+    <None Include="bower-dependencies\jquery\bower.json" />
+    <None Include="bower-dependencies\jquery\dist\jquery.min.map" />
+    <None Include="bower-dependencies\jquery\src\sizzle\dist\sizzle.min.map" />
     <None Include="packages.config" />
     <None Include="Resources\TestGames.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -76,11 +172,138 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Content\nancy-logo.png">
+    <Content Include="bower-dependencies\bootstrap\dist\css\bootstrap-theme.css" />
+    <Content Include="bower-dependencies\bootstrap\dist\css\bootstrap-theme.min.css" />
+    <Content Include="bower-dependencies\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="bower-dependencies\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="bower-dependencies\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="bower-dependencies\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="bower-dependencies\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="bower-dependencies\bootstrap\dist\js\npm.js" />
+    <Content Include="bower-dependencies\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="bower-dependencies\bootstrap\Gruntfile.js" />
+    <Content Include="bower-dependencies\bootstrap\grunt\bs-commonjs-generator.js" />
+    <Content Include="bower-dependencies\bootstrap\grunt\bs-lessdoc-parser.js" />
+    <Content Include="bower-dependencies\bootstrap\grunt\bs-raw-files-generator.js" />
+    <Content Include="bower-dependencies\bootstrap\js\affix.js" />
+    <Content Include="bower-dependencies\bootstrap\js\alert.js" />
+    <Content Include="bower-dependencies\bootstrap\js\button.js" />
+    <Content Include="bower-dependencies\bootstrap\js\carousel.js" />
+    <Content Include="bower-dependencies\bootstrap\js\collapse.js" />
+    <Content Include="bower-dependencies\bootstrap\js\dropdown.js" />
+    <Content Include="bower-dependencies\bootstrap\js\modal.js" />
+    <Content Include="bower-dependencies\bootstrap\js\popover.js" />
+    <Content Include="bower-dependencies\bootstrap\js\scrollspy.js" />
+    <Content Include="bower-dependencies\bootstrap\js\tab.js" />
+    <Content Include="bower-dependencies\bootstrap\js\tooltip.js" />
+    <Content Include="bower-dependencies\bootstrap\js\transition.js" />
+    <Content Include="bower-dependencies\jquery\dist\jquery.js" />
+    <Content Include="bower-dependencies\jquery\dist\jquery.min.js" />
+    <Content Include="bower-dependencies\jquery\MIT-LICENSE.txt" />
+    <Content Include="bower-dependencies\jquery\src\ajax.js" />
+    <Content Include="bower-dependencies\jquery\src\ajax\jsonp.js" />
+    <Content Include="bower-dependencies\jquery\src\ajax\load.js" />
+    <Content Include="bower-dependencies\jquery\src\ajax\parseJSON.js" />
+    <Content Include="bower-dependencies\jquery\src\ajax\parseXML.js" />
+    <Content Include="bower-dependencies\jquery\src\ajax\script.js" />
+    <Content Include="bower-dependencies\jquery\src\ajax\var\nonce.js" />
+    <Content Include="bower-dependencies\jquery\src\ajax\var\rquery.js" />
+    <Content Include="bower-dependencies\jquery\src\ajax\xhr.js" />
+    <Content Include="bower-dependencies\jquery\src\attributes.js" />
+    <Content Include="bower-dependencies\jquery\src\attributes\attr.js" />
+    <Content Include="bower-dependencies\jquery\src\attributes\classes.js" />
+    <Content Include="bower-dependencies\jquery\src\attributes\prop.js" />
+    <Content Include="bower-dependencies\jquery\src\attributes\support.js" />
+    <Content Include="bower-dependencies\jquery\src\attributes\val.js" />
+    <Content Include="bower-dependencies\jquery\src\callbacks.js" />
+    <Content Include="bower-dependencies\jquery\src\core.js" />
+    <Content Include="bower-dependencies\jquery\src\core\access.js" />
+    <Content Include="bower-dependencies\jquery\src\core\init.js" />
+    <Content Include="bower-dependencies\jquery\src\core\parseHTML.js" />
+    <Content Include="bower-dependencies\jquery\src\core\ready.js" />
+    <Content Include="bower-dependencies\jquery\src\core\var\rsingleTag.js" />
+    <Content Include="bower-dependencies\jquery\src\css.js" />
+    <Content Include="bower-dependencies\jquery\src\css\addGetHookIf.js" />
+    <Content Include="bower-dependencies\jquery\src\css\curCSS.js" />
+    <Content Include="bower-dependencies\jquery\src\css\defaultDisplay.js" />
+    <Content Include="bower-dependencies\jquery\src\css\hiddenVisibleSelectors.js" />
+    <Content Include="bower-dependencies\jquery\src\css\support.js" />
+    <Content Include="bower-dependencies\jquery\src\css\swap.js" />
+    <Content Include="bower-dependencies\jquery\src\css\var\cssExpand.js" />
+    <Content Include="bower-dependencies\jquery\src\css\var\getStyles.js" />
+    <Content Include="bower-dependencies\jquery\src\css\var\isHidden.js" />
+    <Content Include="bower-dependencies\jquery\src\css\var\rmargin.js" />
+    <Content Include="bower-dependencies\jquery\src\css\var\rnumnonpx.js" />
+    <Content Include="bower-dependencies\jquery\src\data.js" />
+    <Content Include="bower-dependencies\jquery\src\data\accepts.js" />
+    <Content Include="bower-dependencies\jquery\src\data\Data.js" />
+    <Content Include="bower-dependencies\jquery\src\data\var\data_priv.js" />
+    <Content Include="bower-dependencies\jquery\src\data\var\data_user.js" />
+    <Content Include="bower-dependencies\jquery\src\deferred.js" />
+    <Content Include="bower-dependencies\jquery\src\deprecated.js" />
+    <Content Include="bower-dependencies\jquery\src\dimensions.js" />
+    <Content Include="bower-dependencies\jquery\src\effects.js" />
+    <Content Include="bower-dependencies\jquery\src\effects\animatedSelector.js" />
+    <Content Include="bower-dependencies\jquery\src\effects\Tween.js" />
+    <Content Include="bower-dependencies\jquery\src\event.js" />
+    <Content Include="bower-dependencies\jquery\src\event\ajax.js" />
+    <Content Include="bower-dependencies\jquery\src\event\alias.js" />
+    <Content Include="bower-dependencies\jquery\src\event\support.js" />
+    <Content Include="bower-dependencies\jquery\src\exports\amd.js" />
+    <Content Include="bower-dependencies\jquery\src\exports\global.js" />
+    <Content Include="bower-dependencies\jquery\src\intro.js" />
+    <Content Include="bower-dependencies\jquery\src\jquery.js" />
+    <Content Include="bower-dependencies\jquery\src\manipulation.js" />
+    <Content Include="bower-dependencies\jquery\src\manipulation\support.js" />
+    <Content Include="bower-dependencies\jquery\src\manipulation\var\rcheckableType.js" />
+    <Content Include="bower-dependencies\jquery\src\manipulation\_evalUrl.js" />
+    <Content Include="bower-dependencies\jquery\src\offset.js" />
+    <Content Include="bower-dependencies\jquery\src\outro.js" />
+    <Content Include="bower-dependencies\jquery\src\queue.js" />
+    <Content Include="bower-dependencies\jquery\src\queue\delay.js" />
+    <Content Include="bower-dependencies\jquery\src\selector-native.js" />
+    <Content Include="bower-dependencies\jquery\src\selector-sizzle.js" />
+    <Content Include="bower-dependencies\jquery\src\selector.js" />
+    <Content Include="bower-dependencies\jquery\src\serialize.js" />
+    <Content Include="bower-dependencies\jquery\src\sizzle\dist\sizzle.js" />
+    <Content Include="bower-dependencies\jquery\src\sizzle\dist\sizzle.min.js" />
+    <Content Include="bower-dependencies\jquery\src\traversing.js" />
+    <Content Include="bower-dependencies\jquery\src\traversing\findFilter.js" />
+    <Content Include="bower-dependencies\jquery\src\traversing\var\rneedsContext.js" />
+    <Content Include="bower-dependencies\jquery\src\var\arr.js" />
+    <Content Include="bower-dependencies\jquery\src\var\class2type.js" />
+    <Content Include="bower-dependencies\jquery\src\var\concat.js" />
+    <Content Include="bower-dependencies\jquery\src\var\hasOwn.js" />
+    <Content Include="bower-dependencies\jquery\src\var\indexOf.js" />
+    <Content Include="bower-dependencies\jquery\src\var\pnum.js" />
+    <Content Include="bower-dependencies\jquery\src\var\push.js" />
+    <Content Include="bower-dependencies\jquery\src\var\rnotwhite.js" />
+    <Content Include="bower-dependencies\jquery\src\var\slice.js" />
+    <Content Include="bower-dependencies\jquery\src\var\strundefined.js" />
+    <Content Include="bower-dependencies\jquery\src\var\support.js" />
+    <Content Include="bower-dependencies\jquery\src\var\toString.js" />
+    <Content Include="bower-dependencies\jquery\src\wrap.js" />
+    <Content Include="Content\bootstrap.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\bootstrap.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jquery.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\site.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+if $(ConfigurationName) == Debug (
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.23.2\BuildProviders\Nancy.ViewEngines.Razor.BuildProviders.dll" "$(ProjectDir)bin\"
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.23.2\lib\Net40\Nancy.ViewEngines.Razor.dll" "$(ProjectDir)bin\"
+)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
