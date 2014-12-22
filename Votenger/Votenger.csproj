@@ -52,13 +52,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\Authorization.cs" />
+    <Compile Include="Authorization\IAuthorization.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Data\GameRecord.cs" />
     <Compile Include="Data\RecordLoader.cs" />
     <Compile Include="Data\GameType.cs" />
     <Compile Include="Data\IRecordLoader.cs" />
+    <Compile Include="DashboardModule.cs" />
     <Compile Include="IndexModule.cs" />
-    <Compile Include="Models\ComputerGamesModel.cs" />
+    <Compile Include="Models\DashboardModel.cs" />
+    <Compile Include="Models\IndexModel.cs" />
+    <Compile Include="Models\SignInModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -166,9 +171,13 @@
     <None Include="Resources\Games.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\dashboard.sshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Views\index.sshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\master.sshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -293,6 +302,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\site.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="favicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

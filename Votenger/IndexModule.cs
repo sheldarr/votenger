@@ -1,20 +1,40 @@
 ﻿namespace Votenger
 {
+    using Authorization;
     using Data;
     using Models;
     using Nancy;
+    using Nancy.Cookies;
+    using Nancy.ModelBinding;
 
     public class IndexModule : NancyModule
     {
-        public IndexModule()
+        private readonly IAuthorization _authorization;
+        public IndexModule(IAuthorization authorization)
         {
-            var recordLoader = new RecordLoader();
-            var computerGamesModel = new ComputerGamesModel
+            _authorization = authorization;
+            
+            Get["/"] = parameters =>
             {
-                GameRecords = recordLoader.GetAllComputerGames("Games")
+                var isAuthorized = _authorization.CheckIfAuthorized(Request);
+                var nickname = _authorization.DecodeNickname(Request);
+
+                var indexModel = new IndexModel
+                {
+                    IsAuthorized = isAuthorized,
+                    Nickname = nickname,
+                };
+
+                return View["index", indexModel];
             };
 
-            Get["/"] = parameters => View["index", computerGamesModel];
+            Post["/signIn"] = parameters =>
+            {
+                var signInModel = this.Bind<SignInModel>();         
+                var voteAuthCookie = new NancyCookie("VoteAuth", signInModel.Nickname);
+
+                return Response.AsRedirect("/").WithCookie(voteAuthCookie);
+            };
         }
     }
 }

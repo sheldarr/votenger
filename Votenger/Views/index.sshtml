@@ -1,40 +1,21 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>Votenger</title>
+﻿@Master['master.sshtml']
 
-    <link rel="stylesheet" type="text/css" href="@Path['~/Content/bootstrap.min.css']">
-    <link rel="stylesheet" type="text/css" href="@Path['~/Content/site.css']">
-</head>
-<body>
-    <div class="well col-md-8 col-md-offset-2">
-        <div class="jumbotron text-center">
-            <h1>Welcome to Votenger</h1>
-            <p>Ultimate tool for lanparty voting!</p>
-            <p><button type="button" class="btn btn-primary">Start!</button></p>
+@Section['Content']
+<div class="jumbotron text-center">
+    <h1>Welcome to Votenger@If.IsAuthorized, @Model.Nickname @EndIf</h1>
+    <p>Ultimate tool for lanparty voting!</p>
+    @IfNot.IsAuthorized
+    <form action="signIn" method="post" class="input-sign-in">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Nickname" required="required" name="Nickname">
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                @Each.GameRecords
-                <tr>
-                <td>#</td>
-                <td>@Current.Name</td>
-                <td>@Current.Type</td>
-                </tr>
-                @EndEach
-            </tbody>
-        </table>     
-    </div>
-
-    <script src="@Path['~/Content/jquery.js']" type="text/javascript"></script>
-    <script src="@Path['~/Content/bootstrap.min.js']" type="text/javascript"></script>
-</body>
-</html>
+        <input type="submit" class="btn btn-success btn-sign-in" value="Sign in">             
+    </form>
+    @EndIf
+    @If.IsAuthorized
+    <form action="dashboard">
+        <button type="submit" class="btn btn-success">Start!</button>
+    </form>
+    @EndIf
+</div>
+@EndSection

@@ -1,4 +1,13 @@
-﻿body
-{
-    margin-top: 200px;
+﻿body{
+    margin-top: 180px;
+}
+
+.input-sign-in {
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;    
+}
+
+.btn-sign-in {
+    margin-top: 10px;
 }

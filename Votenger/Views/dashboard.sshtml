@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Votenger</title>
+
+    <link rel="stylesheet" type="text/css" href="@Path['~/Content/bootstrap.min.css']">
+    <link rel="stylesheet" type="text/css" href="@Path['~/Content/site.css']">
+</head>
+<body>
+    <div class="well col-md-8 col-md-offset-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @Each.GameRecords
+                <tr>
+                    <td>#</td>
+                    <td>@Current.Name</td>
+                    <td>@Current.Type</td>
+                </tr>
+                @EndEach
+            </tbody>
+        </table>    
+    </div>
+
+    <script src="@Path['~/Content/jquery.js']" type="text/javascript"></script>
+    <script src="@Path['~/Content/bootstrap.min.js']" type="text/javascript"></script>
+</body>
+</html>

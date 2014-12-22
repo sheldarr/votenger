@@ -1,9 +1,9 @@
 ﻿namespace Votenger.Models
 {
-    using System.Collections.Generic;
     using Data;
+    using System.Collections.Generic;
 
-    public class ComputerGamesModel
+    public class DashboardModel
     {
         public ICollection<GameRecord> GameRecords { get; set; }
     }
