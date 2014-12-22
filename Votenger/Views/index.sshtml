@@ -9,11 +9,17 @@
 		body {
 			text-align: center;
 		}
-
+		
 	</style>
 
 </head>
 <body>
+	@Each.GameRecords
+	GameRecord <br />
+	Name: @Current.Name <br />
+	Type: @Current.Type <br />
+	@EndEach
+	LOlXD
 	<img src="@Path['~/Content/nancy-logo.png']" alt="Nancy logo" /><br />
 	This view was rendered using the SuperSimpleViewEngine
 </body>

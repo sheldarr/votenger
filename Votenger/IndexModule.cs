@@ -1,15 +1,20 @@
 ﻿namespace Votenger
 {
+    using Data;
+    using Models;
     using Nancy;
 
     public class IndexModule : NancyModule
     {
         public IndexModule()
         {
-            Get["/"] = parameters =>
+            var recordLoader = new RecordLoader();
+            var computerGamesModel = new ComputerGamesModel
             {
-                return View["index"];
+                GameRecords = recordLoader.GetAllComputerGames("Games")
             };
+
+            Get["/"] = parameters => View["index", computerGamesModel];
         }
     }
 }
