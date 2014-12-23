@@ -1,6 +1,6 @@
 ﻿namespace Votenger.Domain.Session
 {
-    public enum SessionStatus
+    public enum VotingSessionStatus
     {
         InProgess,
         Completed

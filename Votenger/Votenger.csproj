@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Votenger</RootNamespace>
     <AssemblyName>Votenger</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
@@ -44,25 +47,40 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\RavenDB.Database.3.0.3528\lib\net45\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>packages\RavenDB.Client.3.0.3528\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Database">
+      <HintPath>packages\RavenDB.Database.3.0.3528\lib\net45\Raven.Database.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Session\Session.cs" />
-    <Compile Include="Domain\Session\SessionStatus.cs" />
-    <Compile Include="Domain\Session\SessionType.cs" />
+    <Compile Include="Domain\Game.cs" />
+    <Compile Include="Domain\Session\VotingSession.cs" />
+    <Compile Include="Domain\Session\VotingSessionStatus.cs" />
+    <Compile Include="Domain\Session\VotingSessionType.cs" />
     <Compile Include="Infrastructure\Authorization\Authorization.cs" />
     <Compile Include="Infrastructure\Authorization\IAuthorization.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Domain\GameRecord.cs" />
     <Compile Include="Infrastructure\DtoFactory.cs" />
     <Compile Include="Infrastructure\RecordLoader.cs" />
     <Compile Include="Domain\GameType.cs" />
     <Compile Include="Infrastructure\IRecordLoader.cs" />
+    <Compile Include="Infrastructure\Repositories\GameRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\IGameRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\IVotingSessionRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\VotingSessionRepository.cs" />
     <Compile Include="Infrastructure\SelfHostingRootPathProvider.cs" />
     <Compile Include="Web\DTO\SessionDto.cs" />
     <Compile Include="Web\Modules\DashboardModule.cs" />
@@ -204,7 +222,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="bower-dependencies\datatables-bootstrap3-plugin\Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="bower-dependencies\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="bower-dependencies\bootstrap\dist\css\bootstrap-theme.min.css" />
@@ -338,7 +358,7 @@
     <Content Include="bower-dependencies\jquery\src\var\support.js" />
     <Content Include="bower-dependencies\jquery\src\var\toString.js" />
     <Content Include="bower-dependencies\jquery\src\wrap.js" />
-    <Content Include="favicon.ico">
+    <Content Include="Web\favicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\css\bootstrap.min.css">

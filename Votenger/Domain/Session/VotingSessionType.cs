@@ -1,6 +1,6 @@
 ﻿namespace Votenger.Domain.Session
 {
-    public enum SessionType
+    public enum VotingSessionType
     {
         Computer,
         Board

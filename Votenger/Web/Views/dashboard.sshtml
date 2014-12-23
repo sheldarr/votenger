@@ -1,6 +1,10 @@
 ﻿@Master['master.sshtml']
 
 @Section['Content']
+    <div class="text-center">
+    <h2>Dashboard</h2>
+    </div>
+    <h3>Sessions list</h3>
     <table id="dashboard-table" class="table">
         <thead>
             <tr>

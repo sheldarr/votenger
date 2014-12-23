@@ -9,7 +9,7 @@
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Nickname" required="required" name="Nickname">
         </div>
-        <input type="submit" class="btn btn-success btn-sign-in" value="Sign in">             
+        <input type="submit" class="btn btn-primary btn-sign-in" value="Sign in">             
     </form>
     @EndIf
     @If.IsAuthorized

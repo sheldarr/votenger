@@ -6,19 +6,19 @@
     public class SessionDto
     {
         public int Id { get; set; }
-        public SessionType SessionType { get; set; }
-        public SessionStatus SessionStatus { get; set; }
+        public VotingSessionType VotingSessionType { get; set; }
+        public VotingSessionStatus VotingSessionStatus { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
         public bool IsInProgress
         {
-            get { return SessionStatus == SessionStatus.InProgess; }
+            get { return VotingSessionStatus == VotingSessionStatus.InProgess; }
         }
 
         public bool IsCompleted
         {
-            get { return SessionStatus == SessionStatus.Completed; }
+            get { return VotingSessionStatus == VotingSessionStatus.Completed; }
         }
     }
 }

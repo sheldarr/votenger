@@ -5,15 +5,15 @@
 
     public class DtoFactory
     {
-        public static SessionDto CreateSessionDto(Session session)
+        public static SessionDto CreateSessionDto(VotingSession votingSession)
         {
             return new SessionDto
             {
-                Id = session.Id,
-                SessionType = session.SessionType,
-                SessionStatus = session.SessionStatus,
-                StartDate = session.StartDate,
-                EndDate = session.EndDate
+                Id = votingSession.Id,
+                VotingSessionType = votingSession.VotingSessionType,
+                VotingSessionStatus = votingSession.VotingSessionStatus,
+                StartDate = votingSession.StartDate,
+                EndDate = votingSession.EndDate
             };
         }
     }

@@ -13,7 +13,7 @@
         public IndexModule(IAuthorization authorization)
         {
             _authorization = authorization;
-            
+
             Get["/"] = parameters =>
             {
                 var isAuthorized = _authorization.CheckIfAuthorized(Request);

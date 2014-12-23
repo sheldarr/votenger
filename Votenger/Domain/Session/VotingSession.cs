@@ -2,11 +2,11 @@
 {
     using System;
 
-    public class Session
+    public class VotingSession
     {
         public int Id { get; set; }
-        public SessionType SessionType { get; set; }
-        public SessionStatus SessionStatus { get; set; }
+        public VotingSessionType VotingSessionType { get; set; }
+        public VotingSessionStatus VotingSessionStatus { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }

@@ -1,25 +1,34 @@
 ﻿namespace Votenger.Web.Modules
 {
-    using System.Collections.Generic;
     using System.Linq;
     using Authorization;
-    using DTO;
+    using Data;
+    using Domain;
     using Infrastructure;
+    using Infrastructure.Repositories;
     using Models;
     using Nancy;
 
     public class DashboardModule : NancyModule
     {
         private readonly IAuthorization _authorization;
-        public DashboardModule(IAuthorization authorization)
+        private readonly IVotingSessionRepository _votingSessionRepository;
+
+        public DashboardModule(IAuthorization authorization, IVotingSessionRepository votingSessionRepository)
         {
             _authorization = authorization;
+            _votingSessionRepository = votingSessionRepository;
+
+            Before += ctx =>
+            {                
+                var isAuthorized = _authorization.CheckIfAuthorized(Request);
+
+                return !isAuthorized ? Response.AsRedirect("/") : null;
+            };
             
             Get["/dashboard"] = parameters =>
             {
-                var recordLoader = new RecordLoader();
-
-                var sessions = recordLoader.GetAllSessions("xoxoxo");
+                var sessions = _votingSessionRepository.GetAllVotingSessions();
                 var sessionsDto = sessions.Select(DtoFactory.CreateSessionDto).ToList();
 
                 var dashboardModel = new DashboardModel
