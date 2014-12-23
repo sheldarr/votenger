@@ -15,9 +15,9 @@
             using (var streamReader = new StreamReader(path))
             {
                 var fileContent = streamReader.ReadToEnd();
-                var allGames = JsonConvert.DeserializeObject<ICollection<GameRecord>>(fileContent);
-                var computerGames = allGames.Where(g => g.Type == GameType.ComputerGame).ToList();
-
+                //var allGames = JsonConvert.DeserializeObject<ICollection<GameRecord>>(fileContent);
+                //var computerGames = allGames.Where(g => g.Type == GameType.ComputerGame).ToList();
+                var computerGames = new List<GameRecord> { new GameRecord { Name = "Dupa",Type = GameType.ComputerGame}};
                 return computerGames;
             }
         }

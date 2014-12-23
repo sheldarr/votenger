@@ -52,15 +52,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authorization\Authorization.cs" />
-    <Compile Include="Authorization\IAuthorization.cs" />
+    <Compile Include="Infrastructure\Authorization\Authorization.cs" />
+    <Compile Include="Infrastructure\Authorization\IAuthorization.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Data\GameRecord.cs" />
-    <Compile Include="Data\RecordLoader.cs" />
-    <Compile Include="Data\GameType.cs" />
-    <Compile Include="Data\IRecordLoader.cs" />
-    <Compile Include="DashboardModule.cs" />
-    <Compile Include="IndexModule.cs" />
+    <Compile Include="Domain\GameRecord.cs" />
+    <Compile Include="Infrastructure\RecordLoader.cs" />
+    <Compile Include="Domain\GameType.cs" />
+    <Compile Include="Infrastructure\IRecordLoader.cs" />
+    <Compile Include="Infrastructure\SelfHostingRootPathProvider.cs" />
+    <Compile Include="Web\Modules\DashboardModule.cs" />
+    <Compile Include="Web\Modules\IndexModule.cs" />
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Models\SignInModel.cs" />
@@ -160,6 +161,14 @@
     <None Include="bower-dependencies\bootstrap\LICENSE" />
     <None Include="bower-dependencies\bootstrap\package.json" />
     <None Include="bower-dependencies\bootstrap\README.md" />
+    <None Include="bower-dependencies\datatables-bootstrap3-plugin\.bower.json" />
+    <None Include="bower-dependencies\datatables-bootstrap3-plugin\bower.json" />
+    <None Include="bower-dependencies\datatables-bootstrap3-plugin\README.md" />
+    <None Include="bower-dependencies\datatables\.bower.json" />
+    <None Include="bower-dependencies\datatables\bower.json" />
+    <None Include="bower-dependencies\datatables\Contributing.md" />
+    <None Include="bower-dependencies\datatables\media\images\Sorting icons.psd" />
+    <None Include="bower-dependencies\datatables\Readme.md" />
     <None Include="bower-dependencies\jquery\.bower.json" />
     <None Include="bower-dependencies\jquery\bower.json" />
     <None Include="bower-dependencies\jquery\dist\jquery.min.map" />
@@ -171,13 +180,24 @@
     <None Include="Resources\Games.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\dashboard.sshtml">
+    <None Include="Web\Content\fonts\glyphicons-halflings-regular.eot">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\index.sshtml">
+    <None Include="Web\Content\fonts\glyphicons-halflings-regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\master.sshtml" />
+    <None Include="Web\Content\fonts\glyphicons-halflings-regular.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\Views\dashboard.sshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\Views\index.sshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\Views\master.sshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -206,6 +226,27 @@
     <Content Include="bower-dependencies\bootstrap\js\tab.js" />
     <Content Include="bower-dependencies\bootstrap\js\tooltip.js" />
     <Content Include="bower-dependencies\bootstrap\js\transition.js" />
+    <Content Include="bower-dependencies\datatables-bootstrap3-plugin\media\css\datatables-bootstrap3.css" />
+    <Content Include="bower-dependencies\datatables-bootstrap3-plugin\media\js\datatables-bootstrap3.js" />
+    <Content Include="bower-dependencies\datatables\license.txt" />
+    <Content Include="bower-dependencies\datatables\media\css\jquery.dataTables.css" />
+    <Content Include="bower-dependencies\datatables\media\css\jquery.dataTables.min.css" />
+    <Content Include="bower-dependencies\datatables\media\css\jquery.dataTables_themeroller.css" />
+    <Content Include="bower-dependencies\datatables\media\images\back_disabled.png" />
+    <Content Include="bower-dependencies\datatables\media\images\back_enabled.png" />
+    <Content Include="bower-dependencies\datatables\media\images\back_enabled_hover.png" />
+    <Content Include="bower-dependencies\datatables\media\images\favicon.ico" />
+    <Content Include="bower-dependencies\datatables\media\images\forward_disabled.png" />
+    <Content Include="bower-dependencies\datatables\media\images\forward_enabled.png" />
+    <Content Include="bower-dependencies\datatables\media\images\forward_enabled_hover.png" />
+    <Content Include="bower-dependencies\datatables\media\images\sort_asc.png" />
+    <Content Include="bower-dependencies\datatables\media\images\sort_asc_disabled.png" />
+    <Content Include="bower-dependencies\datatables\media\images\sort_both.png" />
+    <Content Include="bower-dependencies\datatables\media\images\sort_desc.png" />
+    <Content Include="bower-dependencies\datatables\media\images\sort_desc_disabled.png" />
+    <Content Include="bower-dependencies\datatables\media\js\jquery.dataTables.js" />
+    <Content Include="bower-dependencies\datatables\media\js\jquery.dataTables.min.js" />
+    <Content Include="bower-dependencies\datatables\media\js\jquery.js" />
     <Content Include="bower-dependencies\jquery\dist\jquery.js" />
     <Content Include="bower-dependencies\jquery\dist\jquery.min.js" />
     <Content Include="bower-dependencies\jquery\MIT-LICENSE.txt" />
@@ -292,19 +333,46 @@
     <Content Include="bower-dependencies\jquery\src\var\support.js" />
     <Content Include="bower-dependencies\jquery\src\var\toString.js" />
     <Content Include="bower-dependencies\jquery\src\wrap.js" />
-    <Content Include="Content\bootstrap.min.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\bootstrap.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\jquery.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\site.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\css\bootstrap.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\css\datatables.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\css\site.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\fonts\glyphicons-halflings-regular.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\images\sort_asc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\images\sort_asc_disabled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\images\sort_both.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\images\sort_desc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\images\sort_desc_disabled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\js\bootstrap.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\js\datatables.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\js\jquery.dataTables.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\js\jquery.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
