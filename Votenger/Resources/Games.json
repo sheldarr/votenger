@@ -1,4 +1,149 @@
-﻿[
+[
+    {
+        "Name": "Age of Empires II",
+        "Type": "RTS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Age of Mythology",
+        "Type": "RTS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Alien vs Predator",
+        "Type": "FPS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Alien vs Predator 2",
+        "Type": "FPS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Baldur's Gate",
+        "Type": "RPG",
+        "MaxPlayers": 6
+    },
+    {
+        "Name": "Batlle Realms",
+        "Type": "RTS",
+        "MaxPlayers": 8
+    },
+    {
+        "Name": "Bitwa o Środziemie",
+        "Type": "RTS",
+        "MaxPlayers": 8
+    },
+    {
+        "Name": "Bitwa o Środziemie 2",
+        "Type": "RTS",
+        "MaxPlayers": 8
+    },
+    {
+        "Name": "Bomberman",
+        "Type": "Action",
+        "MaxPlayers": 4
+    },
+    {
+        "Name": "Call of Duty Black Ops 2",
+        "Type": "FPS",
+        "MaxPlayers": 4
+    },
+    {
+        "Name": "Castle Crushers",
+        "Type": "Action",
+        "MaxPlayers": 4
+    },
+    {
+        "Name": "Command & Conquer Red Alert 2",
+        "Type": "RTS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Comman & Conquer Tiberian Sun",
+        "Type": "RTS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Company of Heroes",
+        "Type": "RTS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Counter Strike 1.6",
+        "Type": "FPS",
+        "MaxPlayers": 32
+    },
+    {
+        "Name": "Diablo II",
+        "Type": "Action",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Diablo III",
+        "Type": "Action",
+        "MaxPlayers": 4
+    },
+    {
+        "Name": "Duke Nukem 3D",
+        "Type": "FPS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Dune 2000",
+        "Type": "RTS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Dungeon Keeper 2",
+        "Type": "RTS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Empire Earth II",
+        "Type": "RTS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Europa Universalis",
+        "Type": "Strategy",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Fallout Tactics",
+        "Type": "Strategy",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Fifa 2014",
+        "Type": "Sport",
+        "MaxPlayers": 4
+    },
+    {
+        "Name": "Footbal Manager",
+        "Type": "Sport",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Giants Citizen Kabuto",
+        "Type": "FPS",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Heroes III",
+        "Type": "Strategy",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Icewind Dale",
+        "Type": "RPG",
+        "MaxPlayers": 6
+    },
+    {
+        "Name": "Knights & Merchants",
+        "Type": "Action",
+        "MaxPlayers": 4
+    },
     {
         "Name": "Enemy Territory Legacy",
         "Type": "ComputerGame"
