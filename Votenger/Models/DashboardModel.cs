@@ -1,10 +1,10 @@
 ﻿namespace Votenger.Models
 {
-    using Data;
     using System.Collections.Generic;
+    using Web.DTO;
 
     public class DashboardModel
     {
-        public ICollection<GameRecord> GameRecords { get; set; }
+        public ICollection<SessionDto> Sessions { get; set; }
     }
 }

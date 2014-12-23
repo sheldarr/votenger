@@ -52,14 +52,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Session\Session.cs" />
+    <Compile Include="Domain\Session\SessionStatus.cs" />
+    <Compile Include="Domain\Session\SessionType.cs" />
     <Compile Include="Infrastructure\Authorization\Authorization.cs" />
     <Compile Include="Infrastructure\Authorization\IAuthorization.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Domain\GameRecord.cs" />
+    <Compile Include="Infrastructure\DtoFactory.cs" />
     <Compile Include="Infrastructure\RecordLoader.cs" />
     <Compile Include="Domain\GameType.cs" />
     <Compile Include="Infrastructure\IRecordLoader.cs" />
     <Compile Include="Infrastructure\SelfHostingRootPathProvider.cs" />
+    <Compile Include="Web\DTO\SessionDto.cs" />
     <Compile Include="Web\Modules\DashboardModule.cs" />
     <Compile Include="Web\Modules\IndexModule.cs" />
     <Compile Include="Models\DashboardModel.cs" />

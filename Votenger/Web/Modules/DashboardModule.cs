@@ -1,11 +1,12 @@
-﻿namespace Votenger
+﻿namespace Votenger.Web.Modules
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Authorization;
-    using Data;
+    using DTO;
+    using Infrastructure;
     using Models;
     using Nancy;
-    using Nancy.Cookies;
-    using Nancy.ModelBinding;
 
     public class DashboardModule : NancyModule
     {
@@ -17,9 +18,13 @@
             Get["/dashboard"] = parameters =>
             {
                 var recordLoader = new RecordLoader();
+
+                var sessions = recordLoader.GetAllSessions("xoxoxo");
+                var sessionsDto = sessions.Select(DtoFactory.CreateSessionDto).ToList();
+
                 var dashboardModel = new DashboardModel
                 {
-                    GameRecords = recordLoader.GetAllComputerGames("Games")
+                    Sessions = sessionsDto
                 };
 
                 return View["dashboard", dashboardModel];

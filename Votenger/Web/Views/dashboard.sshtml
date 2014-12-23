@@ -5,16 +5,29 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Name</th>
                 <th>Type</th>
+                <th>Status</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @Each.GameRecords
+            @Each.Sessions
             <tr>
-                <td>#</td>  
-                <td>@Current.Name</td>
-                <td>@Current.Type</td>
+                <td>@Current.Id</td>  
+                <td>@Current.SessionType</td>
+                <td>@Current.SessionStatus</td>
+                <td>@Current.StartDate</td>
+                <td>@Current.EndDate</td>
+                <td>
+                    @If.IsInProgress
+                    <button type="button" class="btn btn-default btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span> Vote!</button>
+                    @EndIf
+                    @If.IsCompleted
+                    <button type="button" class="btn btn-default btn-success btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Results!</button>
+                    @EndIf
+                </td>
             </tr>
             @EndEach
         </tbody>

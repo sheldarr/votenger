@@ -3,6 +3,7 @@
     using System.Linq;
     using NUnit.Framework;
     using Votenger.Data;
+    using Votenger.Infrastructure;
 
     [TestFixture]
     internal class RecordLoaderTests
