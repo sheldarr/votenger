@@ -40,6 +40,15 @@
 
                 return View["dashboard", dashboardModel];
             };
+
+            Get["/api/votingSessions"] = parameters =>
+            {
+                var authorizedUser = _authorization.GetAuthorizedUser(Request);
+                var sessions = _votingSessionRepository.GetAllVotingSessions();
+
+                var sessionsDto = sessions.Select(votingSession => DtoFactory.CreateVotingSessionDto(votingSession, authorizedUser)).ToList();
+                return Response.AsJson(sessionsDto);
+            };
         }
     }
 }
