@@ -2,7 +2,6 @@
 {
     using System.Linq;
     using Authorization;
-    using Data;
     using Domain;
     using Infrastructure;
     using Infrastructure.Repositories;

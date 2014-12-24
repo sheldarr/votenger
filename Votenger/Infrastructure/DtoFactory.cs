@@ -10,8 +10,8 @@
             return new SessionDto
             {
                 Id = votingSession.Id,
-                VotingSessionType = votingSession.VotingSessionType,
-                VotingSessionStatus = votingSession.VotingSessionStatus,
+                Type = votingSession.Type,
+                Status = votingSession.Status,
                 StartDate = votingSession.StartDate,
                 EndDate = votingSession.EndDate
             };

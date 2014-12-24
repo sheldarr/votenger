@@ -34,11 +34,15 @@
 
             var embeddableDocumentStore = new EmbeddableDocumentStore
             {
-                DataDirectory = "Data"
-                //RunInMemory = true
+                //DataDirectory = "Data"
+                RunInMemory = true
             };
 
             embeddableDocumentStore.Initialize();
+
+            var ravenInitializer = new RavenInitalizer(embeddableDocumentStore);
+            ravenInitializer.SeedWithVotingSessions();
+            ravenInitializer.SeedWithGames();
 
             container.Register<IDocumentStore>(embeddableDocumentStore);
         }

@@ -1,4 +1,4 @@
-﻿namespace Votenger.Data
+﻿namespace Votenger.Domain.Game
 {
     public enum GameType
     {

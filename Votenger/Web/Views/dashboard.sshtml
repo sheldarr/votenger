@@ -20,8 +20,8 @@
             @Each.Sessions
             <tr>
                 <td>@Current.Id</td>  
-                <td>@Current.SessionType</td>
-                <td>@Current.SessionStatus</td>
+                <td>@Current.Type</td>
+                <td>@Current.Status</td>
                 <td>@Current.StartDate</td>
                 <td>@Current.EndDate</td>
                 <td>

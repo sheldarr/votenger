@@ -7,7 +7,7 @@
     {
         public string GetRootPath()
         {
-            var rootPath = AppDomain.CurrentDomain.BaseDirectory + @"Web";
+            var rootPath = String.Format("{0}Web", AppDomain.CurrentDomain.BaseDirectory);
             return rootPath;
         }
     }

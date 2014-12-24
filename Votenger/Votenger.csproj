@@ -66,7 +66,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Game.cs" />
+    <Compile Include="Domain\Game\Game.cs" />
+    <Compile Include="Domain\Game\GameGenre.cs" />
+    <Compile Include="Domain\Game\GameType.cs" />
     <Compile Include="Domain\Session\VotingSession.cs" />
     <Compile Include="Domain\Session\VotingSessionStatus.cs" />
     <Compile Include="Domain\Session\VotingSessionType.cs" />
@@ -74,9 +76,8 @@
     <Compile Include="Infrastructure\Authorization\IAuthorization.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Infrastructure\DtoFactory.cs" />
-    <Compile Include="Infrastructure\RecordLoader.cs" />
-    <Compile Include="Domain\GameType.cs" />
-    <Compile Include="Infrastructure\IRecordLoader.cs" />
+    <Compile Include="Infrastructure\RavenInitalizer.cs" />
+    <Compile Include="Infrastructure\IRavenInitalizer.cs" />
     <Compile Include="Infrastructure\Repositories\GameRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IGameRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IVotingSessionRepository.cs" />

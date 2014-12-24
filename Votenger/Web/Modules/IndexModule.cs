@@ -1,7 +1,6 @@
 ﻿namespace Votenger
 {
     using Authorization;
-    using Data;
     using Models;
     using Nancy;
     using Nancy.Cookies;
