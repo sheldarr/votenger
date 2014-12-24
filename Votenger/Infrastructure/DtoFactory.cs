@@ -13,8 +13,8 @@
             return new VotingSessionDto
             {
                 Id = votingSession.Id,
-                Type = votingSession.Type,
-                Status = votingSession.Status,
+                Type = votingSession.Type.ToString(),
+                Status = votingSession.Status.ToString(),
                 StartDate = votingSession.StartDate,
                 EndDate = votingSession.EndDate,
                 DraftAlreadyDoneByUser = user.DraftResponses.Any(dr => dr.Id == votingSession.Id),

@@ -18,30 +18,22 @@
                 </tr>
             </thead>
             <tbody>
-                @Each.Sessions
-                <tr>
-                    <td>@Current.Id</td>
-                    <td>@Current.Type</td>
-                    <td>@Current.Status</td>
-                    <td>@Current.StartDate</td>
-                    <td>@Current.EndDate</td>
+                <tr ng-repeat="votingSession in vm.votingSessions">
+                    <td>{{ votingSession.id }}</td>
+                    <td>{{ votingSession.type }}</td>
+                    <td>{{ votingSession.status }}</td>
+                    <td>{{ votingSession.startDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                    <td>{{ votingSession.endDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>
-                        @If.IsInDraftMode
-                        @IfNot.DraftAlreadyDoneByUser
+                      
                         <button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-random"></span> Draft!</button>
-                        @EndIf
-                        @EndIf
-                        @If.IsInVoteMode
-                        @IfNot.VoteAlreadyDoneByUser
+                   
                         <button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-pencil"></span> Vote!</button>
-                        @EndIf
-                        @EndIf
-                        @If.IsCompleted
+                       
                         <button type="button" class="btn btn-default btn-success"><span class="glyphicon glyphicon-eye-open"></span> Results!</button>
-                        @EndIf
+                    
                     </td>
                 </tr>
-                @EndEach
             </tbody>
         </table>
     </div>
