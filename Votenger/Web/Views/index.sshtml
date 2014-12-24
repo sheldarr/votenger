@@ -1,21 +1,28 @@
 ﻿@Master['master.sshtml']
 
 @Section['Content']
-<div class="jumbotron text-center">
+<div class="jumbotron text-center" ng-controller="homeController as vm">
     <h1>Welcome to Votenger@If.IsAuthorized, @Model.Nickname @EndIf</h1>
     <p>Ultimate tool for lanparty voting!</p>
     @IfNot.IsAuthorized
-    <form action="signIn" method="post" class="input-sign-in">
+    <form class="input-sign-in">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Nickname" required="required" name="Nickname">
+            <input type="text" class="form-control" placeholder="Nickname" required="required" name="Nickname" ng-model="vm.credentials.nickname">
         </div>
-        <input type="submit" class="btn btn-primary btn-sign-in" value="Sign in">             
+        <input type="submit" class="btn btn-primary btn-sign-in" value="Sign in" ng-click="vm.signIn()">             
     </form>
     @EndIf
     @If.IsAuthorized
     <form action="dashboard">
-        <button type="submit" class="btn btn-success">Start!</button>
+        <button type="submit" class="btn btn-success" ng-click="vm.signIn()">Start!</button>
     </form>
     @EndIf
 </div>
 @EndSection
+
+@Section['SpecificScripts']
+    <script src="@Path['~/js/homeService.js']" type="text/javascript"></script>
+    <script src="@Path['~/js/homeController.js']" type="text/javascript"></script>
+@EndSection
+
+

@@ -43,6 +43,7 @@
             var ravenInitializer = new RavenInitalizer(embeddableDocumentStore);
             ravenInitializer.SeedWithVotingSessions();
             ravenInitializer.SeedWithGames();
+            ravenInitializer.SeedWithUsers();
 
             container.Register<IDocumentStore>(embeddableDocumentStore);
         }

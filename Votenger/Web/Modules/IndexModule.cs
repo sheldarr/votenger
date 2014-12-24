@@ -6,6 +6,7 @@
     using Nancy.Cookies;
     using Nancy.ModelBinding;
     using Web.Models;
+    using HttpStatusCode = System.Net.HttpStatusCode;
 
     public class IndexModule : NancyModule
     {
@@ -40,7 +41,7 @@
 
                 var voteAuthCookie = new NancyCookie("VoteAuth", userGuid);
 
-                return Response.AsRedirect("/").WithCookie(voteAuthCookie);
+                return  Response.AsJson("").WithCookie(voteAuthCookie);
             };
         }
     }

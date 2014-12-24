@@ -3,7 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using Domain;
     using Domain.Game;
+    using Domain.Response;
     using Domain.Session;
     using Newtonsoft.Json;
     using Raven.Client;
@@ -72,6 +74,23 @@
                     }
                 }
 
+                documentSession.SaveChanges();
+            }
+        }
+
+        public void SeedWithUsers()
+        {
+            using (var documentSession = _documentStore.OpenSession())
+            {
+                var rootUser = new User
+                {
+                    Hash = "uberboss",
+                    Nickname = "Sheldar",
+                    DraftResponses = new List<DraftResponse>(),
+                    VoteResponses = new List<VoteResponse>()
+                };
+
+                documentSession.Store(rootUser);
                 documentSession.SaveChanges();
             }
         }
