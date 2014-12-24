@@ -1,8 +1,8 @@
 ﻿namespace Votenger.Web.Modules
 {
     using System.Linq;
-    using Authorization;
     using Infrastructure;
+    using Infrastructure.Authorization;
     using Infrastructure.Repositories;
     using Models;
     using Nancy;

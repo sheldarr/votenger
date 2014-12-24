@@ -1,5 +1,6 @@
 ﻿namespace Votenger.Infrastructure.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain;
@@ -15,15 +16,24 @@
             _documentStore = documentStore;
         }
 
-        public string GetUserNickname(int id)
+        public string GetUserNickname(string guid)
         {
+            if (string.IsNullOrEmpty(guid))
+            {
+                return String.Empty;
+            }
+
             using (var documentSession = _documentStore.OpenSession())
             {
-                return documentSession.Load<User>(id).Nickname;
+                var user = documentSession.Query<User>()
+                    .Customize(x => x.WaitForNonStaleResults(TimeSpan.FromSeconds(10)))
+                    .FirstOrDefault(u => u.Hash == guid);
+
+                return user.Nickname ?? String.Empty;
             }
         }
 
-        public void CreateUserIfNotExists(string nickname)
+        public string CreateUserIfNotExists(string nickname)
         {
             using (var documentSession = _documentStore.OpenSession())
             {
@@ -31,17 +41,20 @@
 
                 if (existingUser != null)
                 {
-                    return;
+                    return existingUser.Hash;
                 }
 
                 var newUser = new User
                 {
+                    Hash = Guid.NewGuid().ToString(),
                     Nickname = nickname,
                     DraftResponses = new List<DraftResponse>()
                 };
 
                 documentSession.Store(newUser);
                 documentSession.SaveChanges();
+
+                return newUser.Hash;
             }
         }
     }

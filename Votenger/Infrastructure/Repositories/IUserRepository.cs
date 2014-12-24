@@ -2,7 +2,7 @@
 {
     public interface IUserRepository
     {
-        void CreateUserIfNotExists(string nickname);
-        string GetUserNickname(int id);
+        string CreateUserIfNotExists(string nickname);
+        string GetUserNickname(string id);
     }
 }

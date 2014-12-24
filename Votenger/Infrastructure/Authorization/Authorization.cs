@@ -1,4 +1,4 @@
-﻿namespace Votenger.Authorization
+﻿namespace Votenger.Infrastructure.Authorization
 {
     using System.Linq;
     using Nancy;
@@ -13,10 +13,10 @@
             return (authorizationCookie.Key != null);
         }
 
-        public string DecodeNickname(Request request)
+        public string DecodeUserGuid(Request request)
         {
             var authorizationCookie = request.Cookies.FirstOrDefault(c => c.Key == AuthorizationCookie);
-            return authorizationCookie.Value ?? string.Empty;
+            return authorizationCookie.Value;
         }
     }
 }
