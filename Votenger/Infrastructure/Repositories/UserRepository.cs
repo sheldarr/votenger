@@ -16,9 +16,9 @@
             _documentStore = documentStore;
         }
 
-        public string GetUserNickname(string guid)
+        public string GetUserNickname(string hash)
         {
-            if (string.IsNullOrEmpty(guid))
+            if (string.IsNullOrEmpty(hash))
             {
                 return String.Empty;
             }
@@ -27,9 +27,18 @@
             {
                 var user = documentSession.Query<User>()
                     .Customize(x => x.WaitForNonStaleResults(TimeSpan.FromSeconds(10)))
-                    .FirstOrDefault(u => u.Hash == guid);
+                    .FirstOrDefault(u => u.Hash == hash);
 
                 return user.Nickname ?? String.Empty;
+            }
+        }
+
+        public User GetUser(string hash)
+        {
+            using (var documentSession = _documentStore.OpenSession())
+            {
+                var user = documentSession.Query<User>().FirstOrDefault(u => u.Hash == hash);
+                return user;
             }
         }
 
@@ -48,7 +57,8 @@
                 {
                     Hash = Guid.NewGuid().ToString(),
                     Nickname = nickname,
-                    DraftResponses = new List<DraftResponse>()
+                    DraftResponses = new List<DraftResponse>(),
+                    VoteResponses = new List<VoteResponse>()
                 };
 
                 documentSession.Store(newUser);

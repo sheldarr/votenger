@@ -69,6 +69,7 @@
     <Compile Include="Domain\Game\Game.cs" />
     <Compile Include="Domain\Game\GameGenre.cs" />
     <Compile Include="Domain\Game\GameType.cs" />
+    <Compile Include="Domain\Response\VoteResponse.cs" />
     <Compile Include="Domain\Response\DraftResponse.cs" />
     <Compile Include="Domain\Session\VotingSession.cs" />
     <Compile Include="Domain\Session\VotingSessionStatus.cs" />

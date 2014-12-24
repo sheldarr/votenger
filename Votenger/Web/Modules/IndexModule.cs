@@ -1,6 +1,5 @@
 ﻿namespace Votenger
 {
-    using System;
     using Infrastructure.Authorization;
     using Infrastructure.Repositories;
     using Nancy;
@@ -21,7 +20,7 @@
             Get["/"] = parameters =>
             {
                 var isAuthorized = _authorization.CheckIfAuthorized(Request);
-                var userId = _authorization.DecodeUserGuid(Request);
+                var userId = _authorization.DecodeUserHash(Request);
                 var nickname = _userRepository.GetUserNickname(userId);
 
                 var indexModel = new IndexModel
@@ -39,7 +38,7 @@
                 
                 var userGuid = _userRepository.CreateUserIfNotExists(signInModel.Nickname);
 
-                var voteAuthCookie = new NancyCookie("VoteAuth", userGuid.ToString());
+                var voteAuthCookie = new NancyCookie("VoteAuth", userGuid);
 
                 return Response.AsRedirect("/").WithCookie(voteAuthCookie);
             };

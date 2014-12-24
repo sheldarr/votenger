@@ -11,6 +11,9 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public bool DraftAlreadyDoneByUser { get; set; }
+        public bool VoteAlreadyDoneByUser { get; set; }
+
         public bool IsInDraftMode
         {
             get { return Status == VotingSessionStatus.Draft; }

@@ -1,6 +1,8 @@
 ﻿namespace Votenger.Web.Modules
 {
+    using System.Collections.Generic;
     using System.Linq;
+    using DTO;
     using Infrastructure;
     using Infrastructure.Authorization;
     using Infrastructure.Repositories;
@@ -26,8 +28,10 @@
             
             Get["/dashboard"] = parameters =>
             {
+                var authorizedUser = _authorization.GetAuthorizedUser(Request);
                 var sessions = _votingSessionRepository.GetAllVotingSessions();
-                var sessionsDto = sessions.Select(DtoFactory.CreateVotingSessionDto).ToList();
+
+                var sessionsDto = sessions.Select(votingSession => DtoFactory.CreateVotingSessionDto(votingSession, authorizedUser)).ToList();
 
                 var dashboardModel = new DashboardModel
                 {
