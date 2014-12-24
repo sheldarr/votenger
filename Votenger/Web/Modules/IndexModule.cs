@@ -1,17 +1,21 @@
 ﻿namespace Votenger
 {
     using Authorization;
-    using Models;
+    using Infrastructure.Repositories;
     using Nancy;
     using Nancy.Cookies;
     using Nancy.ModelBinding;
+    using Web.Models;
 
     public class IndexModule : NancyModule
     {
         private readonly IAuthorization _authorization;
-        public IndexModule(IAuthorization authorization)
+        private readonly IUserRepository _userRepository;
+
+        public IndexModule(IAuthorization authorization, IUserRepository userRepository)
         {
             _authorization = authorization;
+            _userRepository = userRepository;
 
             Get["/"] = parameters =>
             {
@@ -31,6 +35,8 @@
             {
                 var signInModel = this.Bind<SignInModel>();         
                 var voteAuthCookie = new NancyCookie("VoteAuth", signInModel.Nickname);
+                
+                _userRepository.CreateUserIfNotExists(signInModel.Nickname);
 
                 return Response.AsRedirect("/").WithCookie(voteAuthCookie);
             };

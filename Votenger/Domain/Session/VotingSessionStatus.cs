@@ -2,7 +2,8 @@
 {
     public enum VotingSessionStatus
     {
-        InProgess,
+        Draft,
+        Vote,
         Completed
     }
 }

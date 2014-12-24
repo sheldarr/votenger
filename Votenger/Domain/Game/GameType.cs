@@ -2,7 +2,8 @@
 {
     public enum GameType
     {
-        ComputerGame,
-        BoardGame
+        Pc,
+        Xbox,
+        Board
     }
 }

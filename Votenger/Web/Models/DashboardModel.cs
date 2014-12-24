@@ -1,7 +1,7 @@
-﻿namespace Votenger.Models
+﻿namespace Votenger.Web.Models
 {
     using System.Collections.Generic;
-    using Web.DTO;
+    using DTO;
 
     public class DashboardModel
     {

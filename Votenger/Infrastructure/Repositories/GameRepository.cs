@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Domain;
     using Domain.Game;
     using Raven.Client;
 

@@ -69,9 +69,11 @@
     <Compile Include="Domain\Game\Game.cs" />
     <Compile Include="Domain\Game\GameGenre.cs" />
     <Compile Include="Domain\Game\GameType.cs" />
+    <Compile Include="Domain\Response\DraftResponse.cs" />
     <Compile Include="Domain\Session\VotingSession.cs" />
     <Compile Include="Domain\Session\VotingSessionStatus.cs" />
     <Compile Include="Domain\Session\VotingSessionType.cs" />
+    <Compile Include="Domain\User.cs" />
     <Compile Include="Infrastructure\Authorization\Authorization.cs" />
     <Compile Include="Infrastructure\Authorization\IAuthorization.cs" />
     <Compile Include="Bootstrapper.cs" />
@@ -80,10 +82,17 @@
     <Compile Include="Infrastructure\IRavenInitalizer.cs" />
     <Compile Include="Infrastructure\Repositories\GameRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IGameRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\IUserRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IVotingSessionRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\UserRepository.cs" />
     <Compile Include="Infrastructure\Repositories\VotingSessionRepository.cs" />
     <Compile Include="Infrastructure\SelfHostingRootPathProvider.cs" />
-    <Compile Include="Web\DTO\SessionDto.cs" />
+    <Compile Include="Web\DTO\GameDto.cs" />
+    <Compile Include="Web\DTO\VotingSessionDto.cs" />
+    <Compile Include="Web\Models\DashboardModel.cs" />
+    <Compile Include="Web\Models\DraftModel.cs" />
+    <Compile Include="Web\Models\IndexModel.cs" />
+    <Compile Include="Web\Models\SignInModel.cs" />
     <Compile Include="Web\Modules\DashboardModule.cs" />
     <Compile Include="Web\Modules\IndexModule.cs" />
     <Compile Include="Models\DashboardModel.cs" />
@@ -91,6 +100,7 @@
     <Compile Include="Models\SignInModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\Modules\VotingModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".bowerrc" />
@@ -211,6 +221,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Web\Content\fonts\glyphicons-halflings-regular.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\Views\draft.sshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Web\Views\dashboard.sshtml">

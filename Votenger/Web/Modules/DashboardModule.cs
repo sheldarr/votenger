@@ -2,7 +2,6 @@
 {
     using System.Linq;
     using Authorization;
-    using Domain;
     using Infrastructure;
     using Infrastructure.Repositories;
     using Models;
@@ -28,7 +27,7 @@
             Get["/dashboard"] = parameters =>
             {
                 var sessions = _votingSessionRepository.GetAllVotingSessions();
-                var sessionsDto = sessions.Select(DtoFactory.CreateSessionDto).ToList();
+                var sessionsDto = sessions.Select(DtoFactory.CreateVotingSessionDto).ToList();
 
                 var dashboardModel = new DashboardModel
                 {

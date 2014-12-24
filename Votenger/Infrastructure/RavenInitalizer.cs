@@ -25,20 +25,25 @@
                 {
                     new VotingSession
                     {
-                        Id = 1,
-                        Status = VotingSessionStatus.InProgess,
+                        Status = VotingSessionStatus.Draft,
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
                         EndDate = DateTime.Now.AddDays(2)
                     },
                     new VotingSession
                     {
-                        Id = 2,
-                        Status = VotingSessionStatus.Completed,
+                        Status = VotingSessionStatus.Vote,
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
                         EndDate = DateTime.Now.AddDays(1)
-                    }
+                    },
+                     new VotingSession
+                    {
+                        Status = VotingSessionStatus.Completed,
+                        Type = VotingSessionType.Computer,
+                        StartDate = DateTime.Now,
+                        EndDate = DateTime.Now.AddDays(2)
+                    },
                 };
 
                 foreach (var votingSession in votingSessions)

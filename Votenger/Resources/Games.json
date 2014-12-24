@@ -1,175 +1,175 @@
 [
     {
         "Name": "Age of Empires II",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 0
     },
     {
         "Name": "Age of Mythology",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 0
     },
     {
         "Name": "Alien vs Predator",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Fps",
         "MaxPlayers": 0
     },
     {
         "Name": "Alien vs Predator 2",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Fps",
         "MaxPlayers": 0
     },
     {
         "Name": "Baldur's Gate",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rpg",
         "MaxPlayers": 6
     },
     {
         "Name": "Batlle Realms",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 8
     },
     {
         "Name": "Bitwa o Środziemie",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 8
     },
     {
         "Name": "Bitwa o Środziemie 2",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 8
     },
     {
         "Name": "Bomberman",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Action",
         "MaxPlayers": 4
     },
     {
         "Name": "Call of Duty Black Ops 2",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Fps",
         "MaxPlayers": 4
     },
     {
         "Name": "Castle Crushers",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Action",
         "MaxPlayers": 4
     },
     {
         "Name": "Command & Conquer Red Alert 2",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 0
     },
     {
         "Name": "Comman & Conquer Tiberian Sun",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 0
     },
     {
         "Name": "Company of Heroes",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 0
     },
     {
         "Name": "Counter Strike 1.6",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Fps",
         "MaxPlayers": 32
     },
     {
         "Name": "Diablo II",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Action",
         "MaxPlayers": 0
     },
     {
         "Name": "Diablo III",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Action",
         "MaxPlayers": 4
     },
     {
         "Name": "Duke Nukem 3D",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Fps",
         "MaxPlayers": 0
     },
     {
         "Name": "Dune 2000",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 0
     },
     {
         "Name": "Dungeon Keeper 2",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 0
     },
     {
         "Name": "Empire Earth II",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rts",
         "MaxPlayers": 0
     },
     {
         "Name": "Europa Universalis",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Strategy",
         "MaxPlayers": 0
     },
     {
         "Name": "Fallout Tactics",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Strategy",
         "MaxPlayers": 0
     },
     {
         "Name": "Fifa 2014",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Sport",
         "MaxPlayers": 4
     },
     {
         "Name": "Footbal Manager",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Sport",
         "MaxPlayers": 0
     },
     {
         "Name": "Giants Citizen Kabuto",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Fps",
         "MaxPlayers": 0
     },
     {
         "Name": "Heroes III",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Strategy",
         "MaxPlayers": 0
     },
     {
         "Name": "Icewind Dale",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Rpg",
         "MaxPlayers": 6
     },
     {
         "Name": "Knights & Merchants",
-        "Type": "ComputerGame",
+        "Type": "Pc",
         "Genre": "Action",
         "MaxPlayers": 4
     }
