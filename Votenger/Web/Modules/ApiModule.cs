@@ -1,8 +1,9 @@
 ﻿namespace Votenger.Web.Modules
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using DTO;
+    using Domain.Session;
     using Infrastructure;
     using Infrastructure.Authorization;
     using Infrastructure.Repositories;

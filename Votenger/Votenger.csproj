@@ -413,6 +413,9 @@
     <Content Include="Web\Content\js\linq.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\Content\js\votingSessionController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\Content\js\votingSessionService.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
