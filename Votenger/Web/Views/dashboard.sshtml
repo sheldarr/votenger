@@ -6,7 +6,7 @@
             <h2>Dashboard</h2>
         </div>
         <h3>Sessions list</h3>
-        <table id="dashboard-table" class="table">
+        <table datatable="ng" id="dashboard-table" class="table">
             <thead>
                 <tr>
                     <th>#</th>
@@ -25,13 +25,13 @@
                     <td>{{ votingSession.startDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>{{ votingSession.endDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>
-                      
+
                         <button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-random"></span> Draft!</button>
-                   
+
                         <button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-pencil"></span> Vote!</button>
-                       
+
                         <button type="button" class="btn btn-default btn-success"><span class="glyphicon glyphicon-eye-open"></span> Results!</button>
-                    
+
                     </td>
                 </tr>
             </tbody>
@@ -40,27 +40,6 @@
 @EndSection
 
 @Section['SpecificScripts']
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#dashboard-table').dataTable({
-            "sPaginationType": "bs_normal"
-        });
-        $('#dashboard-table').each(function () {
-            var datatable = $(this);
-            // SEARCH - Add the placeholder for Search and Turn this into in-line form control
-            var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
-            search_input.attr('placeholder', 'Search');
-            search_input.addClass('form-control input-sm');
-            // LENGTH - Inline-Form control
-            var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
-            length_sel.addClass('form-control input-sm');
-            datatable.bind('page', function (e) {
-                window.console && console.log('pagination event:', e) //this event must be fired whenever you paginate
-            });
-        });
-    });
-</script>
-
 <script src="@Path['~/js/votingSessionService.js']" type="text/javascript"></script>
 <script src="@Path['~/js/dashboardController.js']" type="text/javascript"></script>
 @EndSection

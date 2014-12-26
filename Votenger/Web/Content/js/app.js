@@ -1,3 +1,3 @@
 ﻿'use strict';
 
-var app = angular.module('votengerApp', []);
+var app = angular.module('votengerApp', ['datatables']);

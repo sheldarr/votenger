@@ -373,6 +373,12 @@
     <Content Include="bower-dependencies\jquery\src\var\support.js" />
     <Content Include="bower-dependencies\jquery\src\var\toString.js" />
     <Content Include="bower-dependencies\jquery\src\wrap.js" />
+    <Content Include="Web\Content\css\datatables.bootstrap.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\js\angular-datatables.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\Content\js\angular.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -397,9 +403,6 @@
     <Content Include="Web\Content\css\bootstrap.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web\Content\css\datatables.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Web\Content\css\site.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -422,9 +425,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\js\bootstrap.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Web\Content\js\datatables.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\js\jquery.dataTables.min.js">
