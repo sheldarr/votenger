@@ -3,10 +3,14 @@
 
     app.controller('dashboardController', dashboardController);
 
-    dashboardController.$inject = ['votingSessionService'];
+    dashboardController.$inject = ['votingSessionService', 'DTOptionsBuilder'];
 
-    function dashboardController(votingSessionService) {
+    function dashboardController(votingSessionService, DTOptionsBuilder) {
         var vm = this;
+
+        vm.dtOptions = DTOptionsBuilder
+            .newOptions()
+            .withBootstrap();
 
         activate();
 

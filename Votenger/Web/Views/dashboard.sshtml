@@ -6,7 +6,7 @@
             <h2>Dashboard</h2>
         </div>
         <h3>Sessions list</h3>
-        <table datatable="ng" id="dashboard-table" class="table">
+        <table datatable="ng" dt-options="vm.dtOptions" id="dashboard-table" class="table table-hover">
             <thead>
                 <tr>
                     <th>#</th>
@@ -25,12 +25,9 @@
                     <td>{{ votingSession.startDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>{{ votingSession.endDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>
-
-                        <button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-random"></span> Draft!</button>
-
-                        <button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-pencil"></span> Vote!</button>
-
-                        <button type="button" class="btn btn-default btn-success"><span class="glyphicon glyphicon-eye-open"></span> Results!</button>
+                        <button ng-if="votingSession.status == 'Draft'" type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-random"></span> Draft!</button>
+                        <button ng-if="votingSession.status == 'Vote'" type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-pencil"></span> Vote!</button>
+                        <button ng-if="votingSession.status == 'Completed'" type="button" class="btn btn-default btn-success"><span class="glyphicon glyphicon-eye-open"></span> Results!</button>
 
                     </td>
                 </tr>
