@@ -1,21 +1,24 @@
 ﻿namespace Votenger.Web.Modules
 {
-    using System.Linq;
+    using DTO;
     using Infrastructure;
     using Infrastructure.Authorization;
     using Infrastructure.Repositories;
     using Models;
     using Nancy;
+    using Nancy.ModelBinding;
 
     public class VotingModule : NancyModule
     {
         private readonly IAuthorization _authorization;
         private readonly IGameRepository _gameRepository;
+        private readonly IVotingSessionRepository _votingSessionRepository;
 
-        public VotingModule(IAuthorization authorization, IGameRepository gameRepository)
+        public VotingModule(IAuthorization authorization, IGameRepository gameRepository, IVotingSessionRepository votingSessionRepository)
         {
             _authorization = authorization;
             _gameRepository = gameRepository;
+            _votingSessionRepository = votingSessionRepository;
 
             Before += ctx =>
             {                
@@ -34,6 +37,37 @@
                 };
 
                 return View["draft", draftModel];
+            };
+
+            Get["/draft/complete/{id}"] = parameters =>
+            {
+                var votingSessionId = parameters.id;
+
+                _votingSessionRepository.CompleteDraft(votingSessionId);
+
+                return Response.AsJson("");
+            };
+
+            Get["/vote/complete/{id}"] = parameters =>
+            {
+                var votingSessionId = parameters.id;
+
+                _votingSessionRepository.CompleteVote(votingSessionId);
+
+                return Response.AsJson("");
+            };
+
+            Post["/draft/save"] = parameters =>
+            {
+                var draftResultDto = this.Bind<DraftResultDto>();
+                var userId = _authorization.GetAuthorizedUserId(Request);
+
+                var draftResult = DomainObjectsFactory.CreateDraftResult(draftResultDto);
+                draftResult.UserId = userId;
+
+                _votingSessionRepository.AddDraftResult(draftResult);                
+
+                return Response.AsJson("");
             };
         }
     }

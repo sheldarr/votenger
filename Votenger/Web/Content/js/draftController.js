@@ -3,9 +3,9 @@
 
     app.controller('draftController', draftController);
 
-    draftController.$inject = ['gameService', 'DTOptionsBuilder'];
+    draftController.$inject = ['gameService', 'draftService', 'DTOptionsBuilder'];
 
-    function draftController(gameService, DTOptionsBuilder) {
+    function draftController(gameService, draftService, DTOptionsBuilder) {
         var vm = this;
 
         vm.gamesLeft = 10;
@@ -35,12 +35,16 @@
         function saveDraft() {
             var draft = {
                 votingSessionId: vm.votingSessionId,
-                results: []
+                selectedGames: []
             };
 
             var selectedGames = Enumerable.from(vm.games).where(function (game) { return game.selected; }).toArray();
             selectedGames.forEach(function (game) {
-                draft.results.push(game.id);
+                draft.selectedGames.push(game.id);
+            });
+
+            draftService.saveDraft(draft).success(function() {
+                window.location = "/dashboard";
             });
         }
 

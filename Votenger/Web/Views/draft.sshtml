@@ -43,5 +43,6 @@
 @Section['SpecificScripts']
 <script src="@Path['~/js/gameService.js']" type="text/javascript"></script>
 <script src="@Path['~/js/draftController.js']" type="text/javascript"></script>
+<script src="@Path['~/js/draftService.js']" type="text/javascript"></script>
 @EndSection
 

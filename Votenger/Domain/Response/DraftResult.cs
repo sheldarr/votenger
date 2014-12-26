@@ -1,12 +1,12 @@
 ﻿namespace Votenger.Domain.Response
 {
     using System.Collections.Generic;
-    using Session;
 
-    public class DraftResponse
+    public class DraftResult
     {
         public int Id { get; set; }
-        public VotingSession VotingSession { get; set; }
+        public int UserId { get; set; }
+        public int VotingSessionId { get; set; }
         public ICollection<int> SelectedGames { get; set; } 
     }
 }

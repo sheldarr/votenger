@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Domain.Response;
     using Domain.Session;
     using Raven.Client;
 
@@ -39,12 +40,32 @@
             }
         }
 
-        public void UpdateVotingSession(VotingSession votingSession)
+        public void AddDraftResult(DraftResult draftResult)
         {
             using (var documentSession = _documentStore.OpenSession())
             {
-                var sessionToUpdate = documentSession.Load<VotingSession>(votingSession.Id);
-                // ... //
+                var votingSession = documentSession.Load<VotingSession>(draftResult.VotingSessionId);
+                votingSession.DraftResults.Add(draftResult);
+                documentSession.SaveChanges();
+            }
+        }
+
+        public void CompleteDraft(int id)
+        {
+            using (var documentSession = _documentStore.OpenSession())
+            {
+                var votingSession = documentSession.Load<VotingSession>(id);
+                votingSession.Status = VotingSessionStatus.Vote;
+                documentSession.SaveChanges();
+            }
+        }
+
+        public void CompleteVote(int id)
+        {
+            using (var documentSession = _documentStore.OpenSession())
+            {
+                var votingSession = documentSession.Load<VotingSession>(id);
+                votingSession.Status = VotingSessionStatus.Completed;
                 documentSession.SaveChanges();
             }
         }

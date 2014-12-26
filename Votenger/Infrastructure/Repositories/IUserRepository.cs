@@ -7,5 +7,6 @@
         string CreateUserIfNotExists(string nickname);
         string GetUserNickname(string hash);
         User GetUser(string hash);
+        User GetUser(int id);
     }
 }

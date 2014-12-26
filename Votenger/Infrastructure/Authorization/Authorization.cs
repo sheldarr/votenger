@@ -32,5 +32,11 @@
             var userHash = DecodeUserHash(request);
             return _userRepository.GetUser(userHash);
         }
+
+        public int GetAuthorizedUserId(Request request)
+        {
+            var userHash = DecodeUserHash(request);
+            return _userRepository.GetUser(userHash).Id;
+        }
     }
 }

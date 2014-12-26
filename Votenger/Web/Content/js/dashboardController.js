@@ -15,11 +15,25 @@
             .withBootstrap();
 
         vm.draft = draft;
+        vm.completeDraft = completeDraft;
+        vm.completeVote = completeVote;
 
         activate();
 
         function draft(id) {
             window.location = '/draft/' + id;
+        }
+
+        function completeDraft(id) {
+            votingSessionService.completeDraft(id).success(function() {
+                activate();
+            });
+        }
+
+        function completeVote(id) {
+            votingSessionService.completeVote(id).success(function () {
+                activate();
+            });
         }
 
         function activate() {

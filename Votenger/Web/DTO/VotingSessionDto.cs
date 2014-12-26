@@ -6,11 +6,13 @@
     public class VotingSessionDto
     {
         public int Id { get; set; }
+        public string Author { get; set; }
         public string Type { get; set; }
         public string Status { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public bool IsAuthor { get; set; }
         public bool DraftAlreadyDoneByUser { get; set; }
         public bool VoteAlreadyDoneByUser { get; set; }
 

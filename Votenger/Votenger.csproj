@@ -70,7 +70,7 @@
     <Compile Include="Domain\Game\GameGenre.cs" />
     <Compile Include="Domain\Game\GameType.cs" />
     <Compile Include="Domain\Response\VoteResponse.cs" />
-    <Compile Include="Domain\Response\DraftResponse.cs" />
+    <Compile Include="Domain\Response\DraftResult.cs" />
     <Compile Include="Domain\Session\VotingSession.cs" />
     <Compile Include="Domain\Session\VotingSessionStatus.cs" />
     <Compile Include="Domain\Session\VotingSessionType.cs" />
@@ -78,6 +78,7 @@
     <Compile Include="Infrastructure\Authorization\Authorization.cs" />
     <Compile Include="Infrastructure\Authorization\IAuthorization.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Infrastructure\DomainObjectsFactory.cs" />
     <Compile Include="Infrastructure\DtoFactory.cs" />
     <Compile Include="Infrastructure\RavenInitalizer.cs" />
     <Compile Include="Infrastructure\IRavenInitalizer.cs" />
@@ -92,10 +93,12 @@
     <Compile Include="Web\DTO\VotingSessionDto.cs" />
     <Compile Include="Web\Models\DashboardModel.cs" />
     <Compile Include="Web\Models\DraftModel.cs" />
+    <Compile Include="Web\DTO\DraftResultDto.cs" />
     <Compile Include="Web\Models\HomeModel.cs" />
     <Compile Include="Web\Models\SignInModel.cs" />
     <Compile Include="Web\Modules\ApiModule.cs" />
     <Compile Include="Web\Modules\DashboardModule.cs" />
+    <Compile Include="Web\Modules\SessionModule.cs" />
     <Compile Include="Web\Modules\HomeModule.cs" />
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\IndexModel.cs" />
@@ -229,6 +232,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Web\Views\dashboard.sshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Web\Views\session.sshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Web\Views\home.sshtml">
@@ -390,6 +396,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\js\draftController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\js\draftService.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\js\gameService.js">

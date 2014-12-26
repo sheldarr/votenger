@@ -13,12 +13,14 @@
             return new VotingSessionDto
             {
                 Id = votingSession.Id,
+                Author = votingSession.Author.Nickname,
                 Type = votingSession.Type.ToString(),
                 Status = votingSession.Status.ToString(),
                 StartDate = votingSession.StartDate,
                 EndDate = votingSession.EndDate,
-                DraftAlreadyDoneByUser = user.DraftResponses.Any(dr => dr.Id == votingSession.Id),
-                VoteAlreadyDoneByUser = user.VoteResponses.Any(vr => vr.Id == votingSession.Id)
+                IsAuthor = votingSession.Author.Id == user.Id,
+                DraftAlreadyDoneByUser = votingSession.DraftResults.Any(dr => dr.UserId == user.Id),
+                VoteAlreadyDoneByUser = false
             };
         }
 

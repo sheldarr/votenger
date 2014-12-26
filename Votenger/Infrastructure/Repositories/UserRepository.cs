@@ -1,10 +1,8 @@
 ﻿namespace Votenger.Infrastructure.Repositories
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Domain;
-    using Domain.Response;
     using Raven.Client;
 
     public class UserRepository : IUserRepository
@@ -42,6 +40,15 @@
             }
         }
 
+        public User GetUser(int id)
+        {
+            using (var documentSession = _documentStore.OpenSession())
+            {
+                var user = documentSession.Load<User>(id);
+                return user;
+            }
+        }
+
         public string CreateUserIfNotExists(string nickname)
         {
             using (var documentSession = _documentStore.OpenSession())
@@ -57,8 +64,6 @@
                 {
                     Hash = Guid.NewGuid().ToString(),
                     Nickname = nickname,
-                    DraftResponses = new List<DraftResponse>(),
-                    VoteResponses = new List<VoteResponse>()
                 };
 
                 documentSession.Store(newUser);

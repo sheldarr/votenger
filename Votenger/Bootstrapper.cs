@@ -41,10 +41,10 @@
             embeddableDocumentStore.Initialize();
 
             var ravenInitializer = new RavenInitalizer(embeddableDocumentStore);
+            ravenInitializer.SeedWithUsers();
             ravenInitializer.SeedWithVotingSessions();
             ravenInitializer.SeedWithGames();
-            ravenInitializer.SeedWithUsers();
-
+            
             container.Register<IDocumentStore>(embeddableDocumentStore);
         }
     }

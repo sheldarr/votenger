@@ -23,28 +23,35 @@
         {
             using (var documentSession = _documentStore.OpenSession())
             {
+                var rootUser = documentSession.Load<User>(1);
                 var votingSessions = new List<VotingSession>
                 {
                     new VotingSession
                     {
+                        Author = rootUser,
                         Status = VotingSessionStatus.Draft,
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
-                        EndDate = DateTime.Now.AddDays(2)
+                        EndDate = DateTime.Now.AddDays(2),
+                        DraftResults = new List<DraftResult>()
                     },
                     new VotingSession
                     {
+                        Author = rootUser,
                         Status = VotingSessionStatus.Vote,
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
-                        EndDate = DateTime.Now.AddDays(1)
+                        EndDate = DateTime.Now.AddDays(1),
+                        DraftResults = new List<DraftResult>()
                     },
                      new VotingSession
                     {
+                        Author = rootUser,
                         Status = VotingSessionStatus.Completed,
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
-                        EndDate = DateTime.Now.AddDays(2)
+                        EndDate = DateTime.Now.AddDays(2),
+                        DraftResults = new List<DraftResult>()
                     },
                 };
 
@@ -84,10 +91,9 @@
             {
                 var rootUser = new User
                 {
+                    Id = 1,
                     Hash = "uberboss",
                     Nickname = "Sheldar",
-                    DraftResponses = new List<DraftResponse>(),
-                    VoteResponses = new List<VoteResponse>()
                 };
 
                 documentSession.Store(rootUser);
