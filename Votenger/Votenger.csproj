@@ -92,10 +92,11 @@
     <Compile Include="Web\DTO\VotingSessionDto.cs" />
     <Compile Include="Web\Models\DashboardModel.cs" />
     <Compile Include="Web\Models\DraftModel.cs" />
-    <Compile Include="Web\Models\IndexModel.cs" />
+    <Compile Include="Web\Models\HomeModel.cs" />
     <Compile Include="Web\Models\SignInModel.cs" />
+    <Compile Include="Web\Modules\ApiModule.cs" />
     <Compile Include="Web\Modules\DashboardModule.cs" />
-    <Compile Include="Web\Modules\IndexModule.cs" />
+    <Compile Include="Web\Modules\HomeModule.cs" />
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Models\SignInModel.cs" />
@@ -230,7 +231,7 @@
     <None Include="Web\Views\dashboard.sshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Web\Views\index.sshtml">
+    <None Include="Web\Views\home.sshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Web\Views\master.sshtml">
@@ -388,10 +389,19 @@
     <Content Include="Web\Content\js\dashboardController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\Content\js\draftController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\js\gameService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\Content\js\homeController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\js\homeService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\js\linq.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\js\votingSessionService.js">

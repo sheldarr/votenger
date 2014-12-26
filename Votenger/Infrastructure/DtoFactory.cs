@@ -28,8 +28,8 @@
             {
                 Id = game.Id,
                 Name = game.Name,
-                Type = game.Type,
-                Genre = game.Genre,
+                Type = game.Type.ToString(),
+                Genre = game.Genre.ToString(),
                 MaxPlayers = game.MaxPlayers,
             };
         }

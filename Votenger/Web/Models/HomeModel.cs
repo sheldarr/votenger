@@ -1,6 +1,6 @@
 ﻿namespace Votenger.Web.Models
 {
-    public class IndexModel
+    public class HomeModel
     {
         public bool IsAuthorized { get; set; }
         public string Nickname { get; set; }        

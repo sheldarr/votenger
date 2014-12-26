@@ -1,11 +1,13 @@
 ﻿@Master['master.sshtml']
 
 @Section['Content']
-<div class="text-center">
-    <h2>Draft</h2>
-</div>
-<h3>Games list</h3>
-    <table id="draft-table" class="table text-center">
+<div ng-controller="draftController as vm" ng-init="vm.setVotingSession(@Model.VotingSessionId)">
+    <div class="text-center">
+        <h2>Draft</h2>
+    </div>
+    <h4 class="pull-right">Games left: {{ vm.gamesLeft }}</h4>
+    <h3>Games list</h3>
+    <table datatable="ng" dt-options="vm.dtOptions" id="draft-table" class="table table-hover">
         <thead>
             <tr>
                 <th>#</th>
@@ -17,46 +19,29 @@
             </tr>
         </thead>
         <tbody>
-            @Each.Games
-            <tr>
-                <td>@Current.Id</td>
-                <td>@Current.Name</td>
-                <td>@Current.Type</td>
-                <td>@Current.Genre</td>
-                <td>@Current.MaxPlayers</td>
+            <tr ng-repeat="game in vm.games" ng-class="{success: game.selected}">
+                <td>{{ game.id }}</td>
+                <td>{{ game.name }}</td>
+                <td>{{ game.type }}</td>
+                <td>{{ game.genre }}</td>
+                <td>{{ game.maxPlayers }}</td>
                 <td>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="@Current.Id">
+                            <input type="checkbox" name="{{ game.type }}" ng-model="game.selected" ng-change="vm.gameSelected()" ng-disabled="!game.selected && vm.draftCompleted">
                         </label>
                     </div>
                 </td>
             </tr>
-            @EndEach
         </tbody>
     </table>
+    <h4>Games left: {{ vm.gamesLeft }}</h4>
+    <button class="btn btn-default btn-success pull-right" ng-click="vm.saveDraft()" ng-disabled="!vm.draftCompleted">Accept draft!</button>
+</div>
 @EndSection
 
 @Section['SpecificScripts']
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#draft-table').dataTable({
-            "sPaginationType": "bs_normal"
-        });
-        $('#draft-table').each(function () {
-            var datatable = $(this);
-            // SEARCH - Add the placeholder for Search and Turn this into in-line form control
-            var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
-            search_input.attr('placeholder', 'Search');
-            search_input.addClass('form-control input-sm');
-            // LENGTH - Inline-Form control
-            var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
-            length_sel.addClass('form-control input-sm');
-            datatable.bind('page', function (e) {
-                window.console && console.log('pagination event:', e) //this event must be fired whenever you paginate
-            });
-        });
-    });
-</script>
+<script src="@Path['~/js/gameService.js']" type="text/javascript"></script>
+<script src="@Path['~/js/draftController.js']" type="text/javascript"></script>
 @EndSection
 

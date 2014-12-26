@@ -26,13 +26,11 @@
             
             Get["/draft/{id}"] = parameters =>
             {
-                var param = parameters.id;
-                var games = _gameRepository.GetAllGames();
-                var gamesDto = games.Select(DtoFactory.CreateGameDto).ToList();
+                var votingSessionId = parameters.id;
 
                 var draftModel = new DraftModel
                 {
-                    Games = gamesDto
+                    VotingSessionId = votingSessionId
                 };
 
                 return View["draft", draftModel];

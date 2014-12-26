@@ -1,42 +1,41 @@
 ﻿namespace Votenger.Web.Modules
 {
+    using System.Collections.Generic;
     using System.Linq;
+    using DTO;
     using Infrastructure;
     using Infrastructure.Authorization;
     using Infrastructure.Repositories;
-    using Models;
     using Nancy;
 
-    public class DashboardModule : NancyModule
+    public class ApiModule : NancyModule
     {
         private readonly IAuthorization _authorization;
         private readonly IVotingSessionRepository _votingSessionRepository;
+        private readonly IGameRepository _gameRepository;
 
-        public DashboardModule(IAuthorization authorization, IVotingSessionRepository votingSessionRepository)
+        public ApiModule(IAuthorization authorization, IVotingSessionRepository votingSessionRepository, IGameRepository gameRepository)
         {
             _authorization = authorization;
             _votingSessionRepository = votingSessionRepository;
+            _gameRepository = gameRepository;
 
-            Before += ctx =>
-            {                
-                var isAuthorized = _authorization.CheckIfAuthorized(Request);
-
-                return !isAuthorized ? Response.AsRedirect("/") : null;
-            };
-            
-            Get["/dashboard"] = parameters =>
+            Get["/api/votingSessions"] = parameters =>
             {
                 var authorizedUser = _authorization.GetAuthorizedUser(Request);
                 var sessions = _votingSessionRepository.GetAllVotingSessions();
 
                 var sessionsDto = sessions.Select(votingSession => DtoFactory.CreateVotingSessionDto(votingSession, authorizedUser)).ToList();
+                return Response.AsJson(sessionsDto);
+            };
 
-                var dashboardModel = new DashboardModel
-                {
-                    Sessions = sessionsDto
-                };
+            Get["/api/computerGames"] = parameters =>
+            {
+                var games = _gameRepository.GetAllGames();
 
-                return View["dashboard", dashboardModel];
+                var gamesDto = games.Select(DtoFactory.CreateGameDto).ToList();
+
+                return Response.AsJson(gamesDto);
             };
         }
     }

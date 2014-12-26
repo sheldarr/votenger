@@ -1,19 +1,18 @@
-﻿namespace Votenger
+﻿namespace Votenger.Web.Modules
 {
     using Infrastructure.Authorization;
     using Infrastructure.Repositories;
     using Nancy;
     using Nancy.Cookies;
     using Nancy.ModelBinding;
-    using Web.Models;
-    using HttpStatusCode = System.Net.HttpStatusCode;
+    using Models;
 
-    public class IndexModule : NancyModule
+    public class HomeModule : NancyModule
     {
         private readonly IAuthorization _authorization;
         private readonly IUserRepository _userRepository;
 
-        public IndexModule(IAuthorization authorization, IUserRepository userRepository)
+        public HomeModule(IAuthorization authorization, IUserRepository userRepository)
         {
             _authorization = authorization;
             _userRepository = userRepository;
@@ -24,7 +23,7 @@
                 var userId = _authorization.DecodeUserHash(Request);
                 var nickname = _userRepository.GetUserNickname(userId);
 
-                var indexModel = new IndexModel
+                var indexModel = new HomeModel
                 {
                     IsAuthorized = isAuthorized,
                     Nickname = nickname,
