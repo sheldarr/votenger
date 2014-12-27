@@ -15,6 +15,7 @@
             .withBootstrap();
 
         vm.draft = draft;
+        vm.createSession = createSession;
         vm.completeDraft = completeDraft;
         vm.completeVote = completeVote;
 
@@ -22,6 +23,10 @@
 
         function draft(id) {
             window.location = '/draft/' + id;
+        }
+
+        function createSession() {
+            window.location = '/session/';
         }
 
         function completeDraft(id) {

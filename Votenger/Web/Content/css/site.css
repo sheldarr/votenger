@@ -11,3 +11,10 @@
 .btn-sign-in {
     margin-top: 10px;
 }
+
+.input-voting-session-type {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    width: 200px;    
+}

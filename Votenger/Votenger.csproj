@@ -228,6 +228,7 @@
     <None Include="Web\Content\fonts\glyphicons-halflings-regular.woff">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="Web\DTO\CreateSessionDto.cs" />
     <None Include="Web\Views\draft.sshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

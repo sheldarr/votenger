@@ -1,4 +1,4 @@
-﻿(function() {
+﻿
     'use strict';
 
     var app = angular.module('votengerApp', ['datatables']);
@@ -9,9 +9,12 @@
         Completed: 'Completed'
     });
 
-    app.constant('VotingSessionType', {
-        Computer: 0,
-        Board: 1,
-    });
-
-})();
+    app.constant('VotingSessionTypes', [
+    {
+        label: 'Computer',
+        value: 0
+    },
+    {
+        label: 'Board',
+        value: 1
+    }]);

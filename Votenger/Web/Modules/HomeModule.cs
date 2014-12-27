@@ -29,7 +29,7 @@
                     Nickname = nickname,
                 };
 
-                return View["index", indexModel];
+                return View["home", indexModel];
             };
 
             Post["/signIn"] = parameters =>

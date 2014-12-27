@@ -1,6 +1,10 @@
 ﻿namespace Votenger.Infrastructure
 {
+    using System;
+    using System.Collections.Generic;
+    using Domain;
     using Domain.Response;
+    using Domain.Session;
     using Web.DTO;
 
     public static class DomainObjectsFactory
@@ -14,6 +18,21 @@
             };
 
             return draftResult;
+        }
+
+        public static VotingSession CreateVotingSession(CreateSessionDto createSessionDto, User user)
+        {
+            var votingSession = new VotingSession()
+            {
+                Author = user,
+                Type = createSessionDto.Type,
+                Status = VotingSessionStatus.Draft,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
+                DraftResults = new List<DraftResult>()
+            };
+
+            return votingSession;
         }
     }
 }
