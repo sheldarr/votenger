@@ -1,9 +1,8 @@
 ﻿namespace Votenger.Web.Modules
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Session;
+    using DTO;
     using Infrastructure;
     using Infrastructure.Authorization;
     using Infrastructure.Repositories;
@@ -35,6 +34,23 @@
                 var games = _gameRepository.GetAllGames();
 
                 var gamesDto = games.Select(DtoFactory.CreateGameDto).ToList();
+
+                return Response.AsJson(gamesDto);
+            };
+
+            Get["/api/gamesForVote/{id}"] = parameters =>
+            {
+                var votingSessionId = parameters.id;
+                var votingSession = _votingSessionRepository.GetVotingSessionById(votingSessionId);
+                
+                var games = _gameRepository.GetGamesForVote(votingSession.DraftResults);
+
+                var gamesDto = new List<GameDto>();
+
+                foreach (var game in games)
+                {
+                    gamesDto.Add(DtoFactory.CreateGameDto(game));
+                }
 
                 return Response.AsJson(gamesDto);
             };

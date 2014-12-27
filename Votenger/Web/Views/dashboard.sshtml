@@ -29,7 +29,7 @@
                     <td>{{ votingSession.endDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>
                         <button ng-if="votingSession.status == vm.VotingSessionStatus.Draft && !votingSession.draftAlreadyDoneByUser" type="button" class="btn btn-default btn-primary" ng-click="vm.draft(votingSession.id)"><span class="glyphicon glyphicon-random"></span> Draft</button>
-                        <button ng-if="votingSession.status == vm.VotingSessionStatus.Vote && !votingSession.voteAlreadyDoneByUser" type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-pencil"></span> Vote</button>
+                        <button ng-if="votingSession.status == vm.VotingSessionStatus.Vote && !votingSession.voteAlreadyDoneByUser" type="button" class="btn btn-default btn-primary" ng-click="vm.vote(votingSession.id)"><span class="glyphicon glyphicon-pencil"></span> Vote</button>
                         <button ng-if="votingSession.status == vm.VotingSessionStatus.Completed" type="button" class="btn btn-default btn-warning"><span class="glyphicon glyphicon-eye-open"></span> Results</button>
                         <button ng-if="votingSession.isAuthor && votingSession.status == vm.VotingSessionStatus.Draft" type="button" class="btn btn-default btn-success" ng-click="vm.completeDraft(votingSession.id)"><span class="glyphicon glyphicon-ok"></span> Complete Draft</button>
                         <button ng-if="votingSession.isAuthor && votingSession.status == vm.VotingSessionStatus.Vote" type="button" class="btn btn-default btn-success" ng-click="vm.completeVote(votingSession.id)"><span class="glyphicon glyphicon-ok"></span> Complete Vote</button>

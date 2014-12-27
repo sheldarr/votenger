@@ -1,0 +1,58 @@
+﻿@Master['master.sshtml']
+
+@Section['Content']
+<div ng-controller="voteController as vm" ng-init="vm.setVotingSession(@Model.VotingSessionId)">
+    <div class="text-center">
+        <h2>Vote</h2>
+    </div>
+    <h3>Games list</h3>
+    <table datatable="ng" dt-options="vm.dtOptions" id="draft-table" class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Genre</th>
+                <th>Max Players</th>
+                <th>Must Play</th>
+                <th>Must Not Play</th>
+                <th>3 pts</th>
+                <th>2 pts</th>
+                <th>1 pt</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="game in vm.games" ng-class="{success: game.selected}">
+                <td>{{ game.id }}</td>
+                <td>{{ game.name }}</td>
+                <td>{{ game.type }}</td>
+                <td>{{ game.genre }}</td>
+                <td>{{ game.maxPlayers }}</td>
+                <td>
+                    <input type="radio" name="{{ game.name }}" value="MustPlay" ng-model="game.mustPlay" ng-change="vm.gameSelected()" ng-disabled="!game.selected && vm.voteCompleted">
+                </td>
+                <td>
+                    <input type="radio" name="{{ game.name }}" value="MustNotPlay" ng-model="game.mustNotPlay" ng-change="vm.gameSelected()" ng-disabled="!game.selected && vm.voteCompleted">
+                </td>
+                <td>
+                    <input type="radio" name="{{ game.name }}" value="3Pts" ng-model="game.threePoints" ng-change="vm.gameSelected()" ng-disabled="!game.selected && vm.voteCompleted">
+                </td>
+                <td>
+                    <input type="radio" name="{{ game.name }}" value="2Pts" ng-model="game.twoPoints" ng-change="vm.gameSelected()" ng-disabled="!game.selected && vm.voteCompleted">
+                </td>
+                <td>
+                    <input type="radio" name="{{ game.name }}" value="1Pt" ng-model="game.onePoint" ng-change="vm.gameSelected()" ng-disabled="!game.selected && vm.draftCompleted">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-default btn-success pull-right" ng-click="vm.saveVote()" ng-disabled="!vm.draftCompleted">Accept vote!</button>
+</div>
+@EndSection
+
+@Section['SpecificScripts']
+<script src="@Path['~/js/gameService.js']" type="text/javascript"></script>
+<script src="@Path['~/js/voteController.js']" type="text/javascript"></script>
+<script src="@Path['~/js/voteService.js']" type="text/javascript"></script>
+@EndSection
+

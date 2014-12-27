@@ -26,11 +26,7 @@
                 <td>{{ game.genre }}</td>
                 <td>{{ game.maxPlayers }}</td>
                 <td>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="{{ game.type }}" ng-model="game.selected" ng-change="vm.gameSelected()" ng-disabled="!game.selected && vm.draftCompleted">
-                        </label>
-                    </div>
+                    <input type="checkbox" name="{{ game.type }}" ng-model="game.selected" ng-change="vm.gameSelected()" ng-disabled="!game.selected && vm.draftCompleted">
                 </td>
             </tr>
         </tbody>

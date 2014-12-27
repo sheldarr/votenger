@@ -39,6 +39,18 @@
                 return View["draft", draftModel];
             };
 
+            Get["/vote/{id}"] = parameters =>
+            {
+                var votingSessionId = parameters.id;
+
+                var voteModel = new VoteModel
+                {
+                    VotingSessionId = votingSessionId
+                };
+
+                return View["vote", voteModel];
+            };
+
             Get["/draft/complete/{id}"] = parameters =>
             {
                 var votingSessionId = parameters.id;
