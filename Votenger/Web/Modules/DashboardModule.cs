@@ -21,7 +21,7 @@
             {
                 var authorizedUser = _authorization.GetAuthorizedUser(Request);
 
-                return authorizedUser != null ? Response.AsRedirect("/") : null;
+                return authorizedUser == null ? Response.AsRedirect("/") : null;
             };
             
             Get["/dashboard"] = parameters =>

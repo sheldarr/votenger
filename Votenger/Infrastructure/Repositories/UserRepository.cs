@@ -64,11 +64,18 @@
 
                 var newUser = new User
                 {
-                    Hash = Guid.NewGuid().ToString(),
                     Nickname = nickname,
                 };
 
                 documentSession.Store(newUser);
+                documentSession.SaveChanges();
+
+                existingUser = documentSession.Query<User>()
+                    .Customize(x => x.WaitForNonStaleResults(TimeSpan.FromSeconds(10)))
+                    .FirstOrDefault(u => u.Nickname == nickname);
+
+                existingUser.Hash = (existingUser.Id * 1024).ToString();
+                documentSession.Store(existingUser);
                 documentSession.SaveChanges();
 
                 return newUser.Hash;
