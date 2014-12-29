@@ -18,10 +18,10 @@
             _votingSessionRepository = votingSessionRepository;
 
             Before += ctx =>
-            {                
-                var isAuthorized = _authorization.CheckIfAuthorized(Request);
+            {
+                var authorizedUser = _authorization.GetAuthorizedUser(Request);
 
-                return !isAuthorized ? Response.AsRedirect("/") : null;
+                return authorizedUser != null ? Response.AsRedirect("/") : null;
             };
             
             Get["/dashboard"] = parameters =>

@@ -35,7 +35,9 @@
         {
             using (var documentSession = _documentStore.OpenSession())
             {
-                var user = documentSession.Query<User>().FirstOrDefault(u => u.Hash == hash);
+                var user = documentSession.Query<User>()
+                    .Customize(x => x.WaitForNonStaleResults(TimeSpan.FromSeconds(10)))
+                    .FirstOrDefault(u => u.Hash == hash);
                 return user;
             }
         }

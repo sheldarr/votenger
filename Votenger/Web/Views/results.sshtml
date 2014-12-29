@@ -1,39 +1,24 @@
 ﻿@Master['master.sshtml']
 
 @Section['Content']
-    <div ng-controller="dashboardController as vm">
+    <div ng-controller="resultsController as vm" ng-init="vm.setVotingSession(@Model.VotingSessionId)">
         <div class="text-center">
-            <h2>Dashboard</h2>
+            <h2>Results</h2>
         </div>
-        <button type="button" class="btn btn-default btn-primary" ng-click="vm.createSession()"><span class="glyphicon glyphicon-pencil"></span> Create session</button>
         <h3>Sessions list</h3>
-        <table datatable="ng" dt-options="vm.dtOptions" id="dashboard-table" class="table table-hover">
+        <table datatable="ng" dt-options="vm.dtOptions" id="dashboard-table" class="table">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Author</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Actions</th>
+                    <th>Name</th>
+                    <th>Points</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="votingSession in vm.votingSessions">
-                    <td>{{ votingSession.id }}</td>
-                    <td>{{ votingSession.author }}</td>
-                    <td>{{ votingSession.type }}</td>
-                    <td>{{ votingSession.status }}</td>
-                    <td>{{ votingSession.startDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-                    <td>{{ votingSession.endDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-                    <td>
-                        <button ng-if="votingSession.status == vm.VotingSessionStatus.Draft && !votingSession.draftAlreadyDoneByUser" type="button" class="btn btn-default btn-primary" ng-click="vm.draft(votingSession.id)"><span class="glyphicon glyphicon-random"></span> Draft</button>
-                        <button ng-if="votingSession.status == vm.VotingSessionStatus.Vote && !votingSession.voteAlreadyDoneByUser" type="button" class="btn btn-default btn-primary" ng-click="vm.vote(votingSession.id)"><span class="glyphicon glyphicon-pencil"></span> Vote</button>
-                        <button ng-if="votingSession.status == vm.VotingSessionStatus.Completed" type="button" class="btn btn-default btn-warning"><span class="glyphicon glyphicon-eye-open"></span> Results</button>
-                        <button ng-if="votingSession.isAuthor && votingSession.status == vm.VotingSessionStatus.Draft" type="button" class="btn btn-default btn-success" ng-click="vm.completeDraft(votingSession.id)"><span class="glyphicon glyphicon-ok"></span> Complete Draft</button>
-                        <button ng-if="votingSession.isAuthor && votingSession.status == vm.VotingSessionStatus.Vote" type="button" class="btn btn-default btn-success" ng-click="vm.completeVote(votingSession.id)"><span class="glyphicon glyphicon-ok"></span> Complete Vote</button>
-                    </td>
+                <tr ng-repeat="result in vm.results" ng-class="{'first-place': result.firstPlace, 'second-place': result.secondPlace, 'third-place': result.thirdPlace}">
+                    <td>{{ result.id }}</td>
+                    <td>{{ result.name }}</td>
+                    <td>{{ result.points }}</td>
                 </tr>
             </tbody>
         </table>
@@ -42,6 +27,6 @@
 
 @Section['SpecificScripts']
 <script src="@Path['~/js/votingSessionService.js']" type="text/javascript"></script>
-<script src="@Path['~/js/dashboardController.js']" type="text/javascript"></script>
+<script src="@Path['~/js/resultsController.js']" type="text/javascript"></script>
 @EndSection
 

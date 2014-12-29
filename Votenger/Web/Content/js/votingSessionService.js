@@ -8,12 +8,17 @@
     function votingSessionService($http) {
         var service = this;
         service.getAllVotingSessions = getAllVotingSessions;
+        service.getVoteResults = getVoteResults;
         service.createVotingSession = createVotingSession;
         service.completeDraft = completeDraft;
         service.completeVote = completeVote;
 
         function getAllVotingSessions() {
             return $http.get('/api/votingSessions');
+        }
+
+        function getVoteResults(id) {
+            return $http.get('/api/voteResults/' + id);
         }
 
         function createVotingSession(votingSession) {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.IO;
     using Domain;
     using Domain.Game;
@@ -21,6 +22,24 @@
 
         public void SeedWithVotingSessions()
         {
+            ICollection<DraftResult> draftResults = new List<DraftResult>();
+            ICollection<VoteResult> voteResults = new List<VoteResult>();
+
+            draftResults.Add(new DraftResult
+            {
+                SelectedGames = new List<int> { 1, 2, 3, 4, 5, 6 }
+            });
+
+            voteResults.Add(new VoteResult
+            {
+                Id = 1,
+                MustPlayGame = 1,
+                MustNotPlayGame = 2,
+                ThreePointsGame = 3,
+                TwoPointsGame = 4,
+                OnePointGame = 5
+            });
+
             using (var documentSession = _documentStore.OpenSession())
             {
                 var rootUser = documentSession.Load<User>(1);
@@ -33,8 +52,8 @@
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
                         EndDate = DateTime.Now.AddDays(2),
-                        DraftResults = new List<DraftResult>(),
-                        VoteResults = new List<VoteResult>()
+                        DraftResults = draftResults,
+                        VoteResults = voteResults
                     },
                     new VotingSession
                     {
@@ -43,8 +62,8 @@
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
                         EndDate = DateTime.Now.AddDays(1),
-                        DraftResults = new List<DraftResult>(),
-                        VoteResults = new List<VoteResult>()
+                        DraftResults = draftResults,
+                        VoteResults = voteResults
                     },
                      new VotingSession
                     {
@@ -53,8 +72,8 @@
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
                         EndDate = DateTime.Now.AddDays(2),
-                        DraftResults = new List<DraftResult>(),
-                        VoteResults = new List<VoteResult>()
+                        DraftResults = draftResults,
+                        VoteResults = voteResults
                     },
                 };
 

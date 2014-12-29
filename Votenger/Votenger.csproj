@@ -90,7 +90,9 @@
     <Compile Include="Infrastructure\Repositories\VotingSessionRepository.cs" />
     <Compile Include="Infrastructure\SelfHostingRootPathProvider.cs" />
     <Compile Include="Web\DTO\GameDto.cs" />
+    <Compile Include="Web\DTO\GameSummaryDto.cs" />
     <Compile Include="Web\DTO\VoteResultDto.cs" />
+    <Compile Include="Web\DTO\VoteSummaryDto.cs" />
     <Compile Include="Web\DTO\VotingSessionDto.cs" />
     <Compile Include="Web\Models\DashboardModel.cs" />
     <Compile Include="Web\Models\ResultsModel.cs" />
@@ -232,7 +234,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Compile Include="Web\DTO\CreateSessionDto.cs" />
-    <None Include="Web\Views\results.sshtml" />
+    <None Include="Web\Views\results.sshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Web\Views\vote.sshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -398,6 +402,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\js\app.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\Content\js\resultsController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\js\voteService.js">

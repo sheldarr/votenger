@@ -5,9 +5,6 @@
 
     public interface IAuthorization
     {
-        bool CheckIfAuthorized(Request request);
-        string DecodeUserHash(Request request);
         User GetAuthorizedUser(Request request);
-        int GetAuthorizedUserId(Request request);
     }
 }

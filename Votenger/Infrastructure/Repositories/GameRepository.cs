@@ -32,15 +32,18 @@
             }
         }
 
+        public Game GetGameById(int id)
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                return session.Load<Game>(id);
+            }
+        }
+
         public ICollection<Game> GetGamesForVote(ICollection<DraftResult> draftResults)
         {
             using (var session = _documentStore.OpenSession())
             {
-                draftResults.Add(new DraftResult
-                {
-                    SelectedGames = new List<int> {1, 2, 3, 4, 5, 6}
-                });
-
                 var allGames = session.Query<Game>().ToList();
 
                 var gameIds = draftResults.SelectMany(x => x.SelectedGames)

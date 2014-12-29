@@ -8,6 +8,7 @@
     {
         void AddGame(Game game);
         ICollection<Game> GetAllGames();
+        Game GetGameById(int id);
         ICollection<Game> GetGamesForVote(ICollection<DraftResult> draftResults);
     }
 }

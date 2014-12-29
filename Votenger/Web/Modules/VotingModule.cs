@@ -11,20 +11,18 @@
     public class VotingModule : NancyModule
     {
         private readonly IAuthorization _authorization;
-        private readonly IGameRepository _gameRepository;
         private readonly IVotingSessionRepository _votingSessionRepository;
 
-        public VotingModule(IAuthorization authorization, IGameRepository gameRepository, IVotingSessionRepository votingSessionRepository)
+        public VotingModule(IAuthorization authorization, IVotingSessionRepository votingSessionRepository)
         {
             _authorization = authorization;
-            _gameRepository = gameRepository;
             _votingSessionRepository = votingSessionRepository;
 
             Before += ctx =>
             {                
-                var isAuthorized = _authorization.CheckIfAuthorized(Request);
+                var authorizedUser = _authorization.GetAuthorizedUser(Request);
 
-                return !isAuthorized ? Response.AsRedirect("/") : null;
+                return authorizedUser != null ? Response.AsRedirect("/") : null;
             };
 
             Get["/results/{id}"] = parameters =>
@@ -84,7 +82,7 @@
             Post["/draft/save"] = parameters =>
             {
                 var draftResultDto = this.Bind<DraftResultDto>();
-                var userId = _authorization.GetAuthorizedUserId(Request);
+                var userId = _authorization.GetAuthorizedUser(Request).Id;
 
                 var draftResult = DomainObjectsFactory.CreateDraftResult(draftResultDto);
                 draftResult.UserId = userId;
@@ -97,7 +95,7 @@
             Post["/vote/save"] = parameters =>
             {
                 var voteResultDto = this.Bind<VoteResultDto>();
-                var userId = _authorization.GetAuthorizedUserId(Request);
+                var userId = _authorization.GetAuthorizedUser(Request).Id;
 
                 var voteResult = DomainObjectsFactory.CreateVoteResult(voteResultDto);
                 voteResult.UserId = userId;

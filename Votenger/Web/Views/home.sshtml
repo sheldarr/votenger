@@ -1,7 +1,7 @@
 ﻿@Master['master.sshtml']
 
 @Section['Content']
-<div class="jumbotron text-center" ng-controller="homeController as vm">
+<div class="text-center" ng-controller="homeController as vm">
     <h1>Welcome to Votenger@If.IsAuthorized, @Model.Nickname @EndIf</h1>
     <p>Ultimate tool for lanparty voting!</p>
     @IfNot.IsAuthorized

@@ -3,40 +3,28 @@
     using System.Linq;
     using Domain;
     using Nancy;
-    using Repositories;
+    using Raven.Client;
 
     public class Authorization : IAuthorization
     {
         private const string AuthorizationCookie = "VoteAuth";
-        private readonly IUserRepository _userRepository;
+        private readonly IDocumentStore _documentStore;
 
-        public Authorization(IUserRepository userRepository)
+        public Authorization(IDocumentStore documentStore)
         {
-            _userRepository = userRepository;
+            _documentStore = documentStore;
         }
 
-        public bool CheckIfAuthorized(Request request)
-        {
-            var authorizationCookie = request.Cookies.FirstOrDefault(c => c.Key == AuthorizationCookie);
-            return (authorizationCookie.Key != null);
-        }
+        public User GetAuthorizedUser(Request request) 
+        { 
+            using (var documentSession = _documentStore.OpenSession())
+            {
+                var authorizationCookie = request.Cookies.FirstOrDefault(c => c.Key == AuthorizationCookie).Value;
+                var userId = int.Parse(authorizationCookie)/1024;
+                var user = documentSession.Load<User>(userId);
 
-        public string DecodeUserHash(Request request)
-        {
-            var authorizationCookie = request.Cookies.FirstOrDefault(c => c.Key == AuthorizationCookie);
-            return authorizationCookie.Value;
-        }
-
-        public User GetAuthorizedUser(Request request)
-        {
-            var userHash = DecodeUserHash(request);
-            return _userRepository.GetUser(userHash);
-        }
-
-        public int GetAuthorizedUserId(Request request)
-        {
-            var userHash = DecodeUserHash(request);
-            return _userRepository.GetUser(userHash).Id;
+                return user;
+            }
         }
     }
 }

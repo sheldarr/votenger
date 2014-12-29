@@ -1,5 +1,6 @@
 ﻿namespace Votenger.Web.Modules
 {
+    using System;
     using Infrastructure.Authorization;
     using Infrastructure.Repositories;
     using Nancy;
@@ -19,9 +20,9 @@
 
             Get["/"] = parameters =>
             {
-                var isAuthorized = _authorization.CheckIfAuthorized(Request);
-                var userId = _authorization.DecodeUserHash(Request);
-                var nickname = _userRepository.GetUserNickname(userId);
+                var authorizedUser = _authorization.GetAuthorizedUser(Request);
+                var isAuthorized = authorizedUser != null;
+                var nickname = isAuthorized ? authorizedUser.Nickname : String.Empty;
 
                 var indexModel = new HomeModel
                 {

@@ -10,20 +10,18 @@
     public class SessionModule : NancyModule
     {
         private readonly IAuthorization _authorization;
-        private readonly IUserRepository _userRepository;
         private readonly IVotingSessionRepository _votingSessionRepository;
 
-        public SessionModule(IAuthorization authorization, IUserRepository userRepository, IVotingSessionRepository votingSessionRepository)
+        public SessionModule(IAuthorization authorization, IVotingSessionRepository votingSessionRepository)
         {
             _authorization = authorization;
-            _userRepository = userRepository;
             _votingSessionRepository = votingSessionRepository;
 
             Before += ctx =>
             {
-                var isAuthorized = _authorization.CheckIfAuthorized(Request);
+                var authorizedUser = _authorization.GetAuthorizedUser(Request);
 
-                return !isAuthorized ? Response.AsRedirect("/") : null;
+                return authorizedUser != null ? Response.AsRedirect("/") : null;
             };
 
             Get["/session"] = parameters => View["session"];

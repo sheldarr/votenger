@@ -37,14 +37,15 @@
 
         public static VotingSession CreateVotingSession(CreateSessionDto createSessionDto, User user)
         {
-            var votingSession = new VotingSession()
+            var votingSession = new VotingSession
             {
                 Author = user,
                 Type = createSessionDto.Type,
                 Status = VotingSessionStatus.Draft,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,
-                DraftResults = new List<DraftResult>()
+                DraftResults = new List<DraftResult>(),
+                VoteResults = new List<VoteResult>()
             };
 
             return votingSession;

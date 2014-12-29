@@ -18,3 +18,15 @@
     margin-bottom: 20px;
     width: 200px;    
 }
+
+.first-place {
+    background-color: gold;
+}
+
+.second-place {
+    background-color: silver;
+}
+
+.third-place {
+    background-color: #cd7f32;
+}
