@@ -16,6 +16,7 @@
 
         vm.draft = draft;
         vm.vote = vote;
+        vm.showResults = showResults;
         vm.createSession = createSession;
         vm.completeDraft = completeDraft;
         vm.completeVote = completeVote;
@@ -28,6 +29,10 @@
 
         function vote(id) {
             window.location = '/vote/' + id;
+        }
+
+        function showResults(id) {
+            window.location = '/results/' + id;
         }
 
         function createSession() {

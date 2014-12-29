@@ -170,7 +170,212 @@
     {
         "Name": "Knights & Merchants",
         "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Kozacy",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Magicka",
+        "Type": "Pc",
         "Genre": "Action",
         "MaxPlayers": 4
+    },
+    {
+        "Name": "Majesty",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 4
+    },
+    {
+        "Name": "Majesty II",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 4
+    },
+    {
+        "Name": "Mario Kart: Double Dash",
+        "Type": "Pc",
+        "Genre": "Sport",
+        "MaxPlayers": 4
+    },
+    {
+        "Name": "Minecraft",
+        "Type": "Pc",
+        "Genre": "Action",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Mortal Kombat Komplete",
+        "Type": "Pc",
+        "Genre": "Sport",
+        "MaxPlayers": 4
+    },
+    {
+        "Name": "Neverwinter Nights",
+        "Type": "Pc",
+        "Genre": "Rpg",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Original War",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Quake III Arena",
+        "Type": "Pc",
+        "Genre": "Fps",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Rayman Legends",
+        "Type": "Pc",
+        "Genre": "Action",
+        "MaxPlayers": 4
+    },
+    {
+        "Name": "Serious Sam: First Encounter",
+        "Type": "Pc",
+        "Genre": "Fps",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Serious Sam: Second Encounter",
+        "Type": "Pc",
+        "Genre": "Fps",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Settlers 3",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Soldat",
+        "Type": "Pc",
+        "Genre": "Action",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Starcraft",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Tekken Tag Tournament 2",
+        "Type": "Pc",
+        "Genre": "Sport",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Twierdza",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Twierdza Krzyżowiec",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Tzar",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Unreal Tournament",
+        "Type": "Pc",
+        "Genre": "Fps",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Unreal Tournament 2004",
+        "Type": "Pc",
+        "Genre": "Fps",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Warcraft II",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Warcraft III",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Warhammer 40k",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Wolfenstein: Enemy Territory",
+        "Type": "Pc",
+        "Genre": "Fps",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Worms",
+        "Type": "Pc",
+        "Genre": "Action",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Command & Conquer Tiberian Dawn",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Command & Conquer Red Alert",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Dune 2",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Doom",
+        "Type": "Pc",
+        "Genre": "Fps",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Heretic",
+        "Type": "Pc",
+        "Genre": "Fps",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Hexen",
+        "Type": "Pc",
+        "Genre": "Fps",
+        "MaxPlayers": 0
+    },
+    {
+        "Name": "Dungeon Keeper",
+        "Type": "Pc",
+        "Genre": "Rts",
+        "MaxPlayers": 0
     }
+
 ]
