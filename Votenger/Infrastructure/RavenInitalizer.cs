@@ -33,7 +33,8 @@
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
                         EndDate = DateTime.Now.AddDays(2),
-                        DraftResults = new List<DraftResult>()
+                        DraftResults = new List<DraftResult>(),
+                        VoteResults = new List<VoteResult>()
                     },
                     new VotingSession
                     {
@@ -42,7 +43,8 @@
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
                         EndDate = DateTime.Now.AddDays(1),
-                        DraftResults = new List<DraftResult>()
+                        DraftResults = new List<DraftResult>(),
+                        VoteResults = new List<VoteResult>()
                     },
                      new VotingSession
                     {
@@ -51,7 +53,8 @@
                         Type = VotingSessionType.Computer,
                         StartDate = DateTime.Now,
                         EndDate = DateTime.Now.AddDays(2),
-                        DraftResults = new List<DraftResult>()
+                        DraftResults = new List<DraftResult>(),
+                        VoteResults = new List<VoteResult>()
                     },
                 };
 

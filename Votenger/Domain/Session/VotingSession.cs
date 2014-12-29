@@ -12,6 +12,7 @@
         public VotingSessionStatus Status { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public ICollection<DraftResult> DraftResults { get; set; } 
+        public ICollection<DraftResult> DraftResults { get; set; }
+        public ICollection<VoteResult> VoteResults { get; set; } 
     }
 }

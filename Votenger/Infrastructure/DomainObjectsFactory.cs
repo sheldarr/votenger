@@ -20,6 +20,21 @@
             return draftResult;
         }
 
+        public static VoteResult CreateVoteResult(VoteResultDto voteResultDto)
+        {
+            var voteResult = new VoteResult
+            {
+                VotingSessionId = voteResultDto.VotingSessionId,
+                MustPlayGame = voteResultDto.MustPlayGame,
+                MustNotPlayGame = voteResultDto.MustNotPlayGame,
+                ThreePointsGame = voteResultDto.ThreePointsGame,
+                TwoPointsGame = voteResultDto.TwoPointsGame,
+                OnePointGame = voteResultDto.OnePointGame
+            };
+
+            return voteResult;
+        }
+
         public static VotingSession CreateVotingSession(CreateSessionDto createSessionDto, User user)
         {
             var votingSession = new VotingSession()

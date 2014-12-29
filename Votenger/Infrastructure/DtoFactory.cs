@@ -20,7 +20,7 @@
                 EndDate = votingSession.EndDate,
                 IsAuthor = votingSession.Author.Id == user.Id,
                 DraftAlreadyDoneByUser = votingSession.DraftResults.Any(dr => dr.UserId == user.Id),
-                VoteAlreadyDoneByUser = false
+                VoteAlreadyDoneByUser = votingSession.VoteResults.Any(vr => vr.UserId == user.Id),
             };
         }
 

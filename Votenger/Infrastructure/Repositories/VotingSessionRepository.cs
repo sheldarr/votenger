@@ -50,6 +50,16 @@
             }
         }
 
+        public void AddVoteResult(VoteResult voteResult)
+        {
+            using (var documentSession = _documentStore.OpenSession())
+            {
+                var votingSession = documentSession.Load<VotingSession>(voteResult.VotingSessionId);
+                votingSession.VoteResults.Add(voteResult);
+                documentSession.SaveChanges();
+            }
+        }
+
         public void CompleteDraft(int id)
         {
             using (var documentSession = _documentStore.OpenSession())

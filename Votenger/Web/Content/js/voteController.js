@@ -10,51 +10,70 @@
 
         vm.voteCompleted = false;
 
+        vm.vote = {
+            mustPlayGame: 0,
+            mustNotPlayGame: 0,
+            threePointsGame: 0,
+            twoPointsGame: 0,
+            onePointGame: 0
+        };
+
         vm.dtOptions = DTOptionsBuilder
             .newOptions()
             .withBootstrap();
 
         vm.setVotingSession = setVotingSession;
-        //vm.gameSelected = gameSelected;
-        //vm.saveDraft = saveDraft;
+        vm.gameSelected = gameSelected;
+        vm.saveVote = saveVote;
         
         function setVotingSession(id) {
-            vm.votingSessionId = id;
+            vm.vote.votingSessionId = id;
             activate();
         }
 
-        //function gameSelected() {
-        //    var selectedGames = Enumerable.from(vm.games).where(function (game) { return game.selected; }).toArray();
-        //    vm.gamesLeft = 10 - selectedGames.length;
+        function gameSelected() {
+            var voteSelections = [];
 
-        //    vm.draftCompleted = selectedGames.length >= 10;
-        //}
+            voteSelections.push(vm.vote.mustPlayGame);
+            voteSelections.push(vm.vote.mustNotPlayGame);
+            voteSelections.push(vm.vote.threePointsGame);
+            voteSelections.push(vm.vote.twoPointsGame);
+            voteSelections.push(vm.vote.onePointGame);
 
-        //function saveDraft() {
-        //    var draft = {
-        //        votingSessionId: vm.votingSessionId,
-        //        selectedGames: []
-        //    };
+            var groups = Enumerable.from(voteSelections).groupBy(function(selection) { return selection; }).toArray();
+            var nonValidGroups = Enumerable.from(groups)
+                .where(function (group) { return group.getSource().length > 1; })
+                .select(function (group) { return group.key(); })
+                .toArray();
 
-        //    var selectedGames = Enumerable.from(vm.games).where(function (game) { return game.selected; }).toArray();
-        //    selectedGames.forEach(function (game) {
-        //        draft.selectedGames.push(game.id);
-        //    });
+            vm.games.forEach(function(game) {
+                game.isValid = true;
+                game.isSelected = false;
 
-        //    draftService.saveDraft(draft).success(function () {
-        //        window.location = "/dashboard";
-        //    });
-        //}
+                if (Enumerable.from(nonValidGroups).any(function (nonValidGroup) { return game.id == nonValidGroup; })) {
+                    game.isValid = false;
+                };
+                
+                if (Enumerable.from(voteSelections).any(function (voteSelection) { return game.id == voteSelection; })) {
+                    game.isSelected = true;
+                };
+            });
+
+            vm.voteCompleted = (nonValidGroups.length == 0) && !Enumerable.from(voteSelections).any(function(voteSelection) { return voteSelection == 0; });
+        }
+
+        function saveVote() {
+            voteService.saveVote(vm.vote).success(function () {
+                window.location = "/dashboard";
+            });
+        }
 
         function activate() {
-            gameService.getGamesForVote(vm.votingSessionId).then(function (games) {
+            gameService.getGamesForVote(vm.vote.votingSessionId).then(function (games) {
                 vm.games = games.data;
                 vm.games.forEach(function (game) {
-                    game.mustPlay = false;
-                    game.mustNotPlay = false;
-                    game.threePoints = false;
-                    game.twoPoints = false;
-                    game.onePoint = false;
+                    game.isSelected = false;
+                    game.isValid = true;
                 });
             });
         }

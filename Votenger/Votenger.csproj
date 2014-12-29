@@ -69,7 +69,7 @@
     <Compile Include="Domain\Game\Game.cs" />
     <Compile Include="Domain\Game\GameGenre.cs" />
     <Compile Include="Domain\Game\GameType.cs" />
-    <Compile Include="Domain\Response\VoteResponse.cs" />
+    <Compile Include="Domain\Response\VoteResult.cs" />
     <Compile Include="Domain\Response\DraftResult.cs" />
     <Compile Include="Domain\Session\VotingSession.cs" />
     <Compile Include="Domain\Session\VotingSessionStatus.cs" />
@@ -90,8 +90,10 @@
     <Compile Include="Infrastructure\Repositories\VotingSessionRepository.cs" />
     <Compile Include="Infrastructure\SelfHostingRootPathProvider.cs" />
     <Compile Include="Web\DTO\GameDto.cs" />
+    <Compile Include="Web\DTO\VoteResultDto.cs" />
     <Compile Include="Web\DTO\VotingSessionDto.cs" />
     <Compile Include="Web\Models\DashboardModel.cs" />
+    <Compile Include="Web\Models\ResultsModel.cs" />
     <Compile Include="Web\Models\VoteModel.cs" />
     <Compile Include="Web\Models\DraftModel.cs" />
     <Compile Include="Web\DTO\DraftResultDto.cs" />
@@ -230,6 +232,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Compile Include="Web\DTO\CreateSessionDto.cs" />
+    <None Include="Web\Views\results.sshtml" />
     <None Include="Web\Views\vote.sshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

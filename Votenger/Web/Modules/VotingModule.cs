@@ -26,6 +26,18 @@
 
                 return !isAuthorized ? Response.AsRedirect("/") : null;
             };
+
+            Get["/results/{id}"] = parameters =>
+            {
+                var votingSessionId = parameters.id;
+
+                var resultsModel = new ResultsModel
+                {
+                    VotingSessionId = votingSessionId
+                };
+
+                return View["results", resultsModel];
+            };
             
             Get["/draft/{id}"] = parameters =>
             {
@@ -78,6 +90,19 @@
                 draftResult.UserId = userId;
 
                 _votingSessionRepository.AddDraftResult(draftResult);                
+
+                return Response.AsJson("");
+            };
+
+            Post["/vote/save"] = parameters =>
+            {
+                var voteResultDto = this.Bind<VoteResultDto>();
+                var userId = _authorization.GetAuthorizedUserId(Request);
+
+                var voteResult = DomainObjectsFactory.CreateVoteResult(voteResultDto);
+                voteResult.UserId = userId;
+
+                _votingSessionRepository.AddVoteResult(voteResult);
 
                 return Response.AsJson("");
             };

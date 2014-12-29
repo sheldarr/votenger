@@ -10,6 +10,7 @@
         VotingSession GetVotingSessionById(int id);
         ICollection<VotingSession> GetAllVotingSessions();
         void AddDraftResult(DraftResult draftResult);
+        void AddVoteResult(VoteResult voteResult);
         void CompleteDraft(int id);
         void CompleteVote(int id);
     }
