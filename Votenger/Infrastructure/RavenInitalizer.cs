@@ -4,20 +4,25 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
+    using System.Linq;
+    using Authorization;
     using Domain;
     using Domain.Game;
     using Domain.Response;
     using Domain.Session;
     using Newtonsoft.Json;
     using Raven.Client;
+    using Raven.Client.Linq;
 
     public class RavenInitalizer : IRavenInitalizer
     {
         private readonly IDocumentStore _documentStore;
+        private readonly ICookieHasher _cookieHasher;
 
-        public RavenInitalizer(IDocumentStore documentStore)
+        public RavenInitalizer(IDocumentStore documentStore, ICookieHasher cookieHasher)
         {
             _documentStore = documentStore;
+            _cookieHasher = cookieHasher;
         }
 
         public void SeedWithVotingSessions()
@@ -95,9 +100,12 @@
                 using (var streamReader = new StreamReader(path))
                 {
                     var fileContent = streamReader.ReadToEnd();
-                    var allGames = JsonConvert.DeserializeObject<ICollection<Game>>(fileContent);
+                    var gamesFromFile = JsonConvert.DeserializeObject<ICollection<Game>>(fileContent);
+                    var gamesInDatabase = documentSession.Query<Game>().ToList();
 
-                    foreach (var game in allGames)
+                    var gamesToAdd = gamesFromFile.Where(g => gamesInDatabase.All(ga => ga.Name != g.Name)).ToList();
+
+                    foreach (var game in gamesToAdd)
                     {
                         documentSession.Store(game);
                     }
@@ -114,8 +122,8 @@
                 var rootUser = new User
                 {
                     Id = 1,
-                    Hash = "uberboss",
-                    Nickname = "Sheldar",
+                    Login = "Sheldar",
+                    PasswordHash = _cookieHasher.Encode("uberboss")
                 };
 
                 documentSession.Store(rootUser);

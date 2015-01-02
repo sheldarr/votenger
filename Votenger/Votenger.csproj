@@ -76,8 +76,12 @@
     <Compile Include="Domain\Session\VotingSessionType.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Infrastructure\Authorization\Authorization.cs" />
+    <Compile Include="Infrastructure\Authorization\Base64Hasher.cs" />
     <Compile Include="Infrastructure\Authorization\IAuthorization.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Infrastructure\Authorization\ICookieHasher.cs" />
+    <Compile Include="Infrastructure\Authorization\IPasswordHasher.cs" />
+    <Compile Include="Infrastructure\Authorization\Sha1PasswordHasher.cs" />
     <Compile Include="Infrastructure\DomainObjectsFactory.cs" />
     <Compile Include="Infrastructure\DtoFactory.cs" />
     <Compile Include="Infrastructure\RavenInitalizer.cs" />
@@ -100,7 +104,7 @@
     <Compile Include="Web\Models\DraftModel.cs" />
     <Compile Include="Web\DTO\DraftResultDto.cs" />
     <Compile Include="Web\Models\HomeModel.cs" />
-    <Compile Include="Web\Models\SignInModel.cs" />
+    <Compile Include="Web\Models\UserCredentials.cs" />
     <Compile Include="Web\Modules\ApiModule.cs" />
     <Compile Include="Web\Modules\DashboardModule.cs" />
     <Compile Include="Web\Modules\SessionModule.cs" />

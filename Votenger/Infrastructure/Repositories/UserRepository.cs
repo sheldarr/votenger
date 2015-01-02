@@ -2,16 +2,22 @@
 {
     using System;
     using System.Linq;
+    using Authorization;
     using Domain;
     using Raven.Client;
+    using Web.Models;
 
     public class UserRepository : IUserRepository
     {
         private readonly IDocumentStore _documentStore;
+        private readonly IPasswordHasher _passwordHasher;
+        private readonly ICookieHasher _cookieHasher;
 
-        public UserRepository(IDocumentStore documentStore)
+        public UserRepository(IDocumentStore documentStore, IPasswordHasher passwordHasher, ICookieHasher cookieHasher)
         {
             _documentStore = documentStore;
+            _passwordHasher = passwordHasher;
+            _cookieHasher = cookieHasher;
         }
 
         public string GetUserNickname(string hash)
@@ -25,9 +31,9 @@
             {
                 var user = documentSession.Query<User>()
                     .Customize(x => x.WaitForNonStaleResults(TimeSpan.FromSeconds(10)))
-                    .FirstOrDefault(u => u.Hash == hash);
+                    .FirstOrDefault(u => u.Id == int.Parse(_cookieHasher.Decode(hash)));
 
-                return user.Nickname ?? String.Empty;
+                return user.Login ?? String.Empty;
             }
         }
 
@@ -37,7 +43,7 @@
             {
                 var user = documentSession.Query<User>()
                     .Customize(x => x.WaitForNonStaleResults(TimeSpan.FromSeconds(10)))
-                    .FirstOrDefault(u => u.Hash == hash);
+                    .FirstOrDefault(u => u.Id == int.Parse(_cookieHasher.Decode(hash)));
                 return user;
             }
         }
@@ -51,20 +57,27 @@
             }
         }
 
-        public string CreateUserIfNotExists(string nickname)
+        public string LoginOrCreateUserIfNotExists(UserCredentials userCredentials)
         {
+            var passwordHash = _passwordHasher.HashPassword(userCredentials.Password);
             using (var documentSession = _documentStore.OpenSession())
             {
-                var existingUser = documentSession.Query<User>().FirstOrDefault(u => u.Nickname == nickname);
+                var existingUser = documentSession.Query<User>().FirstOrDefault(u => u.Login == userCredentials.Login);
 
                 if (existingUser != null)
                 {
-                    return existingUser.Hash;
+                    if (existingUser.PasswordHash == passwordHash)
+                    {
+                        return _cookieHasher.Encode(existingUser.Id.ToString());
+                    }
+
+                    return String.Empty;
                 }
 
                 var newUser = new User
                 {
-                    Nickname = nickname,
+                    Login = userCredentials.Login,
+                    PasswordHash = passwordHash
                 };
 
                 documentSession.Store(newUser);
@@ -72,13 +85,9 @@
 
                 existingUser = documentSession.Query<User>()
                     .Customize(x => x.WaitForNonStaleResults(TimeSpan.FromSeconds(10)))
-                    .FirstOrDefault(u => u.Nickname == nickname);
+                    .FirstOrDefault(u => u.Login == userCredentials.Login);
 
-                existingUser.Hash = (existingUser.Id * 1024).ToString();
-                documentSession.Store(existingUser);
-                documentSession.SaveChanges();
-
-                return newUser.Hash;
+                return _cookieHasher.Encode(existingUser.Id.ToString());
             }
         }
     }

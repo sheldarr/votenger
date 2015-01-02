@@ -22,7 +22,7 @@
             {
                 var authorizedUser = _authorization.GetAuthorizedUser(Request);
                 var isAuthorized = authorizedUser != null;
-                var nickname = isAuthorized ? authorizedUser.Nickname : String.Empty;
+                var nickname = isAuthorized ? authorizedUser.Login : String.Empty;
 
                 var indexModel = new HomeModel
                 {
@@ -35,9 +35,14 @@
 
             Post["/signIn"] = parameters =>
             {
-                var signInModel = this.Bind<SignInModel>();
-                
-                var userGuid = _userRepository.CreateUserIfNotExists(signInModel.Nickname);
+                var userCredentials = this.Bind<UserCredentials>();
+
+                var userGuid = _userRepository.LoginOrCreateUserIfNotExists(userCredentials);
+
+                if (userGuid == String.Empty)
+                {
+                    return View["home"];
+                }
 
                 var voteAuthCookie = new NancyCookie("VoteAuth", userGuid);
 

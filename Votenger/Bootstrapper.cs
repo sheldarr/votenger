@@ -1,6 +1,7 @@
 ﻿namespace Votenger
 {
     using Infrastructure;
+    using Infrastructure.Authorization;
     using Infrastructure.Repositories;
     using Nancy;
     using Nancy.Bootstrapper;
@@ -40,7 +41,8 @@
 
             embeddableDocumentStore.Initialize();
 
-            var ravenInitializer = new RavenInitalizer(embeddableDocumentStore);
+            var base64Hasher = new Base64Hasher();
+            var ravenInitializer = new RavenInitalizer(embeddableDocumentStore, base64Hasher);
             //ravenInitializer.SeedWithUsers();
             //ravenInitializer.SeedWithVotingSessions();
             ravenInitializer.SeedWithGames();

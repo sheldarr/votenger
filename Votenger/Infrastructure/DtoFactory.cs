@@ -13,7 +13,7 @@
             return new VotingSessionDto
             {
                 Id = votingSession.Id,
-                Author = votingSession.Author.Nickname,
+                Author = votingSession.Author.Login,
                 Type = votingSession.Type.ToString(),
                 Status = votingSession.Status.ToString(),
                 StartDate = votingSession.StartDate,
