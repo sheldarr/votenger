@@ -13,17 +13,22 @@
             .withOption('order', [2, 'desc'])
             .withBootstrap();
 
-        vm.setVotingSession = setVotingSession;
-        
-        function setVotingSession(id) {
-            vm.votingSessionId = id;
-            activate();
-        }
+        activate();
 
         function activate() {
+            vm.votingSessionId = getPathnameParameter();
+
             votingSessionService.getVoteResults(vm.votingSessionId).then(function (results) {
                 vm.results = results.data.gamesSummary;
             });
+        }
+        
+        function getPathnameParameter() {
+            var pathname = window.location.pathname;
+            var pathnameParameterPattern = /\d+$/;
+            var pathnameParameter = pathnameParameterPattern.exec(pathname);
+
+            return pathnameParameter[0];
         }
     }
 })();

@@ -95,16 +95,11 @@
     <Compile Include="Infrastructure\SelfHostingRootPathProvider.cs" />
     <Compile Include="Web\DTO\GameDto.cs" />
     <Compile Include="Web\DTO\GameSummaryDto.cs" />
+    <Compile Include="Web\DTO\UserCredentialsDto.cs" />
     <Compile Include="Web\DTO\VoteResultDto.cs" />
     <Compile Include="Web\DTO\VoteSummaryDto.cs" />
     <Compile Include="Web\DTO\VotingSessionDto.cs" />
-    <Compile Include="Web\Models\DashboardModel.cs" />
-    <Compile Include="Web\Models\ResultsModel.cs" />
-    <Compile Include="Web\Models\VoteModel.cs" />
-    <Compile Include="Web\Models\DraftModel.cs" />
     <Compile Include="Web\DTO\DraftResultDto.cs" />
-    <Compile Include="Web\Models\HomeModel.cs" />
-    <Compile Include="Web\Models\UserCredentials.cs" />
     <Compile Include="Web\Modules\ApiModule.cs" />
     <Compile Include="Web\Modules\DashboardModule.cs" />
     <Compile Include="Web\Modules\SessionModule.cs" />
@@ -432,7 +427,7 @@
     <Content Include="Web\Content\js\homeController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web\Content\js\homeService.js">
+    <Content Include="Web\Content\js\userService.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\js\linq.js">

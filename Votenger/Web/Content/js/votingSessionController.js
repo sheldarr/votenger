@@ -8,19 +8,23 @@
     function votingSessionController(votingSessionTypes, votingSessionService) {
         var vm = this;
         vm.votingSessionTypes = votingSessionTypes;
-        vm.votingSession = {};
+        vm.votingSession = {
+            numberOfPlayers: 1,
+            gamesPerPlayer: 3,
+            type: 0
+        };
 
         vm.createVotingSession = createVotingSession;
-
-        activate();
+        vm.goBack = goBack;
 
         function createVotingSession() {
             votingSessionService.createVotingSession(vm.votingSession).success(function() {
                 window.location = "/dashboard";
-            })
+            });
         }
 
-        function activate() {
+        function goBack() {
+            window.location = "/dashboard";
         }
     }
 })();

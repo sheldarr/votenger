@@ -10,7 +10,7 @@
         service.saveDraft = saveDraft;
 
         function saveDraft(draft) {
-            return $http.post('/draft/save', draft);
+            return $http.post('/api/session/draft/save', draft);
         }
     }
 })();

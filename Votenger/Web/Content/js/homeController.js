@@ -3,10 +3,15 @@
 
     app.controller('homeController', homeController);
 
-    homeController.$inject = ['homeService'];
+    homeController.$inject = ['userService'];
 
-    function homeController(homeService) {
+    function homeController(userService) {
         var vm = this;
+
+        vm.user = {
+            isAuthorized: false,
+            nickname: ""
+        };
 
         vm.credentials = {
             nickname: "",
@@ -16,18 +21,29 @@
         vm.signIn = signIn;
         vm.start = start;
 
+        activate();
+
         function signIn() {
             if (vm.credentials.login == "" || vm.credentials.password == "") {
                 return;
             }
 
-            homeService.signIn(vm.credentials).success(function() {
+            userService.signIn(vm.credentials).success(function () {
                 window.location.reload();
             });
         }
 
         function start() {
             window.location = '/dashboard';
+        }
+
+        function activate() {
+            userService.isAuthorized().success(function (isAuthorized) {
+                vm.user.isAuthorized = isAuthorized;
+            });
+            userService.getNicksname().success(function (nickname) {
+                vm.user.nickname = nickname;
+            });
         }
     }
 })();

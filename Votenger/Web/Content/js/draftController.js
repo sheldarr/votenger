@@ -8,28 +8,23 @@
     function draftController(gameService, draftService, DTOptionsBuilder) {
         var vm = this;
 
-        vm.gamesLeft = 10;
+        vm.gamesLeft = 3;
         vm.draftCompleted = false;
 
         vm.dtOptions = DTOptionsBuilder
             .newOptions()
             .withBootstrap();
 
-        vm.setVotingSession = setVotingSession;
         vm.gameSelected = gameSelected;
         vm.saveDraft = saveDraft;
 
         activate();
 
-        function setVotingSession(id) {
-            vm.votingSessionId = id;
-        }
-
         function gameSelected() {
             var selectedGames = Enumerable.from(vm.games).where(function (game) { return game.selected; }).toArray();
-            vm.gamesLeft = 10 - selectedGames.length;
+            vm.gamesLeft = 3 - selectedGames.length;
 
-            vm.draftCompleted = selectedGames.length >= 10;
+            vm.draftCompleted = selectedGames.length >= 3;
         }
 
         function saveDraft() {
@@ -49,12 +44,22 @@
         }
 
         function activate() {
+            vm.votingSessionId = getPathnameParameter();
+
             gameService.getAllComputerGames().then(function (games) {
                 vm.games = games.data;
                 vm.games.forEach(function (game) {
                     game.selected = false;
                 });
             });
+        }
+
+        function getPathnameParameter() {
+            var pathname = window.location.pathname;
+            var pathnameParameterPattern = /\d+$/;
+            var pathnameParameter = pathnameParameterPattern.exec(pathname);
+
+            return pathnameParameter[0];
         }
     }
 })();

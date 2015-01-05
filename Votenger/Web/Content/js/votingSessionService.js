@@ -22,15 +22,15 @@
         }
 
         function createVotingSession(votingSession) {
-            return $http.post('/session/create', votingSession);
+            return $http.post('/api/session/create', votingSession);
         }
 
         function completeDraft(id) {
-            return $http.get('/draft/complete/' + id);
+            return $http.get('/api/session/draft/complete/' + id);
         }
 
         function completeVote(id) {
-            return $http.get('/vote/complete/' + id);
+            return $http.get('/api/session/vote/complete/' + id);
         }
     }
 })();

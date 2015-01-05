@@ -10,7 +10,7 @@
         service.saveVote = saveVote;
 
         function saveVote(vote) {
-            return $http.post('/vote/save', vote);
+            return $http.post('/api/session/vote/save', vote);
         }
     }
 })();

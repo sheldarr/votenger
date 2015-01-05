@@ -2,15 +2,24 @@
 
 @Section['Content']
 <div ng-controller="votingSessionController as vm">
-    <div class="text-center">
-        <h2>Create session</h2>
-    </div>
-    <form class="text-center">
-        <div class="input-group input-voting-session-type">
-            <select class="form-control" ng-options="votingSessionType.value as votingSessionType.label for votingSessionType in vm.votingSessionTypes" ng-model="vm.votingSession.type"></select>
-        </div>
-        <button type="submit" class="btn btn-default btn-success" ng-click="vm.createVotingSession()"><span class="glyphicon glyphicon-ok"></span> Create voting session</button>
-    </form>
+    <h2>Create session</h2>
+    <form>
+		<div class="form-group">
+			<label for="numerOfPlayers">Number of players</label>
+			<input type="number" min="1" max="16" id="numerOfPlayers" class="form-control" ng-model="vm.votingSession.numberOfPlayers" placeholder="Number of players" required="required">
+		</div>
+		<div class="form-group">
+			<label for="gamesPerPlayer">Games per player</label>
+			<input type="number" min="1" max="16" id="gamesPerPlayer" class="form-control" ng-model="vm.votingSession.gamesPerPlayer" placeholder="Games per player" required="required">
+		</div>
+
+		<label for="votingSessionType">Type</label>
+        <select id="votingSessionType" class="form-control" ng-options="votingSessionType.value as votingSessionType.label for votingSessionType in vm.votingSessionTypes" ng-model="vm.votingSession.type" required="required"></select>
+
+		<button type="button" class="btn btn-default btn-primary" ng-click="vm.goBack()"><span class="glyphicon glyphicon-arrow-left"></span> Go back</button>
+		<button type="submit" class="btn btn-default btn-success pull-right" ng-click="vm.createVotingSession()"><span class="glyphicon glyphicon-plus"></span> Create voting session</button>
+	</form>
+	
 </div>
 @EndSection
 

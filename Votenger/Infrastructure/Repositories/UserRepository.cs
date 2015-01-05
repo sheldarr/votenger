@@ -5,7 +5,7 @@
     using Authorization;
     using Domain;
     using Raven.Client;
-    using Web.Models;
+    using Web.DTO;
 
     public class UserRepository : IUserRepository
     {
@@ -57,7 +57,7 @@
             }
         }
 
-        public string LoginOrCreateUserIfNotExists(UserCredentials userCredentials)
+        public string LoginOrCreateUserIfNotExists(UserCredentialsDto userCredentials)
         {
             var passwordHash = _passwordHasher.HashPassword(userCredentials.Password);
             using (var documentSession = _documentStore.OpenSession())

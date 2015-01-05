@@ -1,5 +1,6 @@
 ﻿namespace Votenger.Web.Modules
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using DTO;
@@ -7,6 +8,8 @@
     using Infrastructure.Authorization;
     using Infrastructure.Repositories;
     using Nancy;
+    using Nancy.Cookies;
+    using Nancy.ModelBinding;
     using Raven.Abstractions.Extensions;
 
     public class ApiModule : NancyModule
@@ -14,12 +17,47 @@
         private readonly IAuthorization _authorization;
         private readonly IVotingSessionRepository _votingSessionRepository;
         private readonly IGameRepository _gameRepository;
+        private readonly IUserRepository _userRepository;
 
-        public ApiModule(IAuthorization authorization, IVotingSessionRepository votingSessionRepository, IGameRepository gameRepository)
+        public ApiModule(IAuthorization authorization, IVotingSessionRepository votingSessionRepository, IGameRepository gameRepository, IUserRepository userRepository)
         {
             _authorization = authorization;
             _votingSessionRepository = votingSessionRepository;
             _gameRepository = gameRepository;
+            _userRepository = userRepository;
+
+            Get["/api/user/isAuthorized"] = parameters =>
+            {
+                var authorizedUser = _authorization.GetAuthorizedUser(Request);
+                var isAuthorized = authorizedUser != null;
+
+                return Response.AsJson(isAuthorized);
+            };
+
+            Get["/api/user/nickname"] = parameters =>
+            {
+                var authorizedUser = _authorization.GetAuthorizedUser(Request);
+                var isAuthorized = authorizedUser != null;
+                var nickname = isAuthorized ? authorizedUser.Login : String.Empty;
+
+                return Response.AsJson(nickname);
+            };
+
+            Post["/api/user/signIn"] = parameters =>
+            {
+                var userCredentials = this.Bind<UserCredentialsDto>();
+
+                var userGuid = _userRepository.LoginOrCreateUserIfNotExists(userCredentials);
+
+                if (userGuid == String.Empty)
+                {
+                    return View["home"];
+                }
+
+                var voteAuthCookie = new NancyCookie("VoteAuth", userGuid);
+
+                return Response.AsJson("").WithCookie(voteAuthCookie);
+            };
 
             Get["/api/votingSessions"] = parameters =>
             {
@@ -160,6 +198,62 @@
                 }
 
                 return Response.AsJson(voteSummaryDto);
+            };
+
+            Post["/api/session/create"] = parameters =>
+            {
+                var createSessionDto = this.Bind<CreateSessionDto>();
+                var user = _authorization.GetAuthorizedUser(Request);
+
+                var votingSession = DomainObjectsFactory.CreateVotingSession(createSessionDto, user);
+
+                _votingSessionRepository.AddVotingSession(votingSession);
+
+                return Response.AsJson("");
+            };
+
+            Get["/api/session/draft/complete/{id}"] = parameters =>
+            {
+                var votingSessionId = parameters.id;
+
+                _votingSessionRepository.CompleteDraft(votingSessionId);
+
+                return Response.AsJson("");
+            };
+
+            Get["/api/session/vote/complete/{id}"] = parameters =>
+            {
+                var votingSessionId = parameters.id;
+
+                _votingSessionRepository.CompleteVote(votingSessionId);
+
+                return Response.AsJson("");
+            };
+
+            Post["/api/session/draft/save"] = parameters =>
+            {
+                var draftResultDto = this.Bind<DraftResultDto>();
+                var userId = _authorization.GetAuthorizedUser(Request).Id;
+
+                var draftResult = DomainObjectsFactory.CreateDraftResult(draftResultDto);
+                draftResult.UserId = userId;
+
+                _votingSessionRepository.AddDraftResult(draftResult);
+
+                return Response.AsJson("");
+            };
+
+            Post["/api/session/vote/save"] = parameters =>
+            {
+                var voteResultDto = this.Bind<VoteResultDto>();
+                var userId = _authorization.GetAuthorizedUser(Request).Id;
+
+                var voteResult = DomainObjectsFactory.CreateVoteResult(voteResultDto);
+                voteResult.UserId = userId;
+
+                _votingSessionRepository.AddVoteResult(voteResult);
+
+                return Response.AsJson("");
             };
         }
     }

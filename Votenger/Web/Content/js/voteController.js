@@ -22,14 +22,10 @@
             .newOptions()
             .withBootstrap();
 
-        vm.setVotingSession = setVotingSession;
         vm.gameSelected = gameSelected;
         vm.saveVote = saveVote;
-        
-        function setVotingSession(id) {
-            vm.vote.votingSessionId = id;
-            activate();
-        }
+
+        activate();
 
         function gameSelected() {
             var voteSelections = [];
@@ -69,6 +65,8 @@
         }
 
         function activate() {
+            vm.vote.votingSessionId = getPathnameParameter();
+
             gameService.getGamesForVote(vm.vote.votingSessionId).then(function (games) {
                 vm.games = games.data;
                 vm.games.forEach(function (game) {
@@ -76,6 +74,14 @@
                     game.isValid = true;
                 });
             });
+        }
+
+        function getPathnameParameter() {
+            var pathname = window.location.pathname;
+            var pathnameParameterPattern = /\d+$/;
+            var pathnameParameter = pathnameParameterPattern.exec(pathname);
+
+            return pathnameParameter[0];
         }
     }
 })();

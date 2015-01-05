@@ -1,7 +1,7 @@
 ﻿@Master['master.sshtml']
 
 @Section['Content']
-<div ng-controller="draftController as vm" ng-init="vm.setVotingSession(@Model.VotingSessionId)">
+<div ng-controller="draftController as vm">
     <div class="text-center">
         <h2>Draft</h2>
     </div>
