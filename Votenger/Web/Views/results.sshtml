@@ -5,7 +5,6 @@
         <div class="text-center">
             <h2>Results</h2>
         </div>
-        <h3>Sessions list</h3>
         <table datatable="ng" dt-options="vm.dtOptions" id="dashboard-table" class="table">
             <thead>
                 <tr>

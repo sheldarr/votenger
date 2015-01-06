@@ -14,15 +14,17 @@
                 <th>Type</th>
                 <th>Genre</th>
                 <th>Max Players</th>
-                <th>Must Play</th>
-                <th>Must Not Play</th>
-                <th>3 pts</th>
-                <th>2 pts</th>
-                <th>1 pt</th>
+                <th>+ + +</th>
+                <th>+ +</th>
+                <th>+</th>
+				<th>- - -</th>
+				<th> | </th>
+                <th>1UP</th>
+				<th>1DOWN</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="game in vm.games" ng-class="{success: game.isSelected, danger: !game.isValid}">
+            <tr ng-repeat="game in vm.games" ng-class="{success: game.isSelected || game.bonus, danger: !game.isValid}">
                 <td>{{ game.id }}</td>
                 <td>{{ game.name }}</td>
                 <td>{{ game.type }}</td>
@@ -32,16 +34,22 @@
                     <input type="radio" name="MustPlay" value="{{ game.id }}" ng-model="vm.vote.mustPlayGame" ng-change="vm.gameSelected()">
                 </td>
                 <td>
-                    <input type="radio" name="MustNotPlay" value="{{ game.id }}" ng-model="vm.vote.mustNotPlayGame" ng-change="vm.gameSelected()">
-                </td>
-                <td>
                     <input type="radio" name="3Pts" value="{{ game.id }}" ng-model="vm.vote.threePointsGame" ng-change="vm.gameSelected()">
                 </td>
                 <td>
                     <input type="radio" name="2Pts" value="{{ game.id }}" ng-model="vm.vote.twoPointsGame" ng-change="vm.gameSelected()">
                 </td>
-                <td>
-                    <input type="radio" name="1Pt" value="{{ game.id }}" ng-model="vm.vote.onePointGame" ng-change="vm.gameSelected()">
+				<td>
+                    <input type="radio" name="MustNotPlay" value="{{ game.id }}" ng-model="vm.vote.mustNotPlayGame" ng-change="vm.gameSelected()">
+                </td>
+				<td>
+					|
+				</td>
+				<td>
+                    <input type="radio" name="{{ game.id }}.bonus" value="1" ng-model="game.bonus" ng-change="vm.gameSelected()" ng-disabled="game.isSelected">
+                </td>
+				<td>
+                    <input type="radio" name="{{ game.id }}.bonus" value="0" ng-model="game.bonus" ng-change="vm.gameSelected()" ng-disabled="game.isSelected">
                 </td>
             </tr>
         </tbody>

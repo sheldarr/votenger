@@ -39,7 +39,6 @@
             voteSelections.push(vm.vote.mustNotPlayGame);
             voteSelections.push(vm.vote.threePointsGame);
             voteSelections.push(vm.vote.twoPointsGame);
-            voteSelections.push(vm.vote.onePointGame);
 
             var groups = Enumerable.from(voteSelections).groupBy(function(selection) { return selection; }).toArray();
             var nonValidGroups = Enumerable.from(groups)
