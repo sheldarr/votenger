@@ -24,15 +24,15 @@
         activate();
 
         function draft(id) {
-            window.location = '/draft/' + id;
+            window.location = '/session/draft/' + id;
         }
 
         function vote(id) {
-            window.location = '/vote/' + id;
+            window.location = '/session/vote/' + id;
         }
 
         function showResults(id) {
-            window.location = '/results/' + id;
+            window.location = '/session/results/' + id;
         }
 
         function createSession() {

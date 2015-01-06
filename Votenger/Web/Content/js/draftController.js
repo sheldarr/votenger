@@ -8,23 +8,30 @@
     function draftController(gameService, draftService, DTOptionsBuilder) {
         var vm = this;
 
-        vm.gamesLeft = 3;
+        vm.gamesLeft = 0;
         vm.draftCompleted = false;
+
+        vm.draftOptions = {};
 
         vm.dtOptions = DTOptionsBuilder
             .newOptions()
             .withBootstrap();
 
+        vm.goBack = goBack;
         vm.gameSelected = gameSelected;
         vm.saveDraft = saveDraft;
 
         activate();
 
+        function goBack() {
+            window.location = "/dashboard";
+        }
+
         function gameSelected() {
             var selectedGames = Enumerable.from(vm.games).where(function (game) { return game.selected; }).toArray();
-            vm.gamesLeft = 3 - selectedGames.length;
+            vm.gamesLeft = vm.draftOptions.gamesPerPlayer - selectedGames.length;
 
-            vm.draftCompleted = selectedGames.length >= 3;
+            vm.draftCompleted = selectedGames.length >= vm.draftOptions.gamesPerPlayer;
         }
 
         function saveDraft() {
@@ -45,6 +52,11 @@
 
         function activate() {
             vm.votingSessionId = getPathnameParameter();
+
+            draftService.getDraftOptions(vm.votingSessionId).then(function (options) {
+                vm.draftOptions = options.data;
+                vm.gamesLeft = vm.draftOptions.gamesPerPlayer;
+            });
 
             gameService.getAllComputerGames().then(function (games) {
                 vm.games = games.data;

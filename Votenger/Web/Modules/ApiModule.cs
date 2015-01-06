@@ -68,6 +68,20 @@
                 return Response.AsJson(sessionsDto);
             };
 
+            Get["/api/session/options/{id}"] = parameters =>
+            {
+                var votingSessionId = parameters.id;
+                var votingSession = _votingSessionRepository.GetVotingSessionById(votingSessionId);
+
+                var draftOptions = new DraftOptionsDto
+                {
+                    NumberOfPlayers = votingSession.NumberOfPlayers,
+                    GamesPerPlayer = votingSession.GamesPerPlayer
+                };
+
+                return Response.AsJson(draftOptions);
+            };
+
             Get["/api/computerGames"] = parameters =>
             {
                 var games = _gameRepository.GetAllGames();

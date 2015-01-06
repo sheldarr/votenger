@@ -13,6 +13,8 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public ICollection<DraftResult> DraftResults { get; set; }
-        public ICollection<VoteResult> VoteResults { get; set; } 
+        public ICollection<VoteResult> VoteResults { get; set; }
+        public int NumberOfPlayers { get; set; }
+        public int GamesPerPlayer { get; set; }
     }
 }

@@ -45,7 +45,9 @@
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,
                 DraftResults = new List<DraftResult>(),
-                VoteResults = new List<VoteResult>()
+                VoteResults = new List<VoteResult>(),
+                NumberOfPlayers = createSessionDto.NumberOfPlayers,
+                GamesPerPlayer = createSessionDto.GamesPerPlayer
             };
 
             return votingSession;

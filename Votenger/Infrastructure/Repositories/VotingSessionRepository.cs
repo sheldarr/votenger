@@ -1,5 +1,6 @@
 ﻿namespace Votenger.Infrastructure.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Response;
@@ -76,6 +77,7 @@
             {
                 var votingSession = documentSession.Load<VotingSession>(id);
                 votingSession.Status = VotingSessionStatus.Completed;
+                votingSession.EndDate = DateTime.Now;               
                 documentSession.SaveChanges();
             }
         }

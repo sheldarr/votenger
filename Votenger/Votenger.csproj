@@ -93,6 +93,7 @@
     <Compile Include="Infrastructure\Repositories\UserRepository.cs" />
     <Compile Include="Infrastructure\Repositories\VotingSessionRepository.cs" />
     <Compile Include="Infrastructure\SelfHostingRootPathProvider.cs" />
+    <Compile Include="Web\DTO\DraftOptionsDto.cs" />
     <Compile Include="Web\DTO\GameDto.cs" />
     <Compile Include="Web\DTO\GameSummaryDto.cs" />
     <Compile Include="Web\DTO\UserCredentialsDto.cs" />
