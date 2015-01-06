@@ -13,7 +13,13 @@
             .withOption('order', [2, 'desc'])
             .withBootstrap();
 
+        vm.goBack = goBack;
+
         activate();
+
+        function goBack() {
+            window.location = '/dashboard';
+        }
 
         function activate() {
             vm.votingSessionId = getPathnameParameter();

@@ -22,6 +22,9 @@
                 </tr>
             </tbody>
         </table>
+		<div>
+			<button type="button" class="btn btn-default btn-primary" ng-click="vm.goBack()"><span class="glyphicon glyphicon-arrow-left"></span> Go back</button>
+		</div>
     </div>
 @EndSection
 

@@ -32,8 +32,10 @@
         </tbody>
     </table>
     <h4>Games left: {{ vm.gamesLeft }}</h4>
-	<button type="button" class="btn btn-default btn-primary" ng-click="vm.goBack()"><span class="glyphicon glyphicon-arrow-left"></span> Go back</button>
-    <button class="btn btn-default btn-success pull-right" ng-click="vm.saveDraft()" ng-disabled="!vm.draftCompleted">Accept draft!</button>
+	<div>
+		<button type="button" class="btn btn-default btn-primary" ng-click="vm.goBack()"><span class="glyphicon glyphicon-arrow-left"></span> Go back</button>
+		<button class="btn btn-default btn-success pull-right" ng-click="vm.saveDraft()" ng-disabled="!vm.draftCompleted">Accept draft!</button>
+	</div>
 </div>
 @EndSection
 

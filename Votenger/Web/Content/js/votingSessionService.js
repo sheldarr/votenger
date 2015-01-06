@@ -14,11 +14,11 @@
         service.completeVote = completeVote;
 
         function getAllVotingSessions() {
-            return $http.get('/api/votingSessions');
+            return $http.get('/api/session/all');
         }
 
         function getVoteResults(id) {
-            return $http.get('/api/voteResults/' + id);
+            return $http.get('/api/session/result/' + id);
         }
 
         function createVotingSession(votingSession) {

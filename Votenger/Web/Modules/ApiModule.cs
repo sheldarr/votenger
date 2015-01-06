@@ -59,7 +59,7 @@
                 return Response.AsJson("").WithCookie(voteAuthCookie);
             };
 
-            Get["/api/votingSessions"] = parameters =>
+            Get["/api/session/all"] = parameters =>
             {
                 var authorizedUser = _authorization.GetAuthorizedUser(Request);
                 var sessions = _votingSessionRepository.GetAllVotingSessions();
@@ -108,7 +108,7 @@
                 return Response.AsJson(gamesDto);
             };
 
-            Get["/api/voteResults/{id}"] = parameters =>
+            Get["/api/session/result/{id}"] = parameters =>
             {
                 var votingSessionId = parameters.id;
                 var votingSession = _votingSessionRepository.GetVotingSessionById(votingSessionId);

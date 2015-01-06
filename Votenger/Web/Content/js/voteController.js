@@ -22,10 +22,15 @@
             .newOptions()
             .withBootstrap();
 
+        vm.goBack = goBack;
         vm.gameSelected = gameSelected;
         vm.saveVote = saveVote;
 
         activate();
+
+        function goBack() {
+            window.location = '/dashboard';
+        }
 
         function gameSelected() {
             var voteSelections = [];
