@@ -11,9 +11,11 @@
             <thead>
                 <tr>
                     <th>#</th>
+					<th>Status</th>
                     <th>Author</th>
                     <th>Type</th>
-                    <th>Status</th>
+					<th>Number Of Players</th>
+					<th>Games Per Player</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Actions</th>
@@ -22,9 +24,11 @@
             <tbody>
                 <tr ng-repeat="votingSession in vm.votingSessions">
                     <td>{{ votingSession.id }}</td>
+					<td>{{ votingSession.status }}</td>
                     <td>{{ votingSession.author }}</td>
                     <td>{{ votingSession.type }}</td>
-                    <td>{{ votingSession.status }}</td>
+					<td>{{ votingSession.numberOfPlayers }}</td>
+					<td>{{ votingSession.gamesPerPlayer }}</td>
                     <td>{{ votingSession.startDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>{{ votingSession.endDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>

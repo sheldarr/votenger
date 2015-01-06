@@ -13,9 +13,11 @@
             return new VotingSessionDto
             {
                 Id = votingSession.Id,
+                Status = votingSession.Status.ToString(),
                 Author = votingSession.Author.Login,
                 Type = votingSession.Type.ToString(),
-                Status = votingSession.Status.ToString(),
+                NumberOfPlayers = votingSession.NumberOfPlayers,
+                GamesPerPlayer = votingSession.GamesPerPlayer,
                 StartDate = votingSession.StartDate,
                 EndDate = votingSession.EndDate,
                 IsAuthor = votingSession.Author.Id == user.Id,
