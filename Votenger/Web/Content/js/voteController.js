@@ -10,13 +10,24 @@
 
         vm.voteCompleted = false;
 
-        vm.vote = {
-            mustPlayGame: 0,
-            mustNotPlayGame: 0,
-            threePointsGame: 0,
-            twoPointsGame: 0,
-            onePointGame: 0
+        vm.threePluses = 0;
+        vm.twoPluses = 0;
+        vm.onePlus = 0;
+        vm.threeMinuses = 0;
+
+        vm.scores = {
+            threePluses: 5,
+            twoPluses: 3,
+            onePlus: 2,
+            threeMinuses: -5,
+            oneUp: 1,
+            oneDown: -1
         };
+
+        vm.results = {
+            votingSessionId: 0,
+            gameScores: []
+        };  
 
         vm.dtOptions = DTOptionsBuilder
             .newOptions()
@@ -33,49 +44,55 @@
         }
 
         function gameSelected() {
-            var voteSelections = [];
+            var premiumGames = [];
+            premiumGames.push(vm.threePluses);
+            premiumGames.push(vm.twoPluses);
+            premiumGames.push(vm.onePlus);
+            premiumGames.push(vm.threeMinuses);
 
-            voteSelections.push(vm.vote.mustPlayGame);
-            voteSelections.push(vm.vote.mustNotPlayGame);
-            voteSelections.push(vm.vote.threePointsGame);
-            voteSelections.push(vm.vote.twoPointsGame);
+            var voteCompleted = true;
 
-            var groups = Enumerable.from(voteSelections).groupBy(function(selection) { return selection; }).toArray();
-            var nonValidGroups = Enumerable.from(groups)
-                .where(function (group) { return group.getSource().length > 1; })
-                .select(function (group) { return group.key(); })
-                .toArray();
+            vm.games.forEach(function (game) {
+                var numberOfPremiumSelections = Enumerable.from(premiumGames).count(function (premiumGame) { return premiumGame == game.id; });
 
-            vm.games.forEach(function(game) {
-                game.isValid = true;
-                game.isSelected = false;
-
-                if (Enumerable.from(nonValidGroups).any(function (nonValidGroup) { return game.id == nonValidGroup; })) {
+                if (numberOfPremiumSelections > 1) {
                     game.isValid = false;
-                };
-                
-                if (Enumerable.from(voteSelections).any(function (voteSelection) { return game.id == voteSelection; })) {
-                    game.isSelected = true;
-                };
+                }
+
+                game.isSelected = vm.threePluses == game.id || vm.twoPluses == game.id || vm.onePlus == game.id || vm.threeMinuses == game.id;
+                voteCompleted = voteCompleted && (game.isSelected || game.basic != 0);
             });
 
-            vm.voteCompleted = (nonValidGroups.length == 0) && !Enumerable.from(voteSelections).any(function(voteSelection) { return voteSelection == 0; });
+            vm.voteCompleted = voteCompleted;
         }
 
         function saveVote() {
-            voteService.saveVote(vm.vote).success(function () {
-                window.location = "/dashboard";
+            vm.games.forEach(function (game) {
+                var points = game.isSelected ? game.premium : game.basic;
+
+                var score = {
+                    id: game.id,
+                    points: points
+                };
+
+                vm.results.push(score);
             });
+
+            //voteService.saveVote(vm.vote).success(function () {
+            //    window.location = "/dashboard";
+            //});
         }
 
         function activate() {
-            vm.vote.votingSessionId = getPathnameParameter();
+            vm.results.votingSessionId = getPathnameParameter();
 
-            gameService.getGamesForVote(vm.vote.votingSessionId).then(function (games) {
+            gameService.getGamesForVote(vm.results.votingSessionId).then(function (games) {
                 vm.games = games.data;
                 vm.games.forEach(function (game) {
                     game.isSelected = false;
                     game.isValid = true;
+                    game.premium = 0;
+                    game.basic = 0;
                 });
             });
         }
