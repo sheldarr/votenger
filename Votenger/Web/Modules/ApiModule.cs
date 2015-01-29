@@ -83,7 +83,7 @@
                 var draftOptions = new DraftOptionsDto
                 {
                     NumberOfVotengers = votingSession.NumberOfVotengers,
-                    DraftsPerPlayer = votingSession.DraftsPerVotenger
+                    DraftsPerVotenger = votingSession.DraftsPerVotenger
                 };
 
                 return Response.AsJson(draftOptions);

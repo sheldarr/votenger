@@ -29,9 +29,9 @@
 
         function gameSelected() {
             var selectedGames = Enumerable.from(vm.games).where(function (game) { return game.selected; }).toArray();
-            vm.gamesLeft = vm.draftOptions.gamesPerPlayer - selectedGames.length;
+            vm.gamesLeft = vm.draftOptions.draftsPerVotenger - selectedGames.length;
 
-            vm.draftCompleted = selectedGames.length >= vm.draftOptions.gamesPerPlayer;
+            vm.draftCompleted = selectedGames.length >= vm.draftOptions.draftsPerVotenger;
         }
 
         function saveDraft() {
@@ -55,7 +55,7 @@
 
             draftService.getDraftOptions(vm.votingSessionId).then(function (options) {
                 vm.draftOptions = options.data;
-                vm.gamesLeft = vm.draftOptions.gamesPerPlayer;
+                vm.gamesLeft = vm.draftOptions.draftsPerVotenger;
             });
 
             gameService.getAllComputerGames().then(function (games) {

@@ -3,6 +3,6 @@
     public class DraftOptionsDto
     {
         public int NumberOfVotengers { get; set; }
-        public int DraftsPerPlayer { get; set; }
+        public int DraftsPerVotenger { get; set; }
     }
 }
