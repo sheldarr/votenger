@@ -10,5 +10,6 @@
         ICollection<Game> GetAllGames();
         Game GetGameById(int id);
         ICollection<Game> GetGamesForVote(ICollection<DraftResult> draftResults);
+        ICollection<string> GetAllCategories();
     }
 }

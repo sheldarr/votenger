@@ -55,5 +55,13 @@
                 return gamesForVote;
             }
         }
+
+        public ICollection<string> GetAllCategories()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                return session.Query<Game>().Select(g => g.Category).Distinct().ToList();
+            }
+        }
     }
 }

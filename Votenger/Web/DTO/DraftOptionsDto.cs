@@ -2,7 +2,7 @@
 {
     public class DraftOptionsDto
     {
-        public int NumberOfPlayers { get; set; }
-        public int GamesPerPlayer { get; set; }
+        public int NumberOfVotengers { get; set; }
+        public int DraftsPerPlayer { get; set; }
     }
 }

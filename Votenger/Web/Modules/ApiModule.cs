@@ -59,6 +59,13 @@
                 return Response.AsJson("").WithCookie(voteAuthCookie);
             };
 
+            Get["/api/session/categories"] = parameters =>
+            {
+                var categories = _gameRepository.GetAllCategories();
+
+                return Response.AsJson(categories);
+            };
+
             Get["/api/session/all"] = parameters =>
             {
                 var authorizedUser = _authorization.GetAuthorizedUser(Request);
@@ -75,8 +82,8 @@
 
                 var draftOptions = new DraftOptionsDto
                 {
-                    NumberOfPlayers = votingSession.NumberOfPlayers,
-                    GamesPerPlayer = votingSession.GamesPerPlayer
+                    NumberOfVotengers = votingSession.NumberOfVotengers,
+                    DraftsPerPlayer = votingSession.DraftsPerVotenger
                 };
 
                 return Response.AsJson(draftOptions);

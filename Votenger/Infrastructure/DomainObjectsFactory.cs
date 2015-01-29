@@ -40,14 +40,14 @@
             var votingSession = new VotingSession
             {
                 Author = user,
-                Type = createSessionDto.Type,
+                Category = createSessionDto.Category,
                 Status = VotingSessionStatus.Draft,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now,
                 DraftResults = new List<DraftResult>(),
                 VoteResults = new List<VoteResult>(),
-                NumberOfPlayers = createSessionDto.NumberOfPlayers,
-                GamesPerPlayer = createSessionDto.GamesPerPlayer
+                NumberOfVotengers = createSessionDto.NumberOfVotengers,
+                DraftsPerVotenger = createSessionDto.DraftsPerVotenger
             };
 
             return votingSession;

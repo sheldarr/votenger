@@ -13,9 +13,9 @@
                     <th>#</th>
 					<th>Status</th>
                     <th>Author</th>
-                    <th>Type</th>
-					<th>Number Of Players</th>
-					<th>Games Per Player</th>
+                    <th>Category</th>
+					<th>Number Of Votengers</th>
+					<th>Drafts Per Votenger</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Actions</th>
@@ -26,9 +26,9 @@
                     <td>{{ votingSession.id }}</td>
 					<td>{{ votingSession.status }}</td>
                     <td>{{ votingSession.author }}</td>
-                    <td>{{ votingSession.type }}</td>
-					<td>{{ votingSession.numberOfPlayers }}</td>
-					<td>{{ votingSession.gamesPerPlayer }}</td>
+                    <td>{{ votingSession.category }}</td>
+					<td>{{ votingSession.numberOfVotengers }}</td>
+					<td>{{ votingSession.draftsPerVotenger }}</td>
                     <td>{{ votingSession.startDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>{{ votingSession.endDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                     <td>

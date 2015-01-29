@@ -8,9 +8,9 @@
         public int Id { get; set; }
         public string Status { get; set; }
         public string Author { get; set; }
-        public string Type { get; set; }
-        public int NumberOfPlayers { get; set; }
-        public int GamesPerPlayer { get; set; }
+        public string Category { get; set; }
+        public int NumberOfVotengers { get; set; }
+        public int DraftsPerVotenger { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 

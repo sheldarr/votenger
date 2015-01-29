@@ -3,24 +3,24 @@
 @Section['Content']
 <div ng-controller="votingSessionController as vm">
     <h2>Create session</h2>
-    <form>
-		<div class="form-group">
-			<label for="numerOfPlayers">Number of players</label>
-			<input type="number" min="1" max="16" id="numerOfPlayers" class="form-control" ng-model="vm.votingSession.numberOfPlayers" placeholder="Number Of Players" required="required">
+    <form name="createSessionForm">
+		<div class="form-group" ng-class="{'has-error': createSessionForm.numberOfVotengers.$invalid && vm.formSubmitted }">
+			<label for="numberOfVotengers">Number of votengers</label>
+			<input type="number" min="1" max="16" id="numberOfVotengers" name="numberOfVotengers" class="form-control" ng-model="vm.votingSession.numberOfVotengers" placeholder="Number Of Votengers" required="required">
 		</div>
-		<div class="form-group">
-			<label for="gamesPerPlayer">Games per player</label>
-			<input type="number" min="1" max="16" id="gamesPerPlayer" class="form-control" ng-model="vm.votingSession.gamesPerPlayer" placeholder="Games Per Player" required="required">
+		<div class="form-group" ng-class="{'has-error': createSessionForm.draftsPerVotenger.$invalid && vm.formSubmitted }">
+			<label for="draftsPerVotenger">Drafts per votenger</label>
+			<input type="number" min="1" max="16" id="draftsPerVotenger" name="draftsPerVotenger" class="form-control" ng-model="vm.votingSession.draftsPerVotenger" placeholder="Drafts Per Player" required="required">
 		</div>
-
-		<label for="votingSessionType">Type</label>
-        <select id="votingSessionType" class="form-control" ng-options="votingSessionType.value as votingSessionType.label for votingSessionType in vm.votingSessionTypes" ng-model="vm.votingSession.type" required="required"></select>
+		<div ng-class="{'has-error': createSessionForm.votingSessionCategory.$invalid && vm.formSubmitted }">
+			<label for="votingSessionCategory">Category</label>
+			<select id="votingSessionCategory" class="form-control" name="votingSessionCategory" ng-options="votingSessionCategory for votingSessionCategory in vm.votingSessionCategories" ng-model="vm.votingSession.category" required="required"></select>
 		<div>
+		<div class="bottom-panel">
 			<button type="button" class="btn btn-default btn-primary" ng-click="vm.goBack()"><span class="glyphicon glyphicon-arrow-left"></span> Go back</button>
 			<button type="submit" class="btn btn-default btn-success pull-right" ng-click="vm.createVotingSession()"><span class="glyphicon glyphicon-plus"></span> Create voting session</button>
 		</div>
-	</form>
-	
+	</form>	
 </div>
 @EndSection
 

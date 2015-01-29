@@ -1,10 +1,8 @@
 ﻿namespace Votenger
 {
     using Infrastructure;
-    using Infrastructure.Authorization;
     using Infrastructure.Repositories;
     using Nancy;
-    using Nancy.Bootstrapper;
     using Nancy.Conventions;
     using Nancy.TinyIoc;
     using Raven.Client;
@@ -35,17 +33,15 @@
 
             var embeddableDocumentStore = new EmbeddableDocumentStore
             {
-                DataDirectory = "Data"
-                //RunInMemory = true
+                DataDirectory = "Data",
+                RunInMemory = true
             };
 
             embeddableDocumentStore.Initialize();
 
-            var base64Hasher = new Base64Hasher();
-            var ravenInitializer = new RavenInitalizer(embeddableDocumentStore, base64Hasher);
-            //ravenInitializer.SeedWithUsers();
-            //ravenInitializer.SeedWithVotingSessions();
-            ravenInitializer.SeedWithGames();
+            var ravenDataLoader = new RavenDataLoader(embeddableDocumentStore);
+
+            ravenDataLoader.LoadGames();
             
             container.Register<IDocumentStore>(embeddableDocumentStore);
         }

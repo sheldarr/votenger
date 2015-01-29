@@ -3,24 +3,43 @@
 
     app.controller('votingSessionController', votingSessionController);
 
-    votingSessionController.$inject = ['VotingSessionTypes', 'votingSessionService'];
+    votingSessionController.$inject = ['$scope', 'votingSessionService'];
 
-    function votingSessionController(votingSessionTypes, votingSessionService) {
+    function votingSessionController($scope, votingSessionService) {
         var vm = this;
-        vm.votingSessionTypes = votingSessionTypes;
+
+        vm.formSubmitted = false;
+        vm.votingSessionCategories = [];
+
         vm.votingSession = {
-            numberOfPlayers: 1,
-            gamesPerPlayer: 3,
-            type: 0
+            numberOfVotengers: 1,
+            draftsPerVotenger: 3,
+            category: ""
         };
 
         vm.createVotingSession = createVotingSession;
         vm.goBack = goBack;
 
+        activate();
+
+        function activate() {
+            votingSessionService.getAllVotingCategories().success(function(categories) {
+                vm.votingSessionCategories = categories;
+            });
+        }
+
         function createVotingSession() {
+            vm.formSubmitted = true;
+
+            if ($scope.createSessionForm.$invalid){
+                return false; 
+            }
+
             votingSessionService.createVotingSession(vm.votingSession).success(function() {
                 window.location = "/dashboard";
             });
+
+            return true;
         }
 
         function goBack() {

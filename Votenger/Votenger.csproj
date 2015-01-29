@@ -84,8 +84,8 @@
     <Compile Include="Infrastructure\Authorization\Sha1PasswordHasher.cs" />
     <Compile Include="Infrastructure\DomainObjectsFactory.cs" />
     <Compile Include="Infrastructure\DtoFactory.cs" />
-    <Compile Include="Infrastructure\RavenInitalizer.cs" />
-    <Compile Include="Infrastructure\IRavenInitalizer.cs" />
+    <Compile Include="Infrastructure\RavenDataLoader.cs" />
+    <Compile Include="Infrastructure\IRavenDataLoader.cs" />
     <Compile Include="Infrastructure\Repositories\GameRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IGameRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IUserRepository.cs" />
@@ -218,9 +218,6 @@
     <None Include="bower-dependencies\jquery\dist\jquery.min.map" />
     <None Include="bower-dependencies\jquery\src\sizzle\dist\sizzle.min.map" />
     <None Include="packages.config" />
-    <None Include="Resources\TestGames.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Resources\Games.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
