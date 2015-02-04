@@ -53,14 +53,12 @@
             var voteCompleted = true;
 
             vm.games.forEach(function (game) {
-                var numberOfPremiumSelections = Enumerable.from(premiumGames).count(function (premiumGame) { return premiumGame == game.id; });
+                var numberOfSelectedPremiumGames = Enumerable.from(premiumGames).count(function (premiumGame) { return premiumGame == game.id; });
 
-                if (numberOfPremiumSelections > 1) {
-                    game.isValid = false;
-                }
+                game.isValid = numberOfSelectedPremiumGames == 1;
 
-                game.isSelected = vm.threePluses == game.id || vm.twoPluses == game.id || vm.onePlus == game.id || vm.threeMinuses == game.id;
-                voteCompleted = voteCompleted && (game.isSelected || game.basic != 0);
+                game.isPremiumSelected = vm.threePluses == game.id || vm.twoPluses == game.id || vm.onePlus == game.id || vm.threeMinuses == game.id;
+                voteCompleted = voteCompleted && (game.isPremiumSelected || game.basic != 0);
             });
 
             vm.voteCompleted = voteCompleted;
@@ -68,7 +66,7 @@
 
         function saveVote() {
             vm.games.forEach(function (game) {
-                var points = game.isSelected ? game.premium : game.basic;
+                var points = game.isPremiumSelected ? game.premium : game.basic;
 
                 var score = {
                     id: game.id,
@@ -89,7 +87,7 @@
             gameService.getGamesForVote(vm.results.votingSessionId).then(function (games) {
                 vm.games = games.data;
                 vm.games.forEach(function (game) {
-                    game.isSelected = false;
+                    game.isPremiumSelected = false;
                     game.isValid = true;
                     game.premium = 0;
                     game.basic = 0;
