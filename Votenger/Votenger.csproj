@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Game\Game.cs" />
+    <Compile Include="Domain\Response\BasicScore.cs" />
     <Compile Include="Domain\Response\VoteResult.cs" />
     <Compile Include="Domain\Response\DraftResult.cs" />
     <Compile Include="Domain\Session\VotingSession.cs" />

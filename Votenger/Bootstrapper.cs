@@ -1,6 +1,7 @@
 ﻿namespace Votenger
 {
     using Infrastructure;
+    using Infrastructure.Authorization;
     using Infrastructure.Repositories;
     using Nancy;
     using Nancy.Conventions;
@@ -30,6 +31,8 @@
             base.ConfigureApplicationContainer(container);
 
             container.Register<IGameRepository, GameRepository>().AsSingleton();
+            container.Register<IUserRepository, UserRepository>().AsSingleton();
+            container.Register<IPasswordHasher, Sha1PasswordHasher>();
 
             var embeddableDocumentStore = new EmbeddableDocumentStore
             {

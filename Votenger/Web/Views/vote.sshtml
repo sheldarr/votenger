@@ -24,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="game in vm.games" ng-class="{success: game.isSelected || game.basic != 0, danger: !game.isValid}">
+            <tr ng-repeat="game in vm.games" ng-class="{success: game.isValid && game.isSelected, danger: !game.isValid && game.isSelected}">
                 <td>{{ game.id }}</td>
                 <td>{{ game.name }}</td>
                 <td>{{ game.type }}</td>
@@ -46,10 +46,10 @@
 					|
 				</td>
 				<td>
-                    <input type="radio" name="{{ game.id }}.basic" value="{{ vm.scores.oneUp }}" ng-model="game.basic" ng-change="vm.voteObjectSelected()" ng-disabled="game.isSelected">
+                    <input type="radio" name="{{ game.id }}.basic" value="1" ng-model="game.basic" ng-change="vm.voteObjectSelected()" ng-disabled="game.isPremiumSelected">
                 </td>
 				<td>
-                    <input type="radio" name="{{ game.id }}.basic" value="{{ vm.scores.oneDown }}" ng-model="game.basic" ng-change="vm.voteObjectSelected()" ng-disabled="game.isSelected">
+                    <input type="radio" name="{{ game.id }}.basic" value="-1" ng-model="game.basic" ng-change="vm.voteObjectSelected()" ng-disabled="game.isPremiumSelected">
                 </td>
             </tr>
         </tbody>

@@ -1,13 +1,17 @@
 ﻿namespace Votenger.Web.DTO
 {
+    using System.Collections.Generic;
+    using Domain.Response;
+
     public class VoteResultDto
     {
         public int VotingSessionId { get; set; }
 
-        public int MustPlayGame { get; set; }
-        public int MustNotPlayGame { get; set; }
-        public int ThreePointsGame { get; set; }
-        public int TwoPointsGame { get; set; }
-        public int OnePointGame { get; set; }
+        public int ThreePlusesVoteObject { get; set; }
+        public int TwoPlusesVoteObject { get; set; }
+        public int OnePlusVoteObject { get; set; }
+        public int ThreeMinusesVoteObject { get; set; }
+
+        public IEnumerable<BasicScore> BasicScores { get; set; }  
     }
 }

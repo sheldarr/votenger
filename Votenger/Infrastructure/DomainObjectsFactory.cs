@@ -25,11 +25,11 @@
             var voteResult = new VoteResult
             {
                 VotingSessionId = voteResultDto.VotingSessionId,
-                MustPlayGame = voteResultDto.MustPlayGame,
-                MustNotPlayGame = voteResultDto.MustNotPlayGame,
-                ThreePointsGame = voteResultDto.ThreePointsGame,
-                TwoPointsGame = voteResultDto.TwoPointsGame,
-                OnePointGame = voteResultDto.OnePointGame
+                ThreePlusesVoteObject = voteResultDto.ThreePlusesVoteObject,
+                TwoPlusesVoteObject = voteResultDto.TwoPlusesVoteObject,
+                OnePlusVoteObject = voteResultDto.OnePlusVoteObject,
+                ThreeMinusesVoteObject = voteResultDto.ThreeMinusesVoteObject,
+                BasicScores = voteResultDto.BasicScores
             };
 
             return voteResult;
