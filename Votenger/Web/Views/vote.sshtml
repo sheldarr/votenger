@@ -31,25 +31,25 @@
                 <td>{{ game.genre }}</td>
                 <td>{{ game.maxPlayers }}</td>
                 <td>
-                    <input type="radio" name="threePluses" value="{{ game.id }}" ng-model="vm.threePluses" ng-change="vm.gameSelected()">
+                    <input type="radio" name="threePluses" value="{{ game.id }}" ng-model="vm.threePluses" ng-change="vm.voteObjectSelected()">
                 </td>
                 <td>
-                    <input type="radio" name="twoPluses" value="{{ game.id }}" ng-model="vm.twoPluses" ng-change="vm.gameSelected()">
+                    <input type="radio" name="twoPluses" value="{{ game.id }}" ng-model="vm.twoPluses" ng-change="vm.voteObjectSelected()">
                 </td>
                 <td>
-                    <input type="radio" name="onePlus" value="{{ game.id }}" ng-model="vm.onePlus" ng-change="vm.gameSelected()">
+                    <input type="radio" name="onePlus" value="{{ game.id }}" ng-model="vm.onePlus" ng-change="vm.voteObjectSelected()">
                 </td>
 				<td>
-                    <input type="radio" name="threeMinuses" value="{{ game.id }}" ng-model="vm.threeMinuses" ng-change="vm.gameSelected()">
+                    <input type="radio" name="threeMinuses" value="{{ game.id }}" ng-model="vm.threeMinuses" ng-change="vm.voteObjectSelected()">
                 </td>
 				<td>
 					|
 				</td>
 				<td>
-                    <input type="radio" name="{{ game.id }}.basic" value="{{ vm.scores.oneUp }}" ng-model="game.basic" ng-change="vm.gameSelected()" ng-disabled="game.isSelected">
+                    <input type="radio" name="{{ game.id }}.basic" value="{{ vm.scores.oneUp }}" ng-model="game.basic" ng-change="vm.voteObjectSelected()" ng-disabled="game.isSelected">
                 </td>
 				<td>
-                    <input type="radio" name="{{ game.id }}.basic" value="{{ vm.scores.oneDown }}" ng-model="game.basic" ng-change="vm.gameSelected()" ng-disabled="game.isSelected">
+                    <input type="radio" name="{{ game.id }}.basic" value="{{ vm.scores.oneDown }}" ng-model="game.basic" ng-change="vm.voteObjectSelected()" ng-disabled="game.isSelected">
                 </td>
             </tr>
         </tbody>

@@ -34,7 +34,7 @@
             .withBootstrap();
 
         vm.goBack = goBack;
-        vm.gameSelected = gameSelected;
+        vm.voteObjectSelected = voteObjectSelected;
         vm.saveVote = saveVote;
 
         activate();
@@ -43,25 +43,38 @@
             window.location = '/dashboard';
         }
 
-        function gameSelected() {
-            var premiumGames = [];
-            premiumGames.push(vm.threePluses);
-            premiumGames.push(vm.twoPluses);
-            premiumGames.push(vm.onePlus);
-            premiumGames.push(vm.threeMinuses);
-
+        function voteObjectSelected() {
             var voteCompleted = true;
 
-            vm.games.forEach(function (game) {
-                var numberOfSelectedPremiumGames = Enumerable.from(premiumGames).count(function (premiumGame) { return premiumGame == game.id; });
+            vm.games.forEach(function (voteObject) {
+                voteObject.isPremiumSelected = vm.threePluses == voteObject.id || vm.twoPluses == voteObject.id || vm.onePlus == voteObject.id || vm.threeMinuses == voteObject.id;
+                voteObject.isBasicSelected = voteObject.basic != 0;
 
-                game.isValid = numberOfSelectedPremiumGames == 1;
+                voteObject.isValid = checkIfPremiumVoteObjectIsSelectedOnlyOnce(voteObject) && (voteObject.isPremiumSelected || voteObject.isBasicSelected);
 
-                game.isPremiumSelected = vm.threePluses == game.id || vm.twoPluses == game.id || vm.onePlus == game.id || vm.threeMinuses == game.id;
-                voteCompleted = voteCompleted && (game.isPremiumSelected || game.basic != 0);
+                voteCompleted = voteCompleted && voteObject.isValid;
             });
 
             vm.voteCompleted = voteCompleted;
+        }
+
+        function getPremiumVoteObjects() {
+            var premiumVoteObjects = [];
+
+            premiumVoteObjects.push(vm.threePluses);
+            premiumVoteObjects.push(vm.twoPluses);
+            premiumVoteObjects.push(vm.onePlus);
+            premiumVoteObjects.push(vm.threeMinuses);
+
+            return premiumVoteObjects;
+        }
+
+        function checkIfPremiumVoteObjectIsSelectedOnlyOnce(voteObject) {
+            var premiumVoteObjects = getPremiumVoteObjects();
+
+            var numberOfPremiumSelections = Enumerable.from(premiumVoteObjects).count(function (premiumVoteObject) { return premiumVoteObject == voteObject.id; });
+
+            return numberOfPremiumSelections == 1;
         }
 
         function saveVote() {
