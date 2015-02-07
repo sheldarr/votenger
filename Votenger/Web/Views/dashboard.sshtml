@@ -30,7 +30,11 @@
 					<td>{{ votingSession.numberOfVotengers }}</td>
 					<td>{{ votingSession.draftsPerVotenger }}</td>
                     <td>{{ votingSession.startDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-                    <td>{{ votingSession.endDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                    <td>
+						<span ng-if="votingSession.startDate !==  votingSession.endDate">
+							{{ votingSession.endDate | date:'dd/MM/yyyy HH:mm:ss' }}
+						</span>
+					</td>
                     <td>
                         <button ng-if="votingSession.status == vm.VotingSessionStatus.Draft && !votingSession.draftAlreadyDoneByUser" type="button" class="btn btn-default btn-primary" ng-click="vm.draft(votingSession.id)"><span class="glyphicon glyphicon-random"></span> Draft</button>
                         <button ng-if="votingSession.status == vm.VotingSessionStatus.Vote && !votingSession.voteAlreadyDoneByUser" type="button" class="btn btn-default btn-primary" ng-click="vm.vote(votingSession.id)"><span class="glyphicon glyphicon-pencil"></span> Vote</button>

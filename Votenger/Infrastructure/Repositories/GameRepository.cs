@@ -15,36 +15,36 @@
             _documentStore = documentStore;
         }
 
-        public void AddGame(Game game)
+        public void AddGame(VoteObject voteObject)
         {
             using (var session = _documentStore.OpenSession())
             {
-                session.Store(game);
+                session.Store(voteObject);
                 session.SaveChanges();
             }
         }
 
-        public ICollection<Game> GetAllGames()
+        public ICollection<VoteObject> GetAllGames()
         {
             using (var session = _documentStore.OpenSession())
             {
-                return session.Query<Game>().ToList();
+                return session.Query<VoteObject>().ToList();
             }
         }
 
-        public Game GetGameById(int id)
+        public VoteObject GetGameById(int id)
         {
             using (var session = _documentStore.OpenSession())
             {
-                return session.Load<Game>(id);
+                return session.Load<VoteObject>(id);
             }
         }
 
-        public ICollection<Game> GetGamesForVote(ICollection<DraftResult> draftResults)
+        public ICollection<VoteObject> GetGamesForVote(ICollection<DraftResult> draftResults)
         {
             using (var session = _documentStore.OpenSession())
             {
-                var allGames = session.Query<Game>().ToList();
+                var allGames = session.Query<VoteObject>().ToList();
 
                 var gameIds = draftResults.SelectMany(x => x.SelectedGames)
                     .Distinct()
@@ -60,7 +60,7 @@
         {
             using (var session = _documentStore.OpenSession())
             {
-                return session.Query<Game>().Select(g => g.Category).Distinct().ToList();
+                return session.Query<VoteObject>().Select(g => g.Category).Distinct().ToList();
             }
         }
     }

@@ -26,15 +26,15 @@
             };
         }
 
-        public static GameDto CreateGameDto(Game game)
+        public static GameDto CreateGameDto(VoteObject voteObject)
         {
             return new GameDto
             {
-                Id = game.Id,
-                Name = game.Name,
-                Type = game.Type,
-                Genre = game.Genre,
-                MaxPlayers = game.MaxPlayers,
+                Id = voteObject.Id,
+                Name = voteObject.Name,
+                Type = voteObject.Type,
+                Genre = voteObject.Genre,
+                MaxPlayers = voteObject.MaxPlayers,
             };
         }
     }

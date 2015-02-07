@@ -6,10 +6,10 @@
 
     public interface IGameRepository
     {
-        void AddGame(Game game);
-        ICollection<Game> GetAllGames();
-        Game GetGameById(int id);
-        ICollection<Game> GetGamesForVote(ICollection<DraftResult> draftResults);
+        void AddGame(VoteObject voteObject);
+        ICollection<VoteObject> GetAllGames();
+        VoteObject GetGameById(int id);
+        ICollection<VoteObject> GetGamesForVote(ICollection<DraftResult> draftResults);
         ICollection<string> GetAllCategories();
     }
 }

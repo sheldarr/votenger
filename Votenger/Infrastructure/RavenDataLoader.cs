@@ -27,8 +27,8 @@
                 using (var streamReader = new StreamReader(path))
                 {
                     var fileContent = streamReader.ReadToEnd();
-                    var gamesFromFile = JsonConvert.DeserializeObject<ICollection<Game>>(fileContent);
-                    var gamesInDatabase = documentSession.Query<Game>().ToList();
+                    var gamesFromFile = JsonConvert.DeserializeObject<ICollection<VoteObject>>(fileContent);
+                    var gamesInDatabase = documentSession.Query<VoteObject>().ToList();
 
                     var gamesToAdd = gamesFromFile.Where(g => gamesInDatabase.All(ga => ga.Name != g.Name)).ToList();
 

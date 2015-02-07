@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class GameSummaryDto
+    public class VoteObjectSummaryDto
     {
         public int Id { get; set; }
         public String Name { get; set; }

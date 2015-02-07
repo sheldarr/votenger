@@ -1,6 +1,6 @@
 ﻿namespace Votenger.Domain.Game
 {
-    public class Game
+    public class VoteObject
     {
         public int Id { get; set; }
         public string Name { get; set; }

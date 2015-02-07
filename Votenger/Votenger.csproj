@@ -66,7 +66,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Game\Game.cs" />
+    <Compile Include="Domain\Game\VoteObject.cs" />
+    <Compile Include="Domain\Game\BasicScore.cs" />
+    <Compile Include="Domain\Game\PremiumScore.cs" />
     <Compile Include="Domain\Response\BasicScore.cs" />
     <Compile Include="Domain\Response\VoteResult.cs" />
     <Compile Include="Domain\Response\DraftResult.cs" />
@@ -94,7 +96,7 @@
     <Compile Include="Infrastructure\SelfHostingRootPathProvider.cs" />
     <Compile Include="Web\DTO\DraftOptionsDto.cs" />
     <Compile Include="Web\DTO\GameDto.cs" />
-    <Compile Include="Web\DTO\GameSummaryDto.cs" />
+    <Compile Include="Web\DTO\VoteObjectSummaryDto.cs" />
     <Compile Include="Web\DTO\UserCredentialsDto.cs" />
     <Compile Include="Web\DTO\VoteResultDto.cs" />
     <Compile Include="Web\DTO\VoteSummaryDto.cs" />
