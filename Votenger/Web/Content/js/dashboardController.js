@@ -40,15 +40,19 @@
         }
 
         function completeDraft(id) {
-            votingSessionService.completeDraft(id).success(function() {
-                activate();
-            });
+            if (confirm("Are you sure that you want to complete draft?")) {
+                votingSessionService.completeDraft(id).success(function() {
+                    activate();
+                });
+            }
         }
 
         function completeVote(id) {
-            votingSessionService.completeVote(id).success(function () {
-                activate();
-            });
+            if (confirm("Are you sure that you want to complete vote?")) {
+                votingSessionService.completeVote(id).success(function() {
+                    activate();
+                });
+            }
         }
 
         function activate() {

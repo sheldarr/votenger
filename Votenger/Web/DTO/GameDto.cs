@@ -7,5 +7,6 @@
         public string Type { get; set; }
         public string Genre { get; set; }
         public int MaxPlayers { get; set; }
+        public string PopularityIndex { get; set; }
     }
 }

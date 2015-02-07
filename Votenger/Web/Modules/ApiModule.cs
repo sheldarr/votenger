@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Domain.Game;
     using Domain.Response;
+    using Domain.Session;
     using DTO;
     using Infrastructure;
     using Infrastructure.Authorization;
@@ -94,25 +96,31 @@
             Get["/api/computerGames"] = parameters =>
             {
                 var games = _gameRepository.GetAllGames();
+                var votingSessions = _votingSessionRepository.GetAllVotingSessions();
 
-                var gamesDto = games.Select(DtoFactory.CreateGameDto).ToList();
+                var draftsCount = votingSessions.Where(vs => vs.Status != VotingSessionStatus.Draft).Aggregate(0, (i, session) => i + session.DraftResults.Count);
+
+                var gamesDto = new List<GameDto>();
+
+                foreach (var game in games)
+                {
+                    var gameDto = DtoFactory.CreateGameDto(game);
+                    var gameDraftCount = votingSessions.Aggregate(0, (i, session) => i + session.DraftResults.Count(dr => dr.SelectedGames.Any(id => id == game.Id)));
+                    gameDto.PopularityIndex = draftsCount == 0 ? "0" : ((float)gameDraftCount / draftsCount).ToString(CultureInfo.InvariantCulture);
+                    gamesDto.Add(gameDto);
+                }
 
                 return Response.AsJson(gamesDto);
             };
 
             Get["/api/gamesForVote/{id}"] = parameters =>
             {
-                var votingSessionId = parameters.id;
+                int votingSessionId = parameters.id;
                 var votingSession = _votingSessionRepository.GetVotingSessionById(votingSessionId);
-                
+
                 var games = _gameRepository.GetGamesForVote(votingSession.DraftResults);
 
-                var gamesDto = new List<GameDto>();
-
-                foreach (var game in games)
-                {
-                    gamesDto.Add(DtoFactory.CreateGameDto(game));
-                }
+                var gamesDto = games.Select(DtoFactory.CreateGameDto).ToList();
 
                 return Response.AsJson(gamesDto);
             };
