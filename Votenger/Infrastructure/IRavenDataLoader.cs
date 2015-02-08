@@ -2,6 +2,6 @@
 {
     public interface IRavenDataLoader
     {
-        void LoadGames();
+        void LoadVoteObjects();
     }
 }

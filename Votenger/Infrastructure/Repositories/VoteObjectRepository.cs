@@ -2,20 +2,20 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Game;
     using Domain.Response;
+    using Domain.VoteObject;
     using Raven.Client;
 
-    public class GameRepository : IGameRepository
+    public class VoteObjectRepository : IVoteObjectRepository
     {
         private readonly IDocumentStore _documentStore;
 
-        public GameRepository(IDocumentStore documentStore)
+        public VoteObjectRepository(IDocumentStore documentStore)
         {
             _documentStore = documentStore;
         }
 
-        public void AddGame(VoteObject voteObject)
+        public void AddVoteObject(VoteObject voteObject)
         {
             using (var session = _documentStore.OpenSession())
             {
@@ -24,7 +24,7 @@
             }
         }
 
-        public ICollection<VoteObject> GetAllGames()
+        public ICollection<VoteObject> GetAllVoteObjects()
         {
             using (var session = _documentStore.OpenSession())
             {
@@ -32,7 +32,7 @@
             }
         }
 
-        public VoteObject GetGameById(int id)
+        public VoteObject GetVoteObjectById(int id)
         {
             using (var session = _documentStore.OpenSession())
             {
@@ -40,19 +40,19 @@
             }
         }
 
-        public ICollection<VoteObject> GetGamesForVote(ICollection<DraftResult> draftResults)
+        public ICollection<VoteObject> GetVoteObjectsForVote(ICollection<DraftResult> draftResults)
         {
             using (var session = _documentStore.OpenSession())
             {
-                var allGames = session.Query<VoteObject>().ToList();
+                var allVoteObjects = session.Query<VoteObject>().ToList();
 
-                var gameIds = draftResults.SelectMany(x => x.SelectedGames)
+                var voteObjectIds = draftResults.SelectMany(x => x.SelectedVoteObjects)
                     .Distinct()
                     .ToList();
 
-                var gamesForVote = allGames.Where(g => gameIds.Any(i => i == g.Id)).ToList();
+                var voteObjectsForVote = allVoteObjects.Where(g => voteObjectIds.Any(i => i == g.Id)).ToList();
 
-                return gamesForVote;
+                return voteObjectsForVote;
             }
         }
 

@@ -5,6 +5,6 @@
     public class DraftResultDto
     {
         public int VotingSessionId { get; set; }
-        public ICollection<int> SelectedGames { get; set; }
+        public ICollection<int> SelectedVoteObjects { get; set; }
     }
 }

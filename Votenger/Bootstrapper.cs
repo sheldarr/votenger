@@ -30,7 +30,7 @@
         {
             base.ConfigureApplicationContainer(container);
 
-            container.Register<IGameRepository, GameRepository>().AsSingleton();
+            container.Register<IVoteObjectRepository, VoteObjectRepository>().AsSingleton();
             container.Register<IUserRepository, UserRepository>().AsSingleton();
             container.Register<IPasswordHasher, Sha1PasswordHasher>();
 
@@ -44,7 +44,7 @@
 
             var ravenDataLoader = new RavenDataLoader(embeddableDocumentStore);
 
-            ravenDataLoader.LoadGames();
+            ravenDataLoader.LoadVoteObjects();
             
             container.Register<IDocumentStore>(embeddableDocumentStore);
         }

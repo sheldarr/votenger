@@ -3,12 +3,12 @@
 
     app.controller('draftController', draftController);
 
-    draftController.$inject = ['gameService', 'draftService', 'DTOptionsBuilder'];
+    draftController.$inject = ['voteObjectService', 'draftService', 'DTOptionsBuilder'];
 
-    function draftController(gameService, draftService, DTOptionsBuilder) {
+    function draftController(voteObjectService, draftService, DTOptionsBuilder) {
         var vm = this;
 
-        vm.gamesLeft = 0;
+        vm.voteObjectsLeft = 0;
         vm.draftCompleted = false;
 
         vm.draftOptions = {};
@@ -19,7 +19,7 @@
             .withBootstrap();
 
         vm.goBack = goBack;
-        vm.gameSelected = gameSelected;
+        vm.voteObjectSelected = voteObjectSelected;
         vm.saveDraft = saveDraft;
 
         activate();
@@ -28,22 +28,22 @@
             window.location = "/dashboard";
         }
 
-        function gameSelected() {
-            var selectedGames = Enumerable.from(vm.games).where(function (game) { return game.selected; }).toArray();
-            vm.gamesLeft = vm.draftOptions.draftsPerVotenger - selectedGames.length;
+        function voteObjectSelected() {
+            var selectedVoteObjects = Enumerable.from(vm.voteObjects).where(function (voteObject) { return voteObject.selected; }).toArray();
+            vm.voteObjectsLeft = vm.draftOptions.draftsPerVotenger - selectedVoteObjects.length;
 
-            vm.draftCompleted = selectedGames.length >= vm.draftOptions.draftsPerVotenger;
+            vm.draftCompleted = selectedVoteObjects.length >= vm.draftOptions.draftsPerVotenger;
         }
 
         function saveDraft() {
             var draft = {
                 votingSessionId: vm.votingSessionId,
-                selectedGames: []
+                selectedVoteObjects: []
             };
 
-            var selectedGames = Enumerable.from(vm.games).where(function (game) { return game.selected; }).toArray();
-            selectedGames.forEach(function (game) {
-                draft.selectedGames.push(game.id);
+            var selectedVoteObjects = Enumerable.from(vm.voteObjects).where(function (voteObject) { return voteObject.selected; }).toArray();
+            selectedVoteObjects.forEach(function (voteObject) {
+                draft.selectedVoteObjects.push(voteObject.id);
             });
 
             draftService.saveDraft(draft).success(function() {
@@ -56,13 +56,13 @@
 
             draftService.getDraftOptions(vm.votingSessionId).then(function (options) {
                 vm.draftOptions = options.data;
-                vm.gamesLeft = vm.draftOptions.draftsPerVotenger;
+                vm.voteObjectsLeft = vm.draftOptions.draftsPerVotenger;
             });
 
-            gameService.getAllComputerGames().then(function (games) {
-                vm.games = games.data;
-                vm.games.forEach(function (game) {
-                    game.selected = false;
+            voteObjectService.getAllVoteObjects().then(function (voteObjects) {
+                vm.voteObjects = voteObjects.data;
+                vm.voteObjects.forEach(function (voteObject) {
+                    voteObject.selected = false;
                 });
             });
         }

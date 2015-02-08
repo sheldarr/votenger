@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Domain.Game;
+    using Domain.VoteObject;
     using Newtonsoft.Json;
     using Raven.Client;
 
@@ -17,7 +17,7 @@
             _documentStore = documentStore;
         } 
 
-        public void LoadGames()
+        public void LoadVoteObjects()
         {
             using (var documentSession = _documentStore.OpenSession())
             {

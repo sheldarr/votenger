@@ -2,8 +2,8 @@
 {
     using System.Linq;
     using Domain;
-    using Domain.Game;
     using Domain.Session;
+    using Domain.VoteObject;
     using Web.DTO;
 
     public class DtoFactory
@@ -26,9 +26,9 @@
             };
         }
 
-        public static GameDto CreateGameDto(VoteObject voteObject)
+        public static VoteObjectDto CreateVoteObjectDto(VoteObject voteObject)
         {
-            return new GameDto
+            return new VoteObjectDto
             {
                 Id = voteObject.Id,
                 Name = voteObject.Name,

@@ -66,9 +66,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Game\VoteObject.cs" />
-    <Compile Include="Domain\Game\BasicScore.cs" />
-    <Compile Include="Domain\Game\PremiumScore.cs" />
+    <Compile Include="Domain\VoteObject\VoteObject.cs" />
+    <Compile Include="Domain\VoteObject\BasicScore.cs" />
+    <Compile Include="Domain\VoteObject\PremiumScore.cs" />
     <Compile Include="Domain\Response\BasicScore.cs" />
     <Compile Include="Domain\Response\VoteResult.cs" />
     <Compile Include="Domain\Response\DraftResult.cs" />
@@ -87,15 +87,15 @@
     <Compile Include="Infrastructure\DtoFactory.cs" />
     <Compile Include="Infrastructure\RavenDataLoader.cs" />
     <Compile Include="Infrastructure\IRavenDataLoader.cs" />
-    <Compile Include="Infrastructure\Repositories\GameRepository.cs" />
-    <Compile Include="Infrastructure\Repositories\IGameRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\VoteObjectRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\IVoteObjectRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IUserRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IVotingSessionRepository.cs" />
     <Compile Include="Infrastructure\Repositories\UserRepository.cs" />
     <Compile Include="Infrastructure\Repositories\VotingSessionRepository.cs" />
     <Compile Include="Infrastructure\SelfHostingRootPathProvider.cs" />
     <Compile Include="Web\DTO\DraftOptionsDto.cs" />
-    <Compile Include="Web\DTO\GameDto.cs" />
+    <Compile Include="Web\DTO\VoteObjectDto.cs" />
     <Compile Include="Web\DTO\VoteObjectSummaryDto.cs" />
     <Compile Include="Web\DTO\UserCredentialsDto.cs" />
     <Compile Include="Web\DTO\VoteResultDto.cs" />
@@ -420,7 +420,7 @@
     <Content Include="Web\Content\js\draftService.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web\Content\js\gameService.js">
+    <Content Include="Web\Content\js\voteObjectService.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web\Content\js\homeController.js">

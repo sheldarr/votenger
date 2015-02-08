@@ -25,7 +25,7 @@
             vm.votingSessionId = getPathnameParameter();
 
             votingSessionService.getVoteResults(vm.votingSessionId).then(function (results) {
-                vm.results = results.data.gamesSummary;
+                vm.results = results.data.voteObjectsSummary;
             });
         }
         

@@ -4,6 +4,6 @@
 
     public class VoteSummaryDto
     {
-        public ICollection<VoteObjectSummaryDto> GamesSummary { get; set; } 
+        public ICollection<VoteObjectSummaryDto> VoteObjectsSummary { get; set; } 
     }
 }

@@ -14,7 +14,7 @@
             var draftResult = new DraftResult
             {
                 VotingSessionId = draftResultDto.VotingSessionId,
-                SelectedGames = draftResultDto.SelectedGames
+                SelectedVoteObjects = draftResultDto.SelectedVoteObjects
             };
 
             return draftResult;

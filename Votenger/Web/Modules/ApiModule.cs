@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using Domain.Game;
     using Domain.Response;
     using Domain.Session;
+    using Domain.VoteObject;
     using DTO;
     using Infrastructure;
     using Infrastructure.Authorization;
@@ -20,14 +20,14 @@
     {
         private readonly IAuthorization _authorization;
         private readonly IVotingSessionRepository _votingSessionRepository;
-        private readonly IGameRepository _gameRepository;
+        private readonly IVoteObjectRepository _voteObjectRepository;
         private readonly IUserRepository _userRepository;
 
-        public ApiModule(IAuthorization authorization, IVotingSessionRepository votingSessionRepository, IGameRepository gameRepository, IUserRepository userRepository)
+        public ApiModule(IAuthorization authorization, IVotingSessionRepository votingSessionRepository, IVoteObjectRepository voteObjectRepository, IUserRepository userRepository)
         {
             _authorization = authorization;
             _votingSessionRepository = votingSessionRepository;
-            _gameRepository = gameRepository;
+            _voteObjectRepository = voteObjectRepository;
             _userRepository = userRepository;
 
             Get["/api/user/isAuthorized"] = parameters =>
@@ -65,7 +65,7 @@
 
             Get["/api/session/categories"] = parameters =>
             {
-                var categories = _gameRepository.GetAllCategories();
+                var categories = _voteObjectRepository.GetAllCategories();
 
                 return Response.AsJson(categories);
             };
@@ -93,36 +93,36 @@
                 return Response.AsJson(draftOptions);
             };
 
-            Get["/api/computerGames"] = parameters =>
+            Get["/api/voteObjects"] = parameters =>
             {
-                var games = _gameRepository.GetAllGames();
+                var voteObjects = _voteObjectRepository.GetAllVoteObjects();
                 var votingSessions = _votingSessionRepository.GetAllVotingSessions();
 
                 var draftsCount = votingSessions.Where(vs => vs.Status != VotingSessionStatus.Draft).Aggregate(0, (i, session) => i + session.DraftResults.Count);
 
-                var gamesDto = new List<GameDto>();
+                var voteObjectsDto = new List<VoteObjectDto>();
 
-                foreach (var game in games)
+                foreach (var voteObject in voteObjects)
                 {
-                    var gameDto = DtoFactory.CreateGameDto(game);
-                    var gameDraftCount = votingSessions.Aggregate(0, (i, session) => i + session.DraftResults.Count(dr => dr.SelectedGames.Any(id => id == game.Id)));
-                    gameDto.PopularityIndex = draftsCount == 0 ? "0" : ((float)gameDraftCount / draftsCount).ToString(CultureInfo.InvariantCulture);
-                    gamesDto.Add(gameDto);
+                    var voteObjectDto = DtoFactory.CreateVoteObjectDto(voteObject);
+                    var voteObjectDraftCount = votingSessions.Aggregate(0, (i, session) => i + session.DraftResults.Count(dr => dr.SelectedVoteObjects.Any(id => id == voteObject.Id)));
+                    voteObjectDto.PopularityIndex = draftsCount == 0 ? "0" : ((float)voteObjectDraftCount / draftsCount).ToString(CultureInfo.InvariantCulture);
+                    voteObjectsDto.Add(voteObjectDto);
                 }
 
-                return Response.AsJson(gamesDto);
+                return Response.AsJson(voteObjectsDto);
             };
 
-            Get["/api/gamesForVote/{id}"] = parameters =>
+            Get["/api/voteObjectsForVote/{id}"] = parameters =>
             {
                 int votingSessionId = parameters.id;
                 var votingSession = _votingSessionRepository.GetVotingSessionById(votingSessionId);
 
-                var games = _gameRepository.GetGamesForVote(votingSession.DraftResults);
+                var voteObjects = _voteObjectRepository.GetVoteObjectsForVote(votingSession.DraftResults);
 
-                var gamesDto = games.Select(DtoFactory.CreateGameDto).ToList();
+                var voteObjectDto = voteObjects.Select(DtoFactory.CreateVoteObjectDto).ToList();
 
-                return Response.AsJson(gamesDto);
+                return Response.AsJson(voteObjectDto);
             };
 
             Get["/api/session/result/{id}"] = parameters =>
@@ -132,7 +132,7 @@
 
                 var voteSummaryDto = new VoteSummaryDto
                 {
-                    GamesSummary = new List<VoteObjectSummaryDto>()
+                    VoteObjectsSummary = new List<VoteObjectSummaryDto>()
                 };
 
                 foreach (var voteResult in votingSession.VoteResults)
@@ -204,10 +204,10 @@
 
         private void AddVoteResultPoints(VoteResult voteResult, VoteSummaryDto voteSummaryDto)
         {
-            var threePlusesVoteObject = _gameRepository.GetGameById(voteResult.ThreePlusesVoteObject);
-            var twoPlusesVoteObject = _gameRepository.GetGameById(voteResult.TwoPlusesVoteObject);
-            var onePlusVoteObject = _gameRepository.GetGameById(voteResult.OnePlusVoteObject);
-            var threeMinusesVoteObject = _gameRepository.GetGameById(voteResult.ThreeMinusesVoteObject);
+            var threePlusesVoteObject = _voteObjectRepository.GetVoteObjectById(voteResult.ThreePlusesVoteObject);
+            var twoPlusesVoteObject = _voteObjectRepository.GetVoteObjectById(voteResult.TwoPlusesVoteObject);
+            var onePlusVoteObject = _voteObjectRepository.GetVoteObjectById(voteResult.OnePlusVoteObject);
+            var threeMinusesVoteObject = _voteObjectRepository.GetVoteObjectById(voteResult.ThreeMinusesVoteObject);
 
             AddPointsToVoteObject(voteSummaryDto, threePlusesVoteObject, (int) PremiumScore.ThreePluses);
             AddPointsToVoteObject(voteSummaryDto, twoPlusesVoteObject, (int) PremiumScore.TwoPluses);
@@ -216,16 +216,16 @@
 
             foreach (var basicScore in voteResult.BasicScores)
             {
-                var basicScoreVoteObject = _gameRepository.GetGameById(basicScore.VoteObjectId);
+                var basicScoreVoteObject = _voteObjectRepository.GetVoteObjectById(basicScore.VoteObjectId);
                 AddPointsToVoteObject(voteSummaryDto, basicScoreVoteObject, basicScore.Points);
             }
         }
 
         private static void AddPointsToVoteObject(VoteSummaryDto voteSummaryDto, VoteObject voteObject, int points)
         {
-            if (voteSummaryDto.GamesSummary.All(g => g.Id != voteObject.Id))
+            if (voteSummaryDto.VoteObjectsSummary.All(g => g.Id != voteObject.Id))
             {
-                voteSummaryDto.GamesSummary.Add(new VoteObjectSummaryDto
+                voteSummaryDto.VoteObjectsSummary.Add(new VoteObjectSummaryDto
                 {
                     Id = voteObject.Id,
                     Name = voteObject.Name,
@@ -234,23 +234,23 @@
             }
             else
             {
-                voteSummaryDto.GamesSummary.First(g => g.Id == voteObject.Id).Points += points;
+                voteSummaryDto.VoteObjectsSummary.First(g => g.Id == voteObject.Id).Points += points;
             }
         }
 
         private static void EmergeVoteWinners(VoteSummaryDto voteSummaryDto)
         {
-            var groupByPoints = voteSummaryDto.GamesSummary.GroupBy(o => o.Points).OrderByDescending(o => o.Key).ToList();
+            var groupByPoints = voteSummaryDto.VoteObjectsSummary.GroupBy(o => o.Points).OrderByDescending(o => o.Key).ToList();
 
-            voteSummaryDto.GamesSummary.Where(g => g.Points == groupByPoints.ElementAt(0).Key).ForEach(g => g.FirstPlace = true);
+            voteSummaryDto.VoteObjectsSummary.Where(g => g.Points == groupByPoints.ElementAt(0).Key).ForEach(g => g.FirstPlace = true);
             if (groupByPoints.Count > 1)
             {
-                voteSummaryDto.GamesSummary.Where(g => g.Points == groupByPoints.ElementAt(1).Key)
+                voteSummaryDto.VoteObjectsSummary.Where(g => g.Points == groupByPoints.ElementAt(1).Key)
                     .ForEach(g => g.SecondPlace = true);
             }
             if (groupByPoints.Count > 2)
             {
-                voteSummaryDto.GamesSummary.Where(g => g.Points == groupByPoints.ElementAt(2).Key)
+                voteSummaryDto.VoteObjectsSummary.Where(g => g.Points == groupByPoints.ElementAt(2).Key)
                     .ForEach(g => g.ThirdPlace = true);
             }
         }

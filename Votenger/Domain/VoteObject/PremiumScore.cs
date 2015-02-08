@@ -1,4 +1,4 @@
-﻿namespace Votenger.Domain.Game
+﻿namespace Votenger.Domain.VoteObject
 {
     public enum PremiumScore
     {

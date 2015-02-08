@@ -3,9 +3,9 @@
 
     app.controller('voteController', draftController);
 
-    draftController.$inject = ['gameService', 'voteService', 'DTOptionsBuilder'];
+    draftController.$inject = ['voteObjectService', 'voteService', 'DTOptionsBuilder'];
 
-    function draftController(gameService, voteService, DTOptionsBuilder) {
+    function draftController(voteObjectService, voteService, DTOptionsBuilder) {
         var vm = this;
 
         vm.voteCompleted = false;
@@ -41,7 +41,7 @@
         function voteObjectSelected() {
             var voteCompleted = true;
 
-            vm.games.forEach(function (voteObject) {
+            vm.voteObjects.forEach(function (voteObject) {
                 voteObject.isPremiumSelected = vm.threePluses == voteObject.id || vm.twoPluses == voteObject.id || vm.onePlus == voteObject.id || vm.threeMinuses == voteObject.id;
                 voteObject.isBasicSelected = voteObject.basic != 0;
 
@@ -81,7 +81,7 @@
             vm.voteResults.onePlusVoteObject = vm.onePlus;
             vm.voteResults.threeMinusesVoteObject = vm.threeMinuses;
             
-            vm.games.forEach(function (voteObject) {
+            vm.voteObjects.forEach(function (voteObject) {
                 if (voteObject.isBasicSelected) {
                     var points = voteObject.basic;
 
@@ -102,12 +102,12 @@
         function activate() {
             vm.voteResults.votingSessionId = getPathnameParameter();
 
-            gameService.getGamesForVote(vm.voteResults.votingSessionId).then(function (games) {
-                vm.games = games.data;
-                vm.games.forEach(function (game) {
-                    game.isPremiumSelected = false;
-                    game.isValid = true;
-                    game.basic = 0;
+            voteObjectService.getVoteObjectsForVote(vm.voteResults.votingSessionId).then(function (voteObjects) {
+                vm.voteObjects = voteObjects.data;
+                vm.voteObjects.forEach(function (voteObject) {
+                    voteObject.isPremiumSelected = false;
+                    voteObject.isValid = true;
+                    voteObject.basic = 0;
                 });
             });
         }
