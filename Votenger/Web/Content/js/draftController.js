@@ -15,6 +15,7 @@
 
         vm.dtOptions = DTOptionsBuilder
             .newOptions()
+            .withOption('order', [5, 'desc'])
             .withBootstrap();
 
         vm.goBack = goBack;

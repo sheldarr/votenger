@@ -45,7 +45,6 @@
             var ravenDataLoader = new RavenDataLoader(embeddableDocumentStore);
 
             ravenDataLoader.LoadGames();
-            ravenDataLoader.LoadExampleData();
             
             container.Register<IDocumentStore>(embeddableDocumentStore);
         }

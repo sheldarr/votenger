@@ -5,7 +5,6 @@
     using System.IO;
     using System.Linq;
     using Domain.Game;
-    using Domain.Session;
     using Newtonsoft.Json;
     using Raven.Client;
 
@@ -39,24 +38,6 @@
                 }
 
                 documentSession.SaveChanges();
-            }
-        }
-
-        public void LoadExampleData()
-        {
-            using (var documentSession = _documentStore.OpenSession())
-            {
-                //var votingSession = new VotingSession
-                //{
-                //    Category = "Video Games",
-                //    Status = VotingSessionStatus.Draft,
-                //    NumberOfVotengers = 1,
-                //    DraftsPerVotenger = 8
-                //};
-               
-                //documentSession.Store(votingSession);
-                 
-                //documentSession.SaveChanges();
             }
         }
     }
