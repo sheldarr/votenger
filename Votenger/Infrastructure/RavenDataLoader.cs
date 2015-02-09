@@ -19,22 +19,45 @@
 
         public void LoadVoteObjects()
         {
+            var filesPath = String.Format("{0}/Resources/", AppDomain.CurrentDomain.BaseDirectory);
+            var filesToLoad = Directory.GetFiles(filesPath, "*.json");
+
+            foreach (var fileToLoad in filesToLoad)
+            {
+                try
+                {
+                    LoadVoteObjectFromFile(fileToLoad);
+                }
+                catch (Exception e)
+                {
+                    var errorMessage = String.Format("Exception: {0}", e.Message);
+                    Console.WriteLine(errorMessage);
+                }
+            }
+        }
+
+        public void LoadVoteObjectFromFile(string path)
+        {
+            var startLoadMessage = String.Format("Started loading vote objects from file: {0}", path);
+            Console.WriteLine(startLoadMessage);
+
             using (var documentSession = _documentStore.OpenSession())
             {
-                var path = String.Format("{0}/Resources/Games.json", AppDomain.CurrentDomain.BaseDirectory);
-
                 using (var streamReader = new StreamReader(path))
                 {
                     var fileContent = streamReader.ReadToEnd();
-                    var gamesFromFile = JsonConvert.DeserializeObject<ICollection<VoteObject>>(fileContent);
-                    var gamesInDatabase = documentSession.Query<VoteObject>().ToList();
+                    var voteObjectsFromFile = JsonConvert.DeserializeObject<ICollection<VoteObject>>(fileContent);
+                    var voteObjectsInDatabase = documentSession.Query<VoteObject>().ToList();
 
-                    var gamesToAdd = gamesFromFile.Where(g => gamesInDatabase.All(ga => ga.Name != g.Name)).ToList();
+                    var voteObjectsToAdd = voteObjectsFromFile.Where(g => voteObjectsInDatabase.All(ga => ga.Name != g.Name)).ToList();
 
-                    foreach (var game in gamesToAdd)
+                    foreach (var voteObject in voteObjectsToAdd)
                     {
-                        documentSession.Store(game);
+                        documentSession.Store(voteObject);
                     }
+
+                    var finishLoadMessage = String.Format("Finished loading vote objects from file: {0}/{1}", voteObjectsToAdd.Count, voteObjectsFromFile.Count);
+                    Console.WriteLine(finishLoadMessage);
                 }
 
                 documentSession.SaveChanges();
