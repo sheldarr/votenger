@@ -1,6 +1,7 @@
 ﻿namespace Votenger
 {
     using System;
+    using CIL;
     using Nancy.Hosting.Self;
 
     class Program
@@ -18,9 +19,8 @@
             {
                 host.Start();
 
-                Console.WriteLine("Your application is running on " + uri);
-                Console.WriteLine("Press any [Enter] to close the host.");
-                Console.ReadLine();
+                var consoleLineInteface = new ConsoleLineInterface();
+                consoleLineInteface.Start(uri.AbsoluteUri);
             }
         }
     }

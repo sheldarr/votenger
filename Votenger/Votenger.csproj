@@ -66,6 +66,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CIL\CilCommandsFactory.cs" />
+    <Compile Include="CIL\Commands\BackupCilCommand.cs" />
+    <Compile Include="CIL\Commands\DisplayVersionCilCommand.cs" />
+    <Compile Include="CIL\Commands\ExitApplicationCilCommand.cs" />
+    <Compile Include="CIL\Commands\ICilCommand.cs" />
+    <Compile Include="CIL\Commands\ParserErrorCilCommand.cs" />
+    <Compile Include="CIL\ConsoleLineInterface.cs" />
     <Compile Include="Domain\VoteObject\VoteObject.cs" />
     <Compile Include="Domain\VoteObject\BasicScore.cs" />
     <Compile Include="Domain\VoteObject\PremiumScore.cs" />
@@ -255,6 +262,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Backup\" />
     <Folder Include="bower-dependencies\datatables-bootstrap3-plugin\Data\" />
   </ItemGroup>
   <ItemGroup>

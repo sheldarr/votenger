@@ -1,6 +1,7 @@
 ﻿namespace Votenger.Infrastructure.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Authorization;
     using Domain;
@@ -54,6 +55,14 @@
             {
                 var user = documentSession.Load<User>(id);
                 return user;
+            }
+        }
+
+        public IEnumerable<User> GetAllUsers()
+        {
+            using (var documentSession = _documentStore.OpenSession())
+            {
+                return documentSession.Query<User>().ToList();
             }
         }
 

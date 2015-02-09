@@ -1,5 +1,6 @@
 ﻿namespace Votenger.Infrastructure.Repositories
 {
+    using System.Collections.Generic;
     using Domain;
     using Web.DTO;
 
@@ -9,5 +10,6 @@
         string GetUserNickname(string hash);
         User GetUser(string hash);
         User GetUser(int id);
+        IEnumerable<User> GetAllUsers();
     }
 }
