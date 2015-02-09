@@ -1,7 +1,7 @@
 ﻿namespace Votenger
 {
     using System;
-    using CIL;
+    using CLI;
     using Nancy.Hosting.Self;
 
     class Program
@@ -19,8 +19,7 @@
             {
                 host.Start();
 
-                var consoleLineInteface = new ConsoleLineInterface();
-                consoleLineInteface.Start(uri.AbsoluteUri);
+                CommandLineInterface.Start(uri.AbsoluteUri);
             }
         }
     }

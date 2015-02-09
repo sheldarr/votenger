@@ -1,5 +1,6 @@
 ﻿namespace Votenger
 {
+    using CLI;
     using Infrastructure;
     using Infrastructure.Authorization;
     using Infrastructure.Repositories;
@@ -45,8 +46,13 @@
             var ravenDataLoader = new RavenDataLoader(embeddableDocumentStore);
 
             ravenDataLoader.LoadVoteObjects();
-            
+
             container.Register<IDocumentStore>(embeddableDocumentStore);
+
+            var cliCommandsFactory = container.Resolve<CliCommandsFactory>();
+            var cliEngine = new CliEngine(cliCommandsFactory);
+
+            CommandLineInterface.SetCliEngine(cliEngine);
         }
     }
 }

@@ -66,13 +66,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CIL\CilCommandsFactory.cs" />
-    <Compile Include="CIL\Commands\BackupCilCommand.cs" />
-    <Compile Include="CIL\Commands\DisplayVersionCilCommand.cs" />
-    <Compile Include="CIL\Commands\ExitApplicationCilCommand.cs" />
-    <Compile Include="CIL\Commands\ICilCommand.cs" />
-    <Compile Include="CIL\Commands\ParserErrorCilCommand.cs" />
-    <Compile Include="CIL\ConsoleLineInterface.cs" />
+    <Compile Include="CLI\CliCommandsFactory.cs" />
+    <Compile Include="CLI\CliEngine.cs" />
+    <Compile Include="CLI\Commands\BackupCliCommand.cs" />
+    <Compile Include="CLI\Commands\DisplayVersionCliCommand.cs" />
+    <Compile Include="CLI\Commands\ExitApplicationCliCommand.cs" />
+    <Compile Include="CLI\Commands\ICliCommand.cs" />
+    <Compile Include="CLI\Commands\ParserErrorCliCommand.cs" />
+    <Compile Include="CLI\CommandLineInterface.cs" />
     <Compile Include="Domain\VoteObject\VoteObject.cs" />
     <Compile Include="Domain\VoteObject\BasicScore.cs" />
     <Compile Include="Domain\VoteObject\PremiumScore.cs" />

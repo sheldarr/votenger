@@ -1,8 +1,8 @@
-﻿namespace Votenger.CIL.Commands
+﻿namespace Votenger.CLI.Commands
 {
     using System;
 
-    public class DisplayVersionCilCommand : ICilCommand
+    public class DisplayVersionCliCommand : ICliCommand
     {
         public void Execute()
         {

@@ -1,8 +1,8 @@
-﻿namespace Votenger.CIL.Commands
+﻿namespace Votenger.CLI.Commands
 {
     using System;
 
-    public class ParserErrorCilCommand : ICilCommand
+    public class ParserErrorCliCommand : ICliCommand
     {
         public void Execute()
         {
