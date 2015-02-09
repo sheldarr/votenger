@@ -402,6 +402,9 @@
     <Content Include="Web\Content\js\app.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Web\Content\js\authorizationController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web\Content\js\resultsController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

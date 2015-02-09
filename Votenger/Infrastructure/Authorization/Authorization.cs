@@ -1,7 +1,6 @@
 ﻿namespace Votenger.Infrastructure.Authorization
 {
     using System.Linq;
-    using System.Net;
     using Domain;
     using Nancy;
     using Nancy.Helpers;
