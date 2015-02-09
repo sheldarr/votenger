@@ -11,5 +11,6 @@
         VoteObject GetVoteObjectById(int id);
         ICollection<VoteObject> GetVoteObjectsForVote(ICollection<DraftResult> draftResults);
         ICollection<string> GetAllCategories();
+        IEnumerable<VoteObject> GetVoteObjectsByCategory(string category);
     }
 }

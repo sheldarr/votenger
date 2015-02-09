@@ -93,10 +93,13 @@
                 return Response.AsJson(draftOptions);
             };
 
-            Get["/api/voteObjects"] = parameters =>
+            Get["/api/voteObjectsForDraft/{id}"] = parameters =>
             {
-                var voteObjects = _voteObjectRepository.GetAllVoteObjects();
-                var votingSessions = _votingSessionRepository.GetAllVotingSessions();
+                int votingSessionId = parameters.id;
+                var votingSession = _votingSessionRepository.GetVotingSessionById(votingSessionId);               
+
+                var voteObjects = _voteObjectRepository.GetVoteObjectsByCategory(votingSession.Category);
+                var votingSessions = _votingSessionRepository.GetVotingSessionsByCategory(votingSession.Category);
 
                 var draftsCount = votingSessions.Where(vs => vs.Status != VotingSessionStatus.Draft).Aggregate(0, (i, session) => i + session.DraftResults.Count);
 

@@ -19,7 +19,7 @@
 
         public void LoadVoteObjects()
         {
-            var filesPath = String.Format("{0}/Resources/", AppDomain.CurrentDomain.BaseDirectory);
+            var filesPath = String.Format("{0}\\Resources\\", AppDomain.CurrentDomain.BaseDirectory);
             var filesToLoad = Directory.GetFiles(filesPath, "*.json");
 
             foreach (var fileToLoad in filesToLoad)

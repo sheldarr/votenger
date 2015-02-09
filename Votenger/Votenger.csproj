@@ -227,6 +227,9 @@
     <None Include="bower-dependencies\jquery\dist\jquery.min.map" />
     <None Include="bower-dependencies\jquery\src\sizzle\dist\sizzle.min.map" />
     <None Include="packages.config" />
+    <None Include="Resources\Yolo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Games.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

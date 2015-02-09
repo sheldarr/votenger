@@ -63,5 +63,15 @@
                 return session.Query<VoteObject>().Select(g => g.Category).Distinct().ToList();
             }
         }
+
+        public IEnumerable<VoteObject> GetVoteObjectsByCategory(string category)
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                return session.Query<VoteObject>()
+                    .Where(vo => vo.Category == category)
+                    .ToList();
+            }
+        }
     }
 }

@@ -13,5 +13,6 @@
         void AddVoteResult(VoteResult voteResult);
         void CompleteDraft(int id);
         void CompleteVote(int id);
+        ICollection<VotingSession> GetVotingSessionsByCategory(string category);
     }
 }

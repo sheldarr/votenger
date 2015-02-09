@@ -81,5 +81,15 @@
                 documentSession.SaveChanges();
             }
         }
+
+        public ICollection<VotingSession> GetVotingSessionsByCategory(string category)
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                return session.Query<VotingSession>()
+                    .Where(vs => vs.Category == category)
+                    .ToList();
+            }
+        }
     }
 }

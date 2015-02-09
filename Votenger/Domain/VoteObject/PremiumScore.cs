@@ -2,9 +2,9 @@
 {
     public enum PremiumScore
     {
-        ThreePluses = 5,
-        TwoPluses = 2,
-        OnePlus = 1,
-        ThreeMinuses  = -5
+        ThreePluses = 6,
+        TwoPluses = 4,
+        OnePlus = 2,
+        ThreeMinuses  = -6
     }
 }

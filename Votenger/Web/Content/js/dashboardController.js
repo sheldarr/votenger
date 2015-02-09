@@ -12,6 +12,7 @@
 
         vm.dtOptions = DTOptionsBuilder
             .newOptions()
+            .withOption('order', [0, 'desc'])
             .withBootstrap();
 
         vm.draft = draft;

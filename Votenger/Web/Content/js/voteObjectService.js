@@ -7,11 +7,11 @@
 
     function voteObjectService($http) {
         var service = this;
-        service.getAllVoteObjects = getAllVoteObjects;
+        service.getVoteObjectsForDraft = getVoteObjectsForDraft;
         service.getVoteObjectsForVote = getVoteObjectsForVote;
 
-        function getAllVoteObjects() {
-            return $http.get('/api/voteObjects');
+        function getVoteObjectsForDraft(id) {
+            return $http.get('/api/voteObjectsForDraft/' + id);
         }
 
         function getVoteObjectsForVote(id) {

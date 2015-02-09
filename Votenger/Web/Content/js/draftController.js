@@ -59,7 +59,7 @@
                 vm.voteObjectsLeft = vm.draftOptions.draftsPerVotenger;
             });
 
-            voteObjectService.getAllVoteObjects().then(function (voteObjects) {
+            voteObjectService.getVoteObjectsForDraft(vm.votingSessionId).then(function (voteObjects) {
                 vm.voteObjects = voteObjects.data;
                 vm.voteObjects.forEach(function (voteObject) {
                     voteObject.selected = false;
