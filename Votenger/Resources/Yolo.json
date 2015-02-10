@@ -14,6 +14,13 @@
         "MaxPlayers": 32
     },
     {
+        "Name": "Quake 3 TA",
+        "Category": "Yolo",
+        "Type": "Pc",
+        "Genre": "Fps",
+        "MaxPlayers": 32
+    },
+    {
         "Name": "Unreal Tournament",
         "Category":  "Yolo",
         "Type": "Pc",
