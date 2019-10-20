@@ -1,0 +1,11 @@
+{
+  "name": "votenger",
+  "version": "3.0.0",
+  "main": "",
+  "repository": "https://github.com/sheldarr/votenger.git",
+  "author": "Kewin Polok <kewin.polok@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^3.0.9"
+  }
+}
