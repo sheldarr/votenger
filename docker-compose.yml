@@ -1,0 +1,13 @@
+version: "3.5"
+
+services:
+  votenger:
+    image: node:12
+    command: yarn dev
+    working_dir: /app
+    env_file:
+      - .env
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - .:/app

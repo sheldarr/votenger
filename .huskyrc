@@ -1,5 +1,5 @@
 {
   "hooks": {
-    "pre-push": "exit 1"
+    "pre-commit": "yarn lint"
   }
 }
