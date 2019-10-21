@@ -1,5 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).send({});
+import { getVotes } from './repository';
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const votes = await getVotes();
+
+  res.status(200).send(votes);
 };
