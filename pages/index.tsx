@@ -23,7 +23,7 @@ interface Vote {
 
 Home.getInitialProps = async () => {
   const { data: votes } = await axios.get<Vote[]>(
-    `${process.env.APP_PROTOCOL}://${process.env.APP_DOMAIN}:${process.env.APP_PORT}/api/votes`,
+    `${process.env.APP_API_URL}/votes`,
   );
 
   return {
