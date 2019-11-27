@@ -1,20 +1,42 @@
 import axios from 'axios';
 import { NextPage } from 'next';
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
+import Head from 'next/head';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import styled from 'styled-components';
+import Grid from '@material-ui/core/Grid';
+
+import NavBar from '../components/NavBar';
+
+const StyledPaper = styled(Paper)`
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  min-height: calc(100vh - 4rem - 5rem);
+  padding: 2rem;
+`;
 
 interface Props {
   votes: Vote[];
 }
 
 const Home: NextPage<Props> = ({ votes }: Props) => (
-  <Box>
-    <main>Votes: {JSON.stringify(votes)}</main>
-    <Button variant="contained" color="primary">
-      Create Vote
-    </Button>
-  </Box>
+  <div>
+    <Head>
+      <title>Votenger</title>
+      <link href="/favicon.ico" rel="icon" />
+    </Head>
+    <NavBar />
+    <Container>
+      <StyledPaper>
+        <Grid container>
+          <Grid item xs={12}>
+            {JSON.stringify(votes)}
+          </Grid>
+        </Grid>
+      </StyledPaper>
+    </Container>
+  </div>
 );
 
 interface Vote {
