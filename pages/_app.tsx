@@ -3,6 +3,8 @@ import React from 'react';
 import App from 'next/app';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { PageTransition } from 'next-page-transitions';
+import { withRouter } from 'next/router';
+import { WithRouterProps } from 'next/dist/client/with-router';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -12,14 +14,27 @@ axios.defaults.timeout = 5000;
 
 import NavBar from '../components/NavBar';
 
-class CustomApp extends App {
+import { URL, USERNAME_LOCAL_STORAGE_KEY } from './login';
+
+class CustomApp extends App<WithRouterProps> {
+  componentDidMount() {
+    const username = localStorage.getItem(USERNAME_LOCAL_STORAGE_KEY);
+
+    if (!username) {
+      this.props.router.push(URL);
+    }
+  }
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, router } = this.props;
     return (
       <>
         <CssBaseline />
         <NavBar />
-        <PageTransition classNames="page-transition" timeout={300}>
+        <PageTransition
+          classNames="page-transition"
+          key={router.route}
+          timeout={300}
+        >
           <Component {...pageProps} />
         </PageTransition>
         <style global jsx>{`
@@ -45,4 +60,4 @@ class CustomApp extends App {
   }
 }
 
-export default CustomApp;
+export default withRouter(CustomApp);
