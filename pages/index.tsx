@@ -7,8 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 
-import NavBar from '../components/NavBar';
-
 const StyledPaper = styled(Paper)`
   margin-bottom: 2rem;
   margin-top: 2rem;
@@ -26,7 +24,6 @@ const Home: NextPage<Props> = ({ votes }: Props) => (
       <title>Votenger</title>
       <link href="/favicon.ico" rel="icon" />
     </Head>
-    <NavBar />
     <Container>
       <StyledPaper>
         <Grid container>
