@@ -14,11 +14,12 @@ axios.defaults.timeout = 5000;
 
 import NavBar from '../components/NavBar';
 
-import { URL, USERNAME_LOCAL_STORAGE_KEY } from './login';
+import { getUsername } from '../auth';
+import { URL } from './login';
 
 class CustomApp extends App<WithRouterProps> {
   componentDidMount() {
-    const username = localStorage.getItem(USERNAME_LOCAL_STORAGE_KEY);
+    const username = getUsername();
 
     if (!username) {
       this.props.router.push(URL);
