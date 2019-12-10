@@ -34,6 +34,5 @@ install: ## stop all services
 prod: ## start production
 	docker-compose -f docker-compose.yml -f docker-compose.production.yml up
 
-
 lint: ## run linters
 	$(DOCKER_COMPOSE_RUN_NODE) yarn lint
