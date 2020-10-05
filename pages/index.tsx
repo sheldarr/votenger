@@ -15,6 +15,8 @@ const StyledPaper = styled(Paper)`
   padding: 2rem;
 `;
 
+export const URL = '/';
+
 const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
 const Home: NextPage = () => {

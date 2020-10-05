@@ -10,13 +10,14 @@ const NavBar: React.FunctionComponent = () => {
 
   useEffect(() => {
     setUsername(getUsername());
-  }, []);
+  });
 
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6">votenger</Typography>
-        <Typography variant="h6">{username}</Typography>
+        <Typography variant="h6">
+          votenger {username ? `- ${username}` : ''}
+        </Typography>
       </Toolbar>
     </AppBar>
   );
