@@ -1,38 +1,34 @@
+include .env
+
 .PHONY: help build
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .DEFAULT_GOAL := help
-USER_ID = `id -u $$USER`
-UUID = `uuidgen`
+USERID=$(shell id -u)
 
-DOCKER_COMPOSE_RUN_NODE = docker-compose run \
-	--name "$(UUID)" \
-	--user "$(USER_ID)" \
+DOCKER_RUN = docker run \
+	--volume ${PWD}:/app \
+	--workdir /app \
+	--user ${USERID} \
+	--publish ${PORT}:${PORT} \
+	--tty \
+	--interactive \
 	--rm \
-	node
-
-dev: ## start development
-	docker-compose run --name votenger --rm --service-ports votenger
+	node:12
 
 build: ## build for production
-	$(DOCKER_COMPOSE_RUN_NODE) yarn build
+	$(DOCKER_RUN) yarn build
 
-start: ## start production
-	$(DOCKER_COMPOSE_RUN_NODE) yarn start
+dev: ## start development
+	$(DOCKER_RUN) yarn dev -p ${PORT}
 
-up: ## start all services
-	docker-compose up -d
-
-down: ## stop all services
-	docker-compose down --remove-orphans
-
-install: ## stop all services
-	$(DOCKER_COMPOSE_RUN_NODE) yarn install
+install: ## stop all services	
+	$(DOCKER_RUN) yarn install
 
 prod: ## start production
-	docker-compose -f docker-compose.yml -f docker-compose.production.yml up
+	$(DOCKER_RUN) yarn start -p ${PORT}
 
-lint: ## run linters
-	$(DOCKER_COMPOSE_RUN_NODE) yarn lint
+lint:
+	$(DOCKER_RUN) yarn lint

@@ -1,11 +1,12 @@
-import axios from 'axios';
 import { NextPage } from 'next';
 import React from 'react';
 import Head from 'next/head';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
-import Grid from '@material-ui/core/Grid';
+import useSwr from 'swr';
+
+import { Poll } from './api/polls';
 
 const StyledPaper = styled(Paper)`
   margin-bottom: 2rem;
@@ -14,40 +15,26 @@ const StyledPaper = styled(Paper)`
   padding: 2rem;
 `;
 
-interface Props {
-  votes: Vote[];
-}
+const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
-const Home: NextPage<Props> = ({ votes }: Props) => (
-  <div>
-    <Head>
-      <title>Votenger</title>
-      <link href="/favicon.ico" rel="icon" />
-    </Head>
-    <Container>
-      <StyledPaper>
-        <Grid container>
-          <Grid item xs={12}>
-            {JSON.stringify(votes)}
-          </Grid>
-        </Grid>
-      </StyledPaper>
-    </Container>
-  </div>
-);
+const Home: NextPage = () => {
+  const { data: polls, mutate } = useSwr<Poll[]>('/api/polls', fetcher, {
+    initialData: [],
+  });
 
-interface Vote {
-  name: string;
-}
+  mutate();
 
-Home.getInitialProps = async () => {
-  const { data: votes } = await axios.get<Vote[]>(
-    `${process.env.APP_API_URL}/votes`,
+  return (
+    <div>
+      <Head>
+        <title>votenger</title>
+        <link href="/favicon.ico" rel="icon" />
+      </Head>
+      <Container>
+        <StyledPaper>Polls: {JSON.stringify(polls)}</StyledPaper>
+      </Container>
+    </div>
   );
-
-  return {
-    votes,
-  };
 };
 
 export default Home;

@@ -1,43 +1,39 @@
-import axios from 'axios';
 import React from 'react';
 import App from 'next/app';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import { PageTransition } from 'next-page-transitions';
-import { withRouter } from 'next/router';
-import { WithRouterProps } from 'next/dist/client/with-router';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 
-axios.defaults.timeout = 5000;
-
 import NavBar from '../components/NavBar';
 
-import { getUsername } from '../auth';
-import { URL } from './login';
-
-class CustomApp extends App<WithRouterProps> {
-  componentDidMount() {
-    const username = getUsername();
-
-    if (!username) {
-      this.props.router.push(URL);
-    }
-  }
+class CustomApp extends App {
   render() {
     const { Component, pageProps, router } = this.props;
+
+    const theme = createMuiTheme({
+      palette: {
+        primary: { main: '#9400d3' },
+      },
+    });
+
     return (
       <>
         <CssBaseline />
-        <NavBar />
-        <PageTransition
-          classNames="page-transition"
-          key={router.route}
-          timeout={300}
-        >
-          <Component {...pageProps} />
-        </PageTransition>
+        <ThemeProvider theme={theme}>
+          <NavBar />
+          <PageTransition
+            classNames="page-transition"
+            key={router.route}
+            timeout={300}
+          >
+            <Component {...pageProps} />
+          </PageTransition>
+        </ThemeProvider>
         <style global jsx>{`
           .page-transition-enter {
             opacity: 0;
@@ -61,4 +57,4 @@ class CustomApp extends App<WithRouterProps> {
   }
 }
 
-export default withRouter(CustomApp);
+export default CustomApp;
