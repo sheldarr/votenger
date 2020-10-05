@@ -1,4 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import StatusCodes from 'http-status-codes';
+import { v4 as uuidv4 } from 'uuid';
 
 import low from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
@@ -12,8 +14,25 @@ export interface Poll {
   id: string;
 }
 
-export default (req: NextApiRequest, res: NextApiResponse<Poll[]>) => {
-  const polls: Poll[] = db.get('polls').value();
+export default (req: NextApiRequest, res: NextApiResponse<Poll[] | Poll>) => {
+  if (req.method === 'POST') {
+    if (!req.body.name) {
+      return res.status(StatusCodes.BAD_REQUEST).send([]);
+    }
 
-  res.status(200).json(polls);
+    const poll = {
+      id: uuidv4(),
+      name: req.body.name,
+    };
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    db.get('polls').push(poll).write();
+
+    return res.status(StatusCodes.OK).send(poll);
+  } else {
+    const polls: Poll[] = db.get('polls').value();
+
+    res.status(StatusCodes.OK).json(polls);
+  }
 };

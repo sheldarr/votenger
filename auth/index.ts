@@ -1,3 +1,4 @@
+export const ADMIN_LOCAL_STORAGE_KEY = 'ADMIN';
 export const USERNAME_LOCAL_STORAGE_KEY = 'USERNAME';
 
 export const login = (username: string) => {
@@ -6,6 +7,10 @@ export const login = (username: string) => {
 
 export const getUsername = () => {
   return localStorage.getItem(USERNAME_LOCAL_STORAGE_KEY);
+};
+
+export const checkIfUserIsAdmin = () => {
+  return !!localStorage.getItem(ADMIN_LOCAL_STORAGE_KEY);
 };
 
 export const logout = () => {

@@ -17,7 +17,6 @@ const VotengerApp = ({ Component, pageProps }) => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log('wut');
     const redirectToLoginIfNotLoggedIn = () => {
       if (!getUsername() && router.pathname !== LOGIN_PAGE_URL) {
         router.push(LOGIN_PAGE_URL);
