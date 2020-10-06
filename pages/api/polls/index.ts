@@ -11,7 +11,9 @@ const db = low(adapter);
 db.defaults({ polls: [] }).write();
 
 export interface Poll {
+  createdAt: string;
   id: string;
+  name: string;
 }
 
 export default (req: NextApiRequest, res: NextApiResponse<Poll[] | Poll>) => {
@@ -21,6 +23,7 @@ export default (req: NextApiRequest, res: NextApiResponse<Poll[] | Poll>) => {
     }
 
     const poll = {
+      createdAt: new Date().toString(),
       id: uuidv4(),
       name: req.body.name,
     };

@@ -7,6 +7,10 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import useSwr from 'swr';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import { format } from 'date-fns';
 
 import { useRouter } from 'next/router';
 import { checkIfUserIsAdmin } from '../auth';
@@ -51,7 +55,18 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <Container>
-        <StyledPaper>Polls: {JSON.stringify(polls)}</StyledPaper>
+        <StyledPaper>
+          {polls.map((poll) => (
+            <Card key={poll.id}>
+              <CardContent>
+                <Typography gutterBottom component="h2" variant="h5">
+                  {poll.name} ({format(new Date(poll.createdAt), 'MM/dd/yyyy')})
+                </Typography>
+                <Typography color="textSecondary">Example poll</Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </StyledPaper>
         {isAdmin && (
           <AddPollFab
             color="primary"
