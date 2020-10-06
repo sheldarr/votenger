@@ -10,10 +10,22 @@ const db = low(adapter);
 
 db.defaults({ polls: [] }).write();
 
+export interface UserVote {
+  votedAt: string;
+  votedFor: string;
+}
+
+export interface Vote {
+  id: string;
+  username: string;
+  votes: UserVote[];
+}
+
 export interface Poll {
   createdAt: string;
   id: string;
   name: string;
+  votes: Vote[];
 }
 
 export default (req: NextApiRequest, res: NextApiResponse<Poll[] | Poll>) => {
@@ -26,6 +38,7 @@ export default (req: NextApiRequest, res: NextApiResponse<Poll[] | Poll>) => {
       createdAt: new Date().toString(),
       id: uuidv4(),
       name: req.body.name,
+      votes: [],
     };
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
