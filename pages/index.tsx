@@ -8,7 +8,9 @@ import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import useSwr from 'swr';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { format } from 'date-fns';
 
@@ -64,6 +66,9 @@ const Home: NextPage = () => {
                 </Typography>
                 <Typography color="textSecondary">Example poll</Typography>
               </CardContent>
+              <CardActions>
+                <Button color="primary">Vote</Button>
+              </CardActions>
             </Card>
           ))}
         </StyledPaper>
