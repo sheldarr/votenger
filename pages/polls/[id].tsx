@@ -9,6 +9,9 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import useSwr from 'swr';
+import Grid from '@material-ui/core/Grid';
+import Fab from '@material-ui/core/Fab';
+import CheckIcon from '@material-ui/icons/Check';
 
 import { checkIfUserIsAdmin, getUsername } from '../../auth';
 import { Poll } from '../api/polls';
@@ -24,11 +27,19 @@ const StyledPaper = styled(Paper)`
   padding: 2rem;
 `;
 
+const VoteFab = styled(Fab)`
+  position: fixed !important;
+  bottom: 2rem;
+  right: 2rem;
+`;
+
+const MAX_VOTES = 4;
+
 const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
 
   const { data: poll, mutate: mutatePoll } = useSwr<Poll | undefined>(
-    `/api/polls/${router.query.id}`,
+    router.query.id && `/api/polls/${router.query.id}`,
     fetcher,
   );
   const { data: games, mutate: mutateGames } = useSwr<Game[]>(
@@ -40,6 +51,9 @@ const PollPage: React.FunctionComponent = () => {
   );
   const [isAdmin, setIsAdmin] = useState(false);
   const [username, setUsername] = useState<string | undefined>(undefined);
+  const [votedFor, setVotedFor] = useState<string[]>([]);
+
+  const votesLeft = MAX_VOTES - votedFor.length;
 
   useEffect(() => {
     setIsAdmin(checkIfUserIsAdmin());
@@ -49,15 +63,16 @@ const PollPage: React.FunctionComponent = () => {
   mutatePoll();
   mutateGames();
 
-  const userAlreadyVoted = (game: Game) => {
-    return !!poll?.votes.find((vote) => {
-      return (
-        vote.username === username &&
-        vote.votes.find((vote) => {
-          return vote.votedFor === game.name;
-        })
-      );
-    });
+  const addVote = (vote: string) => {
+    setVotedFor([...votedFor, vote]);
+  };
+
+  const removeVote = (vote: string) => {
+    setVotedFor(
+      votedFor.filter((voted) => {
+        return voted !== vote;
+      }),
+    );
   };
 
   return (
@@ -66,19 +81,51 @@ const PollPage: React.FunctionComponent = () => {
         <Typography gutterBottom align="center" variant="h5">
           {poll?.name}
         </Typography>
-        {games.map((game) => (
-          <Card key={game.name} variant="outlined">
-            <CardContent>
-              <Typography gutterBottom component="h2" variant="h5">
-                {game.name}
-              </Typography>
-              <Typography color="textSecondary">{game.type}</Typography>
-            </CardContent>
-            <CardActions>
-              {!userAlreadyVoted(game) && <Button color="primary">Vote</Button>}
-            </CardActions>
-          </Card>
-        ))}
+        <Grid container spacing={1}>
+          {games.map((game) => (
+            <Grid item key={game.name} xs={4}>
+              <Card variant="outlined">
+                <CardContent>
+                  <Typography gutterBottom component="h2" variant="h5">
+                    {game.name}
+                  </Typography>
+                  <Typography color="textSecondary">{game.type}</Typography>
+                </CardContent>
+                <CardActions>
+                  {votedFor.includes(game.name) ? (
+                    <Button
+                      color="secondary"
+                      onClick={() => {
+                        removeVote(game.name);
+                      }}
+                    >
+                      Unvote
+                    </Button>
+                  ) : (
+                    <Button
+                      color="primary"
+                      disabled={votesLeft === 0}
+                      onClick={() => {
+                        addVote(game.name);
+                      }}
+                    >
+                      Vote
+                    </Button>
+                  )}
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        <VoteFab
+          color="primary"
+          disabled={votesLeft > 0}
+          onClick={() => {
+            // router.push(CREATE_POLL_URL);
+          }}
+        >
+          {votesLeft > 0 ? votesLeft : <CheckIcon />}
+        </VoteFab>
       </StyledPaper>
     </Container>
   );

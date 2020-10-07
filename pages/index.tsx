@@ -33,7 +33,7 @@ export const URL = '/';
 const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
 const AddPollFab = styled(Fab)`
-  position: absolute !important;
+  position: fixed !important;
   bottom: 2rem;
   right: 2rem;
 `;
@@ -65,7 +65,9 @@ const Home: NextPage = () => {
                 <Typography gutterBottom component="h2" variant="h5">
                   {poll.name} ({format(new Date(poll.createdAt), 'MM/dd/yyyy')})
                 </Typography>
-                <Typography color="textSecondary">Example poll</Typography>
+                <Typography color="textSecondary">
+                  {poll.description}
+                </Typography>
               </CardContent>
               <CardActions>
                 <Button

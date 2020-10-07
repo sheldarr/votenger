@@ -4,19 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 import low from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
 
-export interface UserVote {
-  votedAt: string;
-  votedFor: string;
-}
-
 export interface Vote {
   id: string;
   username: string;
-  votes: UserVote[];
+  votedFor: string[];
 }
 
 export interface Poll {
   createdAt: string;
+  description: string;
   id: string;
   name: string;
   votes: Vote[];
@@ -35,6 +31,7 @@ export default (req: NextApiRequest, res: NextApiResponse<Poll[] | Poll>) => {
 
     const poll = {
       createdAt: new Date().toString(),
+      description: req.body.description,
       id: uuidv4(),
       name: req.body.name,
       votes: [],

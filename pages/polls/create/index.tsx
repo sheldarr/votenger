@@ -40,7 +40,7 @@ const CreatePollPage: React.FunctionComponent = () => {
               Poll
             </Typography>
             <Formik
-              initialValues={{ name: '' }}
+              initialValues={{ description: '', name: '' }}
               onSubmit={async (values) => {
                 await axios.post('/api/polls', values);
 
@@ -77,6 +77,17 @@ const CreatePollPage: React.FunctionComponent = () => {
                           onBlur={handleBlur}
                           onChange={handleChange}
                           value={values.name}
+                        />
+                      </Grid>
+                      <Grid item>
+                        <TextField
+                          fullWidth
+                          id="description"
+                          label="Description"
+                          margin="normal"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.description}
                         />
                       </Grid>
                       <Grid item>
