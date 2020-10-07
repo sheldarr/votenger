@@ -22,7 +22,7 @@ const StyledPaper = styled(Paper)`
   padding: 2rem;
 `;
 
-const LoginPage: React.FunctionComponent = () => {
+const CreatePollPage: React.FunctionComponent = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -102,4 +102,4 @@ const LoginPage: React.FunctionComponent = () => {
   );
 };
 
-export default LoginPage;
+export default CreatePollPage;

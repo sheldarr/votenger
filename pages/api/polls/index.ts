@@ -1,14 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
-
 import low from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
-
-const adapter = new FileSync('db.json');
-const db = low(adapter);
-
-db.defaults({ polls: [] }).write();
 
 export interface UserVote {
   votedAt: string;
@@ -27,6 +21,11 @@ export interface Poll {
   name: string;
   votes: Vote[];
 }
+
+const adapter = new FileSync('db.json');
+const db = low(adapter);
+
+db.defaults({ polls: [] }).write();
 
 export default (req: NextApiRequest, res: NextApiResponse<Poll[] | Poll>) => {
   if (req.method === 'POST') {

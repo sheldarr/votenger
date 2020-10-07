@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import { checkIfUserIsAdmin } from '../auth';
 import { Poll } from './api/polls';
 
+import { URL as POLL_URL } from './polls/[id]';
 import { URL as CREATE_POLL_URL } from './polls/create';
 
 const StyledPaper = styled(Paper)`
@@ -59,7 +60,7 @@ const Home: NextPage = () => {
       <Container>
         <StyledPaper>
           {polls.map((poll) => (
-            <Card key={poll.id}>
+            <Card key={poll.id} variant="outlined">
               <CardContent>
                 <Typography gutterBottom component="h2" variant="h5">
                   {poll.name} ({format(new Date(poll.createdAt), 'MM/dd/yyyy')})
@@ -67,7 +68,14 @@ const Home: NextPage = () => {
                 <Typography color="textSecondary">Example poll</Typography>
               </CardContent>
               <CardActions>
-                <Button color="primary">Vote</Button>
+                <Button
+                  color="primary"
+                  onClick={() => {
+                    router.push(`${POLL_URL}/${poll.id}`);
+                  }}
+                >
+                  Vote
+                </Button>
               </CardActions>
             </Card>
           ))}
