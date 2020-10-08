@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import CheckIcon from '@material-ui/icons/Check';
+import CasinoIcon from '@material-ui/icons/Casino';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -34,6 +34,19 @@ const CloseFab = styled(Fab)`
   bottom: 2rem;
   right: 6rem;
 `;
+
+function weightedRandomGame(games: Record<string, number>) {
+  let sum = 0;
+  const r = Math.random();
+  const numberOfGames = Object.keys(games).length;
+
+  console.log(r);
+
+  for (const name in games) {
+    sum += games[name] / numberOfGames;
+    if (r <= sum) return name;
+  }
+}
 
 const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
@@ -74,7 +87,7 @@ const PollPage: React.FunctionComponent = () => {
                 <Card variant="outlined">
                   <CardContent>
                     <Typography gutterBottom component="h2" variant="h5">
-                      {name} - {score}
+                      {score}pt{score !== 1 && 's'} - {name}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -95,10 +108,10 @@ const PollPage: React.FunctionComponent = () => {
           <CloseFab
             color="primary"
             onClick={() => {
-              console.log('Close');
+              console.log(weightedRandomGame(games));
             }}
           >
-            <CheckIcon />
+            <CasinoIcon />
           </CloseFab>
         )}
       </StyledPaper>
