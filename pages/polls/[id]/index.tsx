@@ -4,7 +4,6 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
-import useSwr from 'swr';
 import Fab from '@material-ui/core/Fab';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import CheckIcon from '@material-ui/icons/Check';
@@ -13,12 +12,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
 import { checkIfUserIsAdmin, getUsername } from '../../../auth';
-import { Poll } from '../../api/polls';
+import usePoll from '../../../hooks/usePoll';
 import { URL as POLL_VOTE_URL } from './vote';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
-
-const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
 const StyledPaper = styled(Paper)`
   margin-bottom: 2rem;
@@ -41,10 +38,7 @@ const CloseFab = styled(Fab)`
 const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
 
-  const { data: poll } = useSwr<Poll | undefined>(
-    router.query.id && `/api/polls/${router.query.id}`,
-    fetcher,
-  );
+  const { data: poll } = usePoll(router.query.id as string);
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [username, setUsername] = useState<string | undefined>(undefined);
@@ -98,7 +92,7 @@ const PollPage: React.FunctionComponent = () => {
           <VoteFab
             color="primary"
             onClick={() => {
-              router.push(POLL_VOTE_URL(poll.id));
+              router.push(POLL_VOTE_URL(poll?.id));
             }}
           >
             <HowToVoteIcon />

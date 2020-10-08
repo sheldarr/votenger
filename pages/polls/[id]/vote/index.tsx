@@ -8,21 +8,18 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import useSwr from 'swr';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
 
 import { getUsername } from '../../../../auth';
-import { Poll } from '../../../api/polls';
 import useGames from '../../../../hooks/useGames';
+import usePoll from '../../../../hooks/usePoll';
 
 import { URL as POLL_URL } from '..';
 
 export const URL = (pollId: string) => `/polls/${pollId}/vote`;
-
-const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
 const StyledPaper = styled(Paper)`
   margin-bottom: 2rem;
@@ -41,11 +38,9 @@ const MAX_VOTES = 4;
 const PollVotePage: React.FunctionComponent = () => {
   const router = useRouter();
 
-  const { data: poll } = useSwr<Poll | undefined>(
-    router.query.id && `/api/polls/${router.query.id}`,
-    fetcher,
-  );
+  const { data: poll } = usePoll(router.query.id as string);
   const { data: games } = useGames();
+
   const [username, setUsername] = useState<string | undefined>(undefined);
   const [votedFor, setVotedFor] = useState<string[]>([]);
 
