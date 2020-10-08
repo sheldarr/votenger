@@ -8,15 +8,7 @@ export interface Game {
 
 const GAMES: Game[] = [
   {
-    name: 'Age of Empires II',
-    type: 'RTS',
-  },
-  {
-    name: 'Age of Mythology',
-    type: 'RTS',
-  },
-  {
-    name: 'Alien vs Predator',
+    name: 'Alien vs Predator 2',
     type: 'FPS',
   },
   {
@@ -24,11 +16,7 @@ const GAMES: Game[] = [
     type: 'Detective Survival',
   },
   {
-    name: 'Batlle Realms',
-    type: 'RTS',
-  },
-  {
-    name: 'Cossacs',
+    name: 'Battle for the Middle Earth 2',
     type: 'RTS',
   },
   {
@@ -44,52 +32,16 @@ const GAMES: Game[] = [
     type: 'Survival',
   },
   {
-    name: 'Duke Nukem 3D',
-    type: 'FPS',
-  },
-  {
-    name: 'Dungeon Keeper 2',
-    type: 'RTS',
-  },
-  {
     name: 'ET: Legacy',
     type: 'FPS',
-  },
-  {
-    name: 'Empire Earth II',
-    type: 'RTS',
-  },
-  {
-    name: 'Fallout Tactics',
-    type: 'Strategy',
-  },
-  {
-    name: 'Giants Citizen Kabuto',
-    type: 'FPS',
-  },
-  {
-    name: 'Icewind Dale',
-    type: 'Rpg',
-  },
-  {
-    name: 'Knights & Merchants',
-    type: 'RTS',
   },
   {
     name: 'Mount & Blade',
     type: 'Action',
   },
   {
-    name: 'Quake III Arena',
-    type: 'FPS',
-  },
-  {
     name: 'Re-Volt',
     type: 'Racing',
-  },
-  {
-    name: 'Serious Sam',
-    type: 'FPS',
   },
   {
     name: 'Settlers 3',
@@ -100,24 +52,8 @@ const GAMES: Game[] = [
     type: '2D Shooter',
   },
   {
-    name: 'Twierdza',
-    type: 'RTS',
-  },
-  {
-    name: 'Tzar',
-    type: 'RTS',
-  },
-  {
-    name: 'Unreal Tournament',
+    name: 'Unreal Tournament 2k4',
     type: 'FPS',
-  },
-  {
-    name: 'Warcraft II',
-    type: 'RTS',
-  },
-  {
-    name: 'Warcraft III',
-    type: 'RTS',
   },
 ];
 
