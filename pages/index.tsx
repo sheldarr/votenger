@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -43,33 +44,44 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>votenger</title>
+        <title>Votenger</title>
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <Container>
         <StyledPaper>
-          {polls?.map((poll) => (
-            <Card key={poll.id} variant="outlined">
-              <CardContent>
-                <Typography gutterBottom component="h2" variant="h5">
-                  {poll.name} ({format(new Date(poll.createdAt), 'MM/dd/yyyy')})
-                </Typography>
-                <Typography color="textSecondary">
-                  {poll.description}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button
-                  color="primary"
-                  onClick={() => {
-                    router.push(POLL_URL(poll.id));
-                  }}
-                >
-                  Vote
-                </Button>
-              </CardActions>
-            </Card>
-          ))}
+          <Grid container spacing={1}>
+            {polls
+              ?.sort((a, b) => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                return new Date(b.createdAt) - new Date(a.createdAt);
+              })
+              .map((poll) => (
+                <Grid item key={poll.id} xs={12}>
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Typography gutterBottom component="h2" variant="h5">
+                        {poll.name} (
+                        {format(new Date(poll.createdAt), 'dd/MM/yyyy')})
+                      </Typography>
+                      <Typography color="textSecondary">
+                        {poll.description}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          router.push(POLL_URL(poll.id));
+                        }}
+                      >
+                        Vote
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+          </Grid>
         </StyledPaper>
         {user?.isAdmin && (
           <AddPollFab
