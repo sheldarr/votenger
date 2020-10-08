@@ -127,7 +127,7 @@ const PollVotePage: React.FunctionComponent = () => {
               votedFor,
             });
 
-            router.replace(POLL_URL(router.query.id));
+            router.replace(POLL_URL(router.query.id as string));
           }}
         >
           {votesLeft > 0 ? votesLeft : <CheckIcon />}
