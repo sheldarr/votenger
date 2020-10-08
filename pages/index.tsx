@@ -6,7 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
-import useSwr from 'swr';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -16,8 +15,8 @@ import { format } from 'date-fns';
 
 import { useRouter } from 'next/router';
 import { checkIfUserIsAdmin } from '../auth';
-import { Poll } from './api/polls';
 
+import usePolls from '../hooks/usePolls';
 import { URL as POLL_URL } from './polls/[id]';
 import { URL as CREATE_POLL_URL } from './polls/create';
 
@@ -30,8 +29,6 @@ const StyledPaper = styled(Paper)`
 
 export const URL = '/';
 
-const fetcher = (url: string) => fetch(url).then((response) => response.json());
-
 const AddPollFab = styled(Fab)`
   position: fixed !important;
   bottom: 2rem;
@@ -40,9 +37,7 @@ const AddPollFab = styled(Fab)`
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { data: polls } = useSwr<Poll[]>('/api/polls', fetcher, {
-    initialData: [],
-  });
+  const { data: polls } = usePolls();
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -57,7 +52,7 @@ const Home: NextPage = () => {
       </Head>
       <Container>
         <StyledPaper>
-          {polls.map((poll) => (
+          {polls?.map((poll) => (
             <Card key={poll.id} variant="outlined">
               <CardContent>
                 <Typography gutterBottom component="h2" variant="h5">
