@@ -73,7 +73,7 @@ const Home: NextPage = () => {
                 <Button
                   color="primary"
                   onClick={() => {
-                    router.push(`${POLL_URL}/${poll.id}`);
+                    router.push(POLL_URL(poll.id));
                   }}
                 >
                   Vote

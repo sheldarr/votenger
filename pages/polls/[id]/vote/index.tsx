@@ -9,15 +9,16 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import useSwr from 'swr';
+import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
 
-import { checkIfUserIsAdmin, getUsername } from '../../auth';
-import { Poll } from '../api/polls';
-import { Game } from '../api/games';
+import { getUsername } from '../../../../auth';
+import { Poll } from '../../../api/polls';
+import { Game } from '../../../api/games';
 
-export const URL = '/polls';
+export const URL = (pollId: string) => `/polls/${pollId}/vote`;
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
@@ -35,7 +36,7 @@ const VoteFab = styled(Fab)`
 
 const MAX_VOTES = 4;
 
-const PollPage: React.FunctionComponent = () => {
+const PollVotePage: React.FunctionComponent = () => {
   const router = useRouter();
 
   const { data: poll, mutate: mutatePoll } = useSwr<Poll | undefined>(
@@ -49,14 +50,12 @@ const PollPage: React.FunctionComponent = () => {
       initialData: [],
     },
   );
-  const [isAdmin, setIsAdmin] = useState(false);
   const [username, setUsername] = useState<string | undefined>(undefined);
   const [votedFor, setVotedFor] = useState<string[]>([]);
 
   const votesLeft = MAX_VOTES - votedFor.length;
 
   useEffect(() => {
-    setIsAdmin(checkIfUserIsAdmin());
     setUsername(getUsername());
   });
 
@@ -120,8 +119,13 @@ const PollPage: React.FunctionComponent = () => {
         <VoteFab
           color="primary"
           disabled={votesLeft > 0}
-          onClick={() => {
-            // router.push(CREATE_POLL_URL);
+          onClick={async () => {
+            await axios.post(`/api/polls/${router.query.id}`, {
+              username,
+              votedFor,
+            });
+
+            router.push(`/polls/${router.query.id}`);
           }}
         >
           {votesLeft > 0 ? votesLeft : <CheckIcon />}
@@ -131,4 +135,4 @@ const PollPage: React.FunctionComponent = () => {
   );
 };
 
-export default PollPage;
+export default PollVotePage;
