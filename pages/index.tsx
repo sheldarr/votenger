@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -14,9 +14,9 @@ import Typography from '@material-ui/core/Typography';
 import { format } from 'date-fns';
 
 import { useRouter } from 'next/router';
-import { checkIfUserIsAdmin } from '../auth';
 
 import usePolls from '../hooks/usePolls';
+import useUser from '../hooks/useUser';
 import { URL as POLL_URL } from './polls/[id]';
 import { URL as CREATE_POLL_URL } from './polls/create';
 
@@ -38,11 +38,7 @@ const AddPollFab = styled(Fab)`
 const Home: NextPage = () => {
   const router = useRouter();
   const { data: polls } = usePolls();
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    setIsAdmin(checkIfUserIsAdmin());
-  });
+  const [user] = useUser();
 
   return (
     <div>
@@ -75,7 +71,7 @@ const Home: NextPage = () => {
             </Card>
           ))}
         </StyledPaper>
-        {isAdmin && (
+        {user?.isAdmin && (
           <AddPollFab
             color="primary"
             onClick={() => {

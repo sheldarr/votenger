@@ -10,8 +10,8 @@ import Button from '@material-ui/core/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { login, getUsername } from '../../auth';
 import { URL as MAIN_PAGE_URL } from '..';
+import useUser from '../../hooks/useUser';
 
 export const URL = '/login';
 
@@ -23,9 +23,10 @@ const StyledPaper = styled(Paper)`
 
 const LoginPage: React.FunctionComponent = () => {
   const router = useRouter();
+  const [user, setUser] = useUser();
 
   useEffect(() => {
-    if (getUsername()) {
+    if (user) {
       router.push(MAIN_PAGE_URL);
     }
   });
@@ -41,7 +42,10 @@ const LoginPage: React.FunctionComponent = () => {
             <Formik
               initialValues={{ username: '' }}
               onSubmit={(values) => {
-                login(values.username);
+                setUser({
+                  isAdmin: false,
+                  username: values.username,
+                });
 
                 router.push(MAIN_PAGE_URL);
               }}

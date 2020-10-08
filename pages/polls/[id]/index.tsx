@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -11,8 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import { checkIfUserIsAdmin, getUsername } from '../../../auth';
 import usePoll from '../../../hooks/usePoll';
+import useUser from '../../../hooks/useUser';
 import { URL as POLL_VOTE_URL } from './vote';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
@@ -37,19 +37,12 @@ const CloseFab = styled(Fab)`
 
 const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
+  const [user] = useUser();
 
   const { data: poll } = usePoll(router.query.id as string);
 
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [username, setUsername] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    setIsAdmin(checkIfUserIsAdmin());
-    setUsername(getUsername());
-  });
-
   const alreadyVoted = poll?.votes.some((vote) => {
-    return vote.username === username;
+    return vote.username === user?.username;
   });
 
   const games =
@@ -98,7 +91,7 @@ const PollPage: React.FunctionComponent = () => {
             <HowToVoteIcon />
           </VoteFab>
         )}
-        {isAdmin && (
+        {user?.isAdmin && (
           <CloseFab
             color="primary"
             onClick={() => {

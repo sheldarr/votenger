@@ -10,15 +10,16 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 
 import NavBar from '../components/NavBar';
-import { getUsername } from '../auth';
 import { URL as LOGIN_PAGE_URL } from '../pages/login';
+import useUser from '../hooks/useUser';
 
 const VotengerApp = ({ Component, pageProps }) => {
   const router = useRouter();
+  const [user] = useUser();
 
   useEffect(() => {
     const redirectToLoginIfNotLoggedIn = () => {
-      if (!getUsername() && router.pathname !== LOGIN_PAGE_URL) {
+      if (!user && router.pathname !== LOGIN_PAGE_URL) {
         router.push(LOGIN_PAGE_URL);
       }
     };

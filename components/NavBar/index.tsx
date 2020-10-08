@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import { getUsername } from '../../auth';
+import useUser from '../../hooks/useUser';
 
 const NavBar: React.FunctionComponent = () => {
-  const [username, setUsername] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    setUsername(getUsername());
-  });
+  const [user] = useUser();
 
   return (
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6">
-          votenger {username ? `- ${username}` : ''}
+          votenger {user?.username ? `- ${user.username}` : ''}
         </Typography>
       </Toolbar>
     </AppBar>

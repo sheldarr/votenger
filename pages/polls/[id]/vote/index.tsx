@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -13,9 +13,9 @@ import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
 
-import { getUsername } from '../../../../auth';
 import useGames from '../../../../hooks/useGames';
 import usePoll from '../../../../hooks/usePoll';
+import useUser from '../../../../hooks/useUser';
 
 import { URL as POLL_URL } from '..';
 
@@ -37,18 +37,14 @@ const MAX_VOTES = 4;
 
 const PollVotePage: React.FunctionComponent = () => {
   const router = useRouter();
+  const [user] = useUser();
 
   const { data: poll } = usePoll(router.query.id as string);
   const { data: games } = useGames();
 
-  const [username, setUsername] = useState<string | undefined>(undefined);
   const [votedFor, setVotedFor] = useState<string[]>([]);
 
   const votesLeft = MAX_VOTES - votedFor.length;
-
-  useEffect(() => {
-    setUsername(getUsername());
-  });
 
   const addVote = (vote: string) => {
     setVotedFor([...votedFor, vote]);
@@ -109,7 +105,7 @@ const PollVotePage: React.FunctionComponent = () => {
           disabled={votesLeft > 0}
           onClick={async () => {
             await axios.post(`/api/polls/${router.query.id}/vote`, {
-              username,
+              username: user?.username,
               votedFor,
             });
 

@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 
 import { URL as MAIN_PAGE_URL } from '../..';
-import { checkIfUserIsAdmin } from '../../../auth';
+import useUser from '../../../hooks/useUser';
 
 export const URL = '/polls/create';
 
@@ -24,9 +24,10 @@ const StyledPaper = styled(Paper)`
 
 const CreatePollPage: React.FunctionComponent = () => {
   const router = useRouter();
+  const [user] = useUser();
 
   useEffect(() => {
-    if (!checkIfUserIsAdmin()) {
+    if (!user?.isAdmin) {
       router.push(MAIN_PAGE_URL);
     }
   });
