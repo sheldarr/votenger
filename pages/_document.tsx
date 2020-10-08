@@ -39,7 +39,7 @@ class CustomDocument extends Document {
     return (
       <Html>
         <Head>
-          <meta content="#3f51b5" name="theme-color" />
+          <meta content="#9400d3" name="theme-color" />
           <link href="/manifest.json" rel="manifest" />
           <link
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
