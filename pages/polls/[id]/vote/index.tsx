@@ -16,7 +16,7 @@ import CheckIcon from '@material-ui/icons/Check';
 
 import { getUsername } from '../../../../auth';
 import { Poll } from '../../../api/polls';
-import { Game } from '../../../api/games';
+import useGames from '../../../../hooks/useGames';
 
 import { URL as POLL_URL } from '..';
 
@@ -45,9 +45,7 @@ const PollVotePage: React.FunctionComponent = () => {
     router.query.id && `/api/polls/${router.query.id}`,
     fetcher,
   );
-  const { data: games } = useSwr<Game[]>('/api/games', fetcher, {
-    initialData: [],
-  });
+  const { data: games } = useGames();
   const [username, setUsername] = useState<string | undefined>(undefined);
   const [votedFor, setVotedFor] = useState<string[]>([]);
 
@@ -76,7 +74,7 @@ const PollVotePage: React.FunctionComponent = () => {
           {poll?.name}
         </Typography>
         <Grid container spacing={1}>
-          {games.map((game) => (
+          {games?.map((game) => (
             <Grid item key={game.name} xs={4}>
               <Card variant="outlined">
                 <CardContent>
