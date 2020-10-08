@@ -40,7 +40,7 @@ const AddPollFab = styled(Fab)`
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { data: polls, mutate } = useSwr<Poll[]>('/api/polls', fetcher, {
+  const { data: polls } = useSwr<Poll[]>('/api/polls', fetcher, {
     initialData: [],
   });
   const [isAdmin, setIsAdmin] = useState(false);
@@ -48,8 +48,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     setIsAdmin(checkIfUserIsAdmin());
   });
-
-  mutate();
 
   return (
     <div>

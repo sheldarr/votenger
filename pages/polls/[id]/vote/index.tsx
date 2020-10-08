@@ -41,17 +41,13 @@ const MAX_VOTES = 4;
 const PollVotePage: React.FunctionComponent = () => {
   const router = useRouter();
 
-  const { data: poll, mutate: mutatePoll } = useSwr<Poll | undefined>(
+  const { data: poll } = useSwr<Poll | undefined>(
     router.query.id && `/api/polls/${router.query.id}`,
     fetcher,
   );
-  const { data: games, mutate: mutateGames } = useSwr<Game[]>(
-    '/api/games',
-    fetcher,
-    {
-      initialData: [],
-    },
-  );
+  const { data: games } = useSwr<Game[]>('/api/games', fetcher, {
+    initialData: [],
+  });
   const [username, setUsername] = useState<string | undefined>(undefined);
   const [votedFor, setVotedFor] = useState<string[]>([]);
 
@@ -60,9 +56,6 @@ const PollVotePage: React.FunctionComponent = () => {
   useEffect(() => {
     setUsername(getUsername());
   });
-
-  mutatePoll();
-  mutateGames();
 
   const addVote = (vote: string) => {
     setVotedFor([...votedFor, vote]);
