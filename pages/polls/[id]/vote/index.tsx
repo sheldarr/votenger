@@ -18,6 +18,8 @@ import { getUsername } from '../../../../auth';
 import { Poll } from '../../../api/polls';
 import { Game } from '../../../api/games';
 
+import { URL as POLL_URL } from '..';
+
 export const URL = (pollId: string) => `/polls/${pollId}/vote`;
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json());
@@ -125,7 +127,7 @@ const PollVotePage: React.FunctionComponent = () => {
               votedFor,
             });
 
-            router.push(`/polls/${router.query.id}`);
+            router.replace(POLL_URL(router.query.id));
           }}
         >
           {votesLeft > 0 ? votesLeft : <CheckIcon />}
