@@ -8,6 +8,7 @@ import useSwr from 'swr';
 import Fab from '@material-ui/core/Fab';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import CheckIcon from '@material-ui/icons/Check';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
@@ -53,25 +54,46 @@ const PollPage: React.FunctionComponent = () => {
     setUsername(getUsername());
   });
 
-  const alreadyVoted = poll.votes.some((vote) => {
+  const alreadyVoted = poll?.votes.some((vote) => {
     return vote.username === username;
   });
+
+  const games =
+    poll?.votes.reduce<Record<string, number>>((games, vote) => {
+      vote.votedFor.forEach((vote) => {
+        if (games[vote]) {
+          return (games[vote] += 1);
+        }
+
+        games[vote] = 1;
+      });
+
+      return games;
+    }, {}) || {};
 
   return (
     <Container>
       <StyledPaper>
-        <Typography gutterBottom align="center" variant="h5">
+        <Typography gutterBottom align="center" variant="h2">
           {poll?.name}
         </Typography>
-        {poll?.votes.map((vote) => (
-          <Card key={vote.id} variant="outlined">
-            <CardContent>
-              <Typography gutterBottom component="h2" variant="h5">
-                {vote.votedFor}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
+        <Grid container spacing={1}>
+          {Object.entries(games)
+            .sort(([, scoreA], [, scoreB]) => {
+              return scoreB - scoreA;
+            })
+            .map(([name, score]) => (
+              <Grid item key={name} xs={12}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography gutterBottom component="h2" variant="h5">
+                      {name} - {score}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+        </Grid>
         {!alreadyVoted && (
           <VoteFab
             color="primary"
@@ -82,7 +104,7 @@ const PollPage: React.FunctionComponent = () => {
             <HowToVoteIcon />
           </VoteFab>
         )}
-        {!isAdmin && (
+        {isAdmin && (
           <CloseFab
             color="primary"
             onClick={() => {

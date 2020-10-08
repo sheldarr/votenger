@@ -77,7 +77,7 @@ const PollVotePage: React.FunctionComponent = () => {
   return (
     <Container>
       <StyledPaper>
-        <Typography gutterBottom align="center" variant="h5">
+        <Typography gutterBottom align="center" variant="h2">
           {poll?.name}
         </Typography>
         <Grid container spacing={1}>
@@ -120,7 +120,7 @@ const PollVotePage: React.FunctionComponent = () => {
           color="primary"
           disabled={votesLeft > 0}
           onClick={async () => {
-            await axios.post(`/api/polls/${router.query.id}`, {
+            await axios.post(`/api/polls/${router.query.id}/vote`, {
               username,
               votedFor,
             });

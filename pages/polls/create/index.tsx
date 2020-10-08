@@ -36,7 +36,7 @@ const CreatePollPage: React.FunctionComponent = () => {
       <StyledPaper>
         <Grid container justify="center">
           <Grid item xs={4}>
-            <Typography align="center" variant="h5">
+            <Typography align="center" variant="h2">
               Poll
             </Typography>
             <Formik

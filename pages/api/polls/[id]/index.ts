@@ -3,7 +3,7 @@ import StatusCodes from 'http-status-codes';
 import low from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
 
-import { Poll } from '.';
+import { Poll } from '..';
 
 const adapter = new FileSync('db.json');
 const db = low(adapter);
