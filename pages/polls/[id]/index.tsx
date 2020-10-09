@@ -5,7 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
-import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import CasinoIcon from '@material-ui/icons/Casino';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -13,7 +12,6 @@ import CardContent from '@material-ui/core/CardContent';
 
 import usePoll from '../../../hooks/usePoll';
 import useUser from '../../../hooks/useUser';
-import { URL as POLL_VOTE_URL } from './vote';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
@@ -21,12 +19,6 @@ const StyledPaper = styled(Paper)`
   margin-bottom: 2rem;
   margin-top: 2rem;
   padding: 2rem;
-`;
-
-const VoteFab = styled(Fab)`
-  position: fixed !important;
-  bottom: 2rem;
-  right: 2rem;
 `;
 
 const CloseFab = styled(Fab)`
@@ -53,10 +45,6 @@ const PollPage: React.FunctionComponent = () => {
   const [user] = useUser();
 
   const { data: poll } = usePoll(router.query.id as string);
-
-  const alreadyVoted = poll?.votes.some((vote) => {
-    return vote.username === user?.username;
-  });
 
   const games =
     poll?.votes.reduce<Record<string, number>>((games, vote) => {
@@ -94,16 +82,6 @@ const PollPage: React.FunctionComponent = () => {
               </Grid>
             ))}
         </Grid>
-        {!alreadyVoted && (
-          <VoteFab
-            color="primary"
-            onClick={() => {
-              router.push(POLL_VOTE_URL(poll?.id));
-            }}
-          >
-            <HowToVoteIcon />
-          </VoteFab>
-        )}
         {user?.isAdmin && (
           <CloseFab
             color="primary"

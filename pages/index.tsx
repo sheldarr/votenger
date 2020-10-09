@@ -19,7 +19,9 @@ import { useRouter } from 'next/router';
 import usePolls from '../hooks/usePolls';
 import useUser from '../hooks/useUser';
 import { URL as POLL_URL } from './polls/[id]';
+import { URL as POLL_VOTE_URL } from './polls/[id]/vote';
 import { URL as CREATE_POLL_URL } from './polls/create';
+import { Poll } from './api/polls';
 
 const StyledPaper = styled(Paper)`
   margin-bottom: 2rem;
@@ -40,6 +42,12 @@ const Home: NextPage = () => {
   const router = useRouter();
   const { data: polls } = usePolls();
   const [user] = useUser();
+
+  const userAlreadyVoted = (poll: Poll) => {
+    return poll.votes.some((vote) => {
+      return vote.username === user?.username;
+    });
+  };
 
   return (
     <div>
@@ -69,14 +77,25 @@ const Home: NextPage = () => {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button
-                        color="primary"
-                        onClick={() => {
-                          router.push(POLL_URL(poll.id));
-                        }}
-                      >
-                        Vote
-                      </Button>
+                      {userAlreadyVoted(poll) ? (
+                        <Button
+                          color="primary"
+                          onClick={() => {
+                            router.push(POLL_URL(poll.id));
+                          }}
+                        >
+                          Summary
+                        </Button>
+                      ) : (
+                        <Button
+                          color="primary"
+                          onClick={() => {
+                            router.push(POLL_VOTE_URL(poll.id));
+                          }}
+                        >
+                          Vote
+                        </Button>
+                      )}
                     </CardActions>
                   </Card>
                 </Grid>
