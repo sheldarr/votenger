@@ -18,12 +18,12 @@ export interface Poll {
   votes: Vote[];
 }
 
-const adapter = new FileSync('db.json');
-const db = low(adapter);
-
-db.defaults({ polls: [] }).write();
-
 export default (req: NextApiRequest, res: NextApiResponse<Poll[] | Poll>) => {
+  const adapter = new FileSync('db.json');
+  const db = low(adapter);
+
+  db.defaults({ polls: [] }).write();
+
   if (req.method === 'POST') {
     if (!req.body.name) {
       return res.status(StatusCodes.BAD_REQUEST).send([]);

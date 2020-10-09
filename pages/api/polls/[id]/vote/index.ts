@@ -6,12 +6,12 @@ import FileSync from 'lowdb/adapters/FileSync';
 
 import { Vote } from '../..';
 
-const adapter = new FileSync('db.json');
-const db = low(adapter);
-
-db.defaults({ polls: [] }).write();
-
 export default (req: NextApiRequest, res: NextApiResponse<Vote>) => {
+  const adapter = new FileSync('db.json');
+  const db = low(adapter);
+
+  db.defaults({ polls: [] }).write();
+
   const {
     query: { id },
   } = req;
