@@ -12,6 +12,8 @@ import useUser from '../../hooks/useUser';
 
 export const URL = '/login';
 
+const ADMINS_SEPARATOR = ';';
+
 const LoginPage: React.FunctionComponent = () => {
   const router = useRouter();
   const [user, setUser] = useUser();
@@ -30,7 +32,9 @@ const LoginPage: React.FunctionComponent = () => {
             initialValues={{ username: '' }}
             onSubmit={(values) => {
               setUser({
-                isAdmin: false,
+                isAdmin: process.env.NEXT_PUBLIC_ADMINS.split(
+                  ADMINS_SEPARATOR,
+                ).includes(values.username),
                 username: values.username,
               });
 
