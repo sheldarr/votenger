@@ -22,10 +22,10 @@ import { RANDOM_GAME } from '../../../components/RandomGameDialog';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
-const CloseFab = styled(Fab)`
+const RandomGameFab = styled(Fab)`
   position: fixed !important;
   bottom: 2rem;
-  right: 6rem;
+  right: 2rem;
 `;
 
 interface GameCardProps {
@@ -134,7 +134,7 @@ const PollPage: React.FunctionComponent = () => {
         </FlipMove>
       </Grid>
       {user?.isAdmin && (
-        <CloseFab
+        <RandomGameFab
           color="primary"
           onClick={() => {
             const unplayedGames = Object.fromEntries(
@@ -147,7 +147,7 @@ const PollPage: React.FunctionComponent = () => {
           }}
         >
           <CasinoIcon />
-        </CloseFab>
+        </RandomGameFab>
       )}
     </Container>
   );
