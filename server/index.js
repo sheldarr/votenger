@@ -15,6 +15,12 @@ const server = createServer((req, res) => {
 
 io = require('socket.io')(server);
 
+io.on('connection', (socket) => {
+  socket.on('RANDOM_GAME', (message) => {
+    io.emit('RANDOM_GAME', message);
+  });
+});
+
 app.prepare().then(() => {
   server.listen(Number(process.env.PORT), (err) => {
     if (err) throw err;

@@ -15,6 +15,7 @@ import usePoll from '../../../hooks/usePoll';
 import useUser from '../../../hooks/useUser';
 import useSocket from '../../../hooks/useSocket';
 import { VOTE_CREATED } from '../../api/polls/[id]/vote';
+import { RANDOM_GAME } from '../../../components/RandomGameDialog';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
@@ -41,7 +42,7 @@ const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
   const [user] = useUser();
   const { data: poll, mutate } = usePoll(router.query.id as string);
-  useSocket(VOTE_CREATED, () => {
+  const socket = useSocket(VOTE_CREATED, () => {
     mutate();
   });
 
@@ -104,7 +105,7 @@ const PollPage: React.FunctionComponent = () => {
         <CloseFab
           color="primary"
           onClick={() => {
-            console.log(weightedRandomGame(games));
+            socket.emit(RANDOM_GAME, weightedRandomGame(games));
           }}
         >
           <CasinoIcon />

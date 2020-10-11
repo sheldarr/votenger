@@ -10,6 +10,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 
 import NavBar from '../components/NavBar';
+import RandomGameDialog from '../components/RandomGameDialog';
 import { URL as LOGIN_PAGE_URL } from '../pages/login';
 import useUser from '../hooks/useUser';
 
@@ -45,6 +46,7 @@ const VotengerApp = ({ Component, pageProps }) => {
         >
           <Component {...pageProps} />
         </PageTransition>
+        <RandomGameDialog />
       </ThemeProvider>
       <style global jsx>{`
         .page-transition-enter {
