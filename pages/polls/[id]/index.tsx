@@ -9,6 +9,7 @@ import CasinoIcon from '@material-ui/icons/Casino';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import FlipMove from 'react-flip-move';
 
 import usePoll from '../../../hooks/usePoll';
 import useUser from '../../../hooks/useUser';
@@ -66,21 +67,23 @@ const PollPage: React.FunctionComponent = () => {
           {poll?.name}
         </Typography>
         <Grid container spacing={1}>
-          {Object.entries(games)
-            .sort(([, scoreA], [, scoreB]) => {
-              return scoreB - scoreA;
-            })
-            .map(([name, score]) => (
-              <Grid item key={name} xs={12}>
-                <Card variant="outlined">
-                  <CardContent>
-                    <Typography gutterBottom component="h2" variant="h5">
-                      {score}pt{score !== 1 && 's'} - {name}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
+          <FlipMove typeName={null}>
+            {Object.entries(games)
+              .sort(([, scoreA], [, scoreB]) => {
+                return scoreB - scoreA;
+              })
+              .map(([name, score]) => (
+                <Grid item key={name} xs={12}>
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Typography gutterBottom component="h2" variant="h5">
+                        {score}pt{score !== 1 && 's'} - {name}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+          </FlipMove>
         </Grid>
         {user?.isAdmin && (
           <CloseFab
