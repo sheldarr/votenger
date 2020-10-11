@@ -1,11 +1,5 @@
 include .env
 
-.PHONY: help build
-
-help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-
-.DEFAULT_GOAL := help
 USERID=$(shell id -u)
 
 DOCKER_RUN = docker run \
@@ -24,11 +18,11 @@ build: ## build for production
 dev: ## start development
 	$(DOCKER_RUN) yarn dev
 
-install: ## stop all services	
+install: ## install dependencies
 	$(DOCKER_RUN) yarn install
 
 prod: ## start production
 	$(DOCKER_RUN) yarn start
 
-lint:
+lint: ## run linter
 	$(DOCKER_RUN) yarn lint
