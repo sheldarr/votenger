@@ -28,10 +28,12 @@ const CloseFab = styled(Fab)`
   right: 6rem;
 `;
 
+interface GameCardProps {
+  played: boolean;
+}
+
 const GameCard = styled(Card)`
-  ${(props) =>
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+  ${(props: GameCardProps) =>
     props.played &&
     `
       background-color: #90ee90 !important;
@@ -93,7 +95,9 @@ const PollPage: React.FunctionComponent = () => {
                 <GameCard
                   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                   // @ts-ignore
-                  played={poll.alreadyPlayed.includes(name)}
+                  played={
+                    poll.alreadyPlayed.includes(name) ? 'played' : undefined
+                  }
                   variant="outlined"
                 >
                   <CardContent>
