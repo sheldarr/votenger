@@ -22,13 +22,13 @@ build: ## build for production
 	$(DOCKER_RUN) yarn build
 
 dev: ## start development
-	$(DOCKER_RUN) yarn dev -p ${PORT}
+	$(DOCKER_RUN) yarn dev
 
 install: ## stop all services	
 	$(DOCKER_RUN) yarn install
 
 prod: ## start production
-	$(DOCKER_RUN) yarn start -p ${PORT}
+	$(DOCKER_RUN) yarn start
 
 lint:
 	$(DOCKER_RUN) yarn lint
