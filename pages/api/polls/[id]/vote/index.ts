@@ -1,18 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
-import low from 'lowdb';
-import FileSync from 'lowdb/adapters/FileSync';
 
 import { Vote } from '../..';
+import getDb from '../../../../../getDb';
 
 export const REFRESH_VOTE = 'REFRESH_VOTE';
 
 const VoteApi = (req: NextApiRequest, res: NextApiResponse<Vote>) => {
-  const adapter = new FileSync('db.json');
-  const db = low(adapter);
-
-  db.defaults({ polls: [] }).write();
+  const db = getDb();
 
   const {
     query: { id },

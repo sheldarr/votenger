@@ -1,15 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
-import low from 'lowdb';
-import FileSync from 'lowdb/adapters/FileSync';
 
 import { Poll } from '..';
+import getDb from '../../../../getDb';
 
 export default (req: NextApiRequest, res: NextApiResponse<Poll>) => {
-  const adapter = new FileSync('db.json');
-  const db = low(adapter);
-
-  db.defaults({ polls: [] }).write();
+  const db = getDb();
 
   const {
     query: { id },
