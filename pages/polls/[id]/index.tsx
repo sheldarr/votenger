@@ -13,6 +13,8 @@ import FlipMove from 'react-flip-move';
 
 import usePoll from '../../../hooks/usePoll';
 import useUser from '../../../hooks/useUser';
+import useSocket from '../../../hooks/useSocket';
+import { VOTE_CREATED } from '../../api/polls/[id]/vote';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
@@ -44,8 +46,11 @@ function weightedRandomGame(games: Record<string, number>) {
 const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
   const [user] = useUser();
-
-  const { data: poll } = usePoll(router.query.id as string);
+  const { data: poll, mutate } = usePoll(router.query.id as string);
+  useSocket(VOTE_CREATED, () => {
+    console.log('VOTE_CREATED');
+    mutate();
+  });
 
   const games =
     poll?.votes.reduce<Record<string, number>>((games, vote) => {

@@ -1,27 +1,22 @@
 const { createServer } = require('http');
-const { parse } = require('url');
 const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-app.prepare().then(() => {
-  createServer((req, res) => {
-    console.log('request!');
-    // Be sure to pass `true` as the second argument to `url.parse`.
-    // This tells it to parse the query portion of the URL.
-    const parsedUrl = parse(req.url, true);
-    const { pathname, query } = parsedUrl;
+let io;
 
-    if (pathname === '/a') {
-      app.render(req, res, '/a', query);
-    } else if (pathname === '/b') {
-      app.render(req, res, '/b', query);
-    } else {
-      handle(req, res, parsedUrl);
-    }
-  }).listen(Number(process.env.PORT), (err) => {
+const server = createServer((req, res) => {
+  req.io = io;
+
+  handle(req, res);
+});
+
+io = require('socket.io')(server);
+
+app.prepare().then(() => {
+  server.listen(Number(process.env.PORT), (err) => {
     if (err) throw err;
 
     console.log(`> Ready on localhost ${process.env.PORT}`);

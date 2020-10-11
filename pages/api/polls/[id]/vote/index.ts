@@ -6,6 +6,8 @@ import FileSync from 'lowdb/adapters/FileSync';
 
 import { Vote } from '../..';
 
+export const VOTE_CREATED = 'VOTE_CREATED';
+
 export default (req: NextApiRequest, res: NextApiResponse<Vote>) => {
   const adapter = new FileSync('db.json');
   const db = low(adapter);
@@ -39,6 +41,10 @@ export default (req: NextApiRequest, res: NextApiResponse<Vote>) => {
         votes: [...poll.votes, vote],
       })
       .write();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    req.io.emit(VOTE_CREATED);
 
     return res.status(StatusCodes.OK).send(vote);
   }
