@@ -24,7 +24,7 @@ const CloseFab = styled(Fab)`
   right: 6rem;
 `;
 
-function weightedRandomGame(games: Record<string, number>) {
+function weightedRandomGame(games: Record<string, string[]>) {
   let sum = 0;
   const r = Math.random();
   const numberOfGames = Object.keys(games).length;
@@ -32,7 +32,7 @@ function weightedRandomGame(games: Record<string, number>) {
   console.log(r);
 
   for (const name in games) {
-    sum += games[name] / numberOfGames;
+    sum += games[name].length / numberOfGames;
     if (r <= sum) return name;
   }
 }
@@ -42,18 +42,17 @@ const PollPage: React.FunctionComponent = () => {
   const [user] = useUser();
   const { data: poll, mutate } = usePoll(router.query.id as string);
   useSocket(VOTE_CREATED, () => {
-    console.log('VOTE_CREATED');
     mutate();
   });
 
   const games =
-    poll?.votes.reduce<Record<string, number>>((games, vote) => {
-      vote.votedFor.forEach((vote) => {
-        if (games[vote]) {
-          return (games[vote] += 1);
+    poll?.votes.reduce<Record<string, string[]>>((games, vote) => {
+      vote.votedFor.forEach((voteForName) => {
+        if (games[voteForName]) {
+          return (games[voteForName] = [...games[voteForName], vote.username]);
         }
 
-        games[vote] = 1;
+        games[voteForName] = [vote.username];
       });
 
       return games;
@@ -67,21 +66,34 @@ const PollPage: React.FunctionComponent = () => {
       <Grid container spacing={1}>
         {poll?.votes.map((vote) => (
           <Grid item key={vote.id}>
-            <Chip color="primary" label={vote.username} variant="outlined" />
+            <Chip color="primary" label={vote.username} />
           </Grid>
         ))}
         <FlipMove typeName={null}>
           {Object.entries(games)
-            .sort(([, scoreA], [, scoreB]) => {
-              return scoreB - scoreA;
+            .sort(([, votersA], [, votersB]) => {
+              return votersB.length - votersA.length;
             })
-            .map(([name, score]) => (
+            .map(([name, voters]) => (
               <Grid item key={name} xs={12}>
                 <Card variant="outlined">
                   <CardContent>
-                    <Typography component="h2" variant="h6">
-                      {score}pt{score !== 1 && 's'} - {name}
-                    </Typography>
+                    <Grid container spacing={1}>
+                      <Grid item>
+                        <Typography component="h2" variant="h6">
+                          {voters.length}pt{voters.length !== 1 && 's'} - {name}
+                        </Typography>
+                      </Grid>
+                      {voters.map((voter) => (
+                        <Grid item key={voter}>
+                          <Chip
+                            color="primary"
+                            label={voter}
+                            variant="outlined"
+                          />
+                        </Grid>
+                      ))}
+                    </Grid>
                   </CardContent>
                 </Card>
               </Grid>
