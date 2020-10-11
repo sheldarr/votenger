@@ -11,6 +11,7 @@ export interface Vote {
 }
 
 export interface Poll {
+  alreadyPlayed: string[];
   createdAt: string;
   description: string;
   id: string;
@@ -30,6 +31,7 @@ export default (req: NextApiRequest, res: NextApiResponse<Poll[] | Poll>) => {
     }
 
     const poll = {
+      alreadyPlayed: [],
       createdAt: new Date().toString(),
       description: req.body.description,
       id: uuidv4(),

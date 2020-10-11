@@ -4,17 +4,20 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
+import CardActions from '@material-ui/core/CardActions';
 import CasinoIcon from '@material-ui/icons/Casino';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import FlipMove from 'react-flip-move';
 import Chip from '@material-ui/core/Chip';
+import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 import usePoll from '../../../hooks/usePoll';
 import useUser from '../../../hooks/useUser';
 import useSocket from '../../../hooks/useSocket';
-import { VOTE_CREATED } from '../../api/polls/[id]/vote';
+import { REFRESH_VOTE } from '../../api/polls/[id]/vote';
 import { RANDOM_GAME } from '../../../components/RandomGameDialog';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
@@ -23,6 +26,16 @@ const CloseFab = styled(Fab)`
   position: fixed !important;
   bottom: 2rem;
   right: 6rem;
+`;
+
+const GameCard = styled(Card)`
+  ${(props) =>
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    props.played &&
+    `
+      background-color: #90ee90 !important;
+  `}
 `;
 
 function weightedRandomGame(games: Record<string, string[]>) {
@@ -42,7 +55,7 @@ const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
   const [user] = useUser();
   const { data: poll, mutate } = usePoll(router.query.id as string);
-  const socket = useSocket(VOTE_CREATED, () => {
+  const socket = useSocket(REFRESH_VOTE, () => {
     mutate();
   });
 
@@ -77,7 +90,12 @@ const PollPage: React.FunctionComponent = () => {
             })
             .map(([name, voters]) => (
               <Grid item key={name} xs={12}>
-                <Card variant="outlined">
+                <GameCard
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  played={poll.alreadyPlayed.includes(name)}
+                  variant="outlined"
+                >
                   <CardContent>
                     <Grid container spacing={1}>
                       <Grid item>
@@ -87,16 +105,26 @@ const PollPage: React.FunctionComponent = () => {
                       </Grid>
                       {voters.map((voter) => (
                         <Grid item key={voter}>
-                          <Chip
-                            color="primary"
-                            label={voter}
-                            variant="outlined"
-                          />
+                          <Chip color="primary" label={voter} />
                         </Grid>
                       ))}
                     </Grid>
                   </CardContent>
-                </Card>
+                  {user?.isAdmin && (
+                    <CardActions>
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          axios.post(`/api/polls/${poll.id}/played`, { name });
+                        }}
+                      >
+                        {poll?.alreadyPlayed.includes(name)
+                          ? 'Unplay'
+                          : 'Played'}
+                      </Button>
+                    </CardActions>
+                  )}
+                </GameCard>
               </Grid>
             ))}
         </FlipMove>
@@ -105,7 +133,13 @@ const PollPage: React.FunctionComponent = () => {
         <CloseFab
           color="primary"
           onClick={() => {
-            socket.emit(RANDOM_GAME, weightedRandomGame(games));
+            const unplayedGames = Object.fromEntries(
+              Object.entries(games).filter(([name]) => {
+                return !poll.alreadyPlayed.includes(name);
+              }),
+            );
+
+            socket.emit(RANDOM_GAME, weightedRandomGame(unplayedGames));
           }}
         >
           <CasinoIcon />

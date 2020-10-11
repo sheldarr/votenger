@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 
 const socket = io();
 
-const useSocket = (eventName: string, callback: () => void) => {
+const useSocket = (eventName: string, callback: (message: string) => void) => {
   useEffect(() => {
     socket.on(eventName, callback);
 
