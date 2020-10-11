@@ -27,7 +27,7 @@ const CreatePollPage: React.FunctionComponent = () => {
   return (
     <Container>
       <Grid container justify="center">
-        <Grid item lg={4} xs={8}>
+        <Grid item md={4} xs={12}>
           <Typography align="center" variant="h4">
             Create poll
           </Typography>
@@ -62,6 +62,7 @@ const CreatePollPage: React.FunctionComponent = () => {
                         error={errors.name && touched.name}
                         helperText={errors.name && touched.name && errors.name}
                         id="name"
+                        inputProps={{ maxlength: 32 }}
                         label="Name"
                         margin="normal"
                         onBlur={handleBlur}
@@ -72,7 +73,9 @@ const CreatePollPage: React.FunctionComponent = () => {
                     <Grid item>
                       <TextField
                         fullWidth
+                        multiline
                         id="description"
+                        inputProps={{ maxlength: 256 }}
                         label="Description"
                         margin="normal"
                         onBlur={handleBlur}

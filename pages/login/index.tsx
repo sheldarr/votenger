@@ -25,7 +25,7 @@ const LoginPage: React.FunctionComponent = () => {
   return (
     <Container>
       <Grid container justify="center">
-        <Grid item lg={4} xs={8}>
+        <Grid item md={4} xs={12}>
           <Formik
             initialValues={{ username: '' }}
             onSubmit={(values) => {
@@ -62,6 +62,7 @@ const LoginPage: React.FunctionComponent = () => {
                           errors.username && touched.username && errors.username
                         }
                         id="username"
+                        inputProps={{ maxlength: 16 }}
                         label="Username"
                         margin="normal"
                         onBlur={handleBlur}

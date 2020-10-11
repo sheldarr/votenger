@@ -58,7 +58,7 @@ const PollVotePage: React.FunctionComponent = () => {
       </Typography>
       <Grid container spacing={1}>
         {games?.map((game) => (
-          <Grid item key={game.name} lg={4} xs={12}>
+          <Grid item key={game.name} lg={4} md={6} xs={12}>
             <Card variant="outlined">
               <CardContent>
                 <Typography gutterBottom component="h2" variant="h6">

@@ -4,6 +4,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { PageTransition } from 'next-page-transitions';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -37,6 +38,10 @@ const VotengerApp = ({ Component, pageProps }) => {
   return (
     <>
       <CssBaseline />
+      <Head>
+        <title>Votenger</title>
+        <link href="/favicon.ico" rel="icon" />
+      </Head>
       <ThemeProvider theme={theme}>
         <NavBar />
         <PageTransition
