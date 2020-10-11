@@ -50,6 +50,7 @@ const LoginPage: React.FunctionComponent = () => {
                 touched,
                 errors,
                 isSubmitting,
+                isValid,
                 handleChange,
                 handleBlur,
                 handleSubmit,
@@ -78,7 +79,7 @@ const LoginPage: React.FunctionComponent = () => {
                       <Button
                         fullWidth
                         color="primary"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || !isValid}
                         type="submit"
                         variant="contained"
                       >
