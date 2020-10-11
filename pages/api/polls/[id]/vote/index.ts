@@ -8,7 +8,7 @@ import { Vote } from '../..';
 
 export const VOTE_CREATED = 'VOTE_CREATED';
 
-export default (req: NextApiRequest, res: NextApiResponse<Vote>) => {
+const VoteApi = (req: NextApiRequest, res: NextApiResponse<Vote>) => {
   const adapter = new FileSync('db.json');
   const db = low(adapter);
 
@@ -49,3 +49,5 @@ export default (req: NextApiRequest, res: NextApiResponse<Vote>) => {
     return res.status(StatusCodes.OK).send(vote);
   }
 };
+
+export default VoteApi;
