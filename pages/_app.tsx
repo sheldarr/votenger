@@ -5,6 +5,9 @@ import { ThemeProvider } from '@material-ui/styles';
 import { PageTransition } from 'next-page-transitions';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
+import DateFnsUtils from '@date-io/date-fns';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -43,15 +46,17 @@ const VotengerApp = ({ Component, pageProps }) => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <ThemeProvider theme={theme}>
-        <NavBar />
-        <PageTransition
-          classNames="page-transition"
-          key={router.route}
-          timeout={300}
-        >
-          <Component {...pageProps} />
-        </PageTransition>
-        <RandomGameDialog />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <NavBar />
+          <PageTransition
+            classNames="page-transition"
+            key={router.route}
+            timeout={300}
+          >
+            <Component {...pageProps} />
+          </PageTransition>
+          <RandomGameDialog />
+        </MuiPickersUtilsProvider>
       </ThemeProvider>
       <style global jsx>{`
         .page-transition-enter {

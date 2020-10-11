@@ -16,6 +16,7 @@ export interface Poll {
   description: string;
   id: string;
   name: string;
+  plannedFor: string;
   votes: Vote[];
 }
 
@@ -26,16 +27,17 @@ export default (req: NextApiRequest, res: NextApiResponse<Poll[] | Poll>) => {
   db.defaults({ polls: [] }).write();
 
   if (req.method === 'POST') {
-    if (!req.body.name) {
+    if (!req.body.name || !req.body.plannedFor) {
       return res.status(StatusCodes.BAD_REQUEST).send([]);
     }
 
-    const poll = {
+    const poll: Poll = {
       alreadyPlayed: [],
       createdAt: new Date().toString(),
       description: req.body.description,
       id: uuidv4(),
       name: req.body.name,
+      plannedFor: req.body.plannedFor,
       votes: [],
     };
 

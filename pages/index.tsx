@@ -47,7 +47,7 @@ const Home: NextPage = () => {
           ?.sort((a, b) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            return new Date(b.createdAt) - new Date(a.createdAt);
+            return new Date(b.plannedFor) - new Date(a.plannedFor);
           })
           .map((poll) => (
             <Grid item key={poll.id} xs={12}>
@@ -55,7 +55,7 @@ const Home: NextPage = () => {
                 <CardContent>
                   <Typography gutterBottom component="h2" variant="h6">
                     {poll.name} (
-                    {format(new Date(poll.createdAt), 'dd/MM/yyyy')})
+                    {format(new Date(poll.plannedFor), 'dd/MM/yyyy')})
                   </Typography>
                   <Typography color="textSecondary">
                     {poll.description}

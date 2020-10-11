@@ -62,7 +62,7 @@ const LoginPage: React.FunctionComponent = () => {
                           errors.username && touched.username && errors.username
                         }
                         id="username"
-                        inputProps={{ maxlength: 16 }}
+                        inputProps={{ maxLength: 16 }}
                         label="Username"
                         margin="normal"
                         onBlur={handleBlur}

@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 
 import { URL as MAIN_PAGE_URL } from '../..';
 import useUser from '../../../hooks/useUser';
@@ -32,7 +33,11 @@ const CreatePollPage: React.FunctionComponent = () => {
             Create poll
           </Typography>
           <Formik
-            initialValues={{ description: '', name: '' }}
+            initialValues={{
+              description: '',
+              name: '',
+              plannedFor: new Date().toString(),
+            }}
             onSubmit={async (values) => {
               await axios.post('/api/polls', values);
 
@@ -48,9 +53,11 @@ const CreatePollPage: React.FunctionComponent = () => {
                 touched,
                 errors,
                 isSubmitting,
+                isValid,
                 handleChange,
                 handleBlur,
                 handleSubmit,
+                setFieldValue,
               } = props;
               return (
                 <form onSubmit={handleSubmit}>
@@ -62,7 +69,7 @@ const CreatePollPage: React.FunctionComponent = () => {
                         error={errors.name && touched.name}
                         helperText={errors.name && touched.name && errors.name}
                         id="name"
-                        inputProps={{ maxlength: 32 }}
+                        inputProps={{ maxLength: 32 }}
                         label="Name"
                         margin="normal"
                         onBlur={handleBlur}
@@ -71,11 +78,24 @@ const CreatePollPage: React.FunctionComponent = () => {
                       />
                     </Grid>
                     <Grid item>
+                      <KeyboardDatePicker
+                        fullWidth
+                        format="dd/MM/yyyy"
+                        id="plannedFor"
+                        label="Date"
+                        onBlur={handleBlur}
+                        onChange={(plannedFor) => {
+                          setFieldValue('plannedFor', plannedFor.toString());
+                        }}
+                        value={values.plannedFor}
+                      />
+                    </Grid>
+                    <Grid item>
                       <TextField
                         fullWidth
                         multiline
                         id="description"
-                        inputProps={{ maxlength: 256 }}
+                        inputProps={{ maxLength: 256 }}
                         label="Description"
                         margin="normal"
                         onBlur={handleBlur}
@@ -87,7 +107,7 @@ const CreatePollPage: React.FunctionComponent = () => {
                       <Button
                         fullWidth
                         color="primary"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || !isValid}
                         type="submit"
                         variant="contained"
                       >
