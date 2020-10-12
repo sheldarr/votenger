@@ -16,6 +16,20 @@ describe('weightedRandomGame', () => {
     expect(result).toEqual('1Game');
   });
 
+  test('returns 4rd game if all games have the same number of votes and random returns 0.999999', () => {
+    const games = {
+      '1Game': ['paczek'],
+      '2Game': ['kaczek'],
+      '3Game': ['laczek'],
+      '4Game': ['baczek'],
+    };
+    Math.random = () => 0.999999;
+
+    const result = weightedRandomGame(games);
+
+    expect(result).toEqual('4Game');
+  });
+
   test('returns 3rd game if all games have the same number of votes and random returns the lowest number for 3rd game', () => {
     const games = {
       '1Game': ['paczek'],
