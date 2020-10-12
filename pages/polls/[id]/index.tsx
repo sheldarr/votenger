@@ -36,7 +36,7 @@ const GameCard = styled(Card)`
   ${(props: GameCardProps) =>
     props.played &&
     `
-      background-color: #90ee90 !important;
+      background-color: #f6e1ff !important;
   `}
 `;
 
