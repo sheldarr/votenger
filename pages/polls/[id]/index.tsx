@@ -20,6 +20,7 @@ import useSocket from '../../../hooks/useSocket';
 import { REFRESH_VOTE } from '../../api/polls/[id]/vote';
 import { RANDOM_GAME } from '../../../components/RandomGameDialog';
 import { isUserAdmin } from '../../../auth';
+import { weightedRandomGame } from '../../../utils/weightedRandomGame';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
@@ -42,19 +43,6 @@ const GameCard = styled(Card)`
       background-color: #f6e1ff !important;
   `}
 `;
-
-function weightedRandomGame(games: Record<string, string[]>) {
-  let sum = 0;
-  const r = Math.random();
-  const numberOfGames = Object.keys(games).length;
-
-  console.log(r);
-
-  for (const name in games) {
-    sum += games[name].length / numberOfGames;
-    if (r <= sum) return name;
-  }
-}
 
 const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
