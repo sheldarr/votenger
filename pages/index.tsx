@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 
 import usePolls from '../hooks/usePolls';
 import useUser from '../hooks/useUser';
+import { isUserAdmin } from '../auth';
 import { URL as POLL_URL } from './polls/[id]';
 import { URL as POLL_VOTE_URL } from './polls/[id]/vote';
 import { URL as CREATE_POLL_URL } from './polls/create';
@@ -86,7 +87,7 @@ const Home: NextPage = () => {
             </Grid>
           ))}
       </Grid>
-      {user?.isAdmin && (
+      {isUserAdmin(user?.username) && (
         <AddPollFab
           color="primary"
           onClick={() => {

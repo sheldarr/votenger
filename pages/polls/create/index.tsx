@@ -12,6 +12,7 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 
 import { URL as MAIN_PAGE_URL } from '../..';
 import useUser from '../../../hooks/useUser';
+import { isUserAdmin } from '../../../auth';
 
 export const URL = '/polls/create';
 
@@ -20,10 +21,10 @@ const CreatePollPage: React.FunctionComponent = () => {
   const [user] = useUser();
 
   useEffect(() => {
-    if (!user?.isAdmin) {
+    if (!isUserAdmin(user?.username)) {
       router.push(MAIN_PAGE_URL);
     }
-  });
+  }, []);
 
   return (
     <Container>

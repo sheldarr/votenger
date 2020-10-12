@@ -19,6 +19,7 @@ import useUser from '../../../hooks/useUser';
 import useSocket from '../../../hooks/useSocket';
 import { REFRESH_VOTE } from '../../api/polls/[id]/vote';
 import { RANDOM_GAME } from '../../../components/RandomGameDialog';
+import { isUserAdmin } from '../../../auth';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
@@ -116,7 +117,7 @@ const PollPage: React.FunctionComponent = () => {
                       ))}
                     </Grid>
                   </CardContent>
-                  {user?.isAdmin && (
+                  {isUserAdmin(user?.username) && (
                     <CardActions>
                       <Button
                         color="primary"
@@ -135,7 +136,7 @@ const PollPage: React.FunctionComponent = () => {
             ))}
         </FlipMove>
       </Grid>
-      {user?.isAdmin && (
+      {isUserAdmin(user?.username) && (
         <RandomGameFab
           color="primary"
           onClick={() => {
