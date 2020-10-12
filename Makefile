@@ -18,6 +18,9 @@ build: ## build for production
 dev: ## start development
 	$(DOCKER_RUN) yarn dev
 
+test: ## run tests
+	$(DOCKER_RUN) yarn test
+
 install: ## install dependencies
 	$(DOCKER_RUN) yarn install
 
