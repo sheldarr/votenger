@@ -1,12 +1,25 @@
 export const weightedRandomGame = (games: Record<string, string[]>) => {
-  let sum = 0;
-  const r = Math.random();
+  const randomNumber = Math.random();
   const numberOfGames = Object.keys(games).length;
+  const allVotesNumber = Object.values(games).reduce(
+    (votesSum, peopleVotedOnGame) => votesSum + peopleVotedOnGame.length,
+    0,
+  );
+  const rangeForOneVote = 1 / (allVotesNumber || numberOfGames);
 
-  console.log(r);
+  console.log(randomNumber);
 
+  let gameLowestNumber = 0;
   for (const name in games) {
-    sum += games[name].length / numberOfGames;
-    if (r <= sum) return name;
+    const votesNumberForGame = games[name].length;
+    const gameHighestNumber =
+      gameLowestNumber + votesNumberForGame * rangeForOneVote;
+    if (randomNumber < gameHighestNumber) {
+      return name;
+    }
+
+    gameLowestNumber = gameHighestNumber;
   }
+
+  throw new Error('Your algorithm of drawing the game sucks!!!');
 };
