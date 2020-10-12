@@ -4,6 +4,12 @@ export const weightedRandomGame = (games: Record<string, string[]>) => {
   ).flatMap(([gameName, peopleVotedOnGame]) =>
     peopleVotedOnGame.map(() => gameName),
   );
-  const gameIndex = Math.floor(Math.random() * gamesToPick.length);
+  const randomNumber = Math.random();
+  const gameIndex = Math.floor(randomNumber * gamesToPick.length);
+
+  console.log(
+    `gameIndex: ${gameIndex}; random: ${randomNumber}; gamesToPick length: ${gamesToPick.length}`,
+  );
+
   return gamesToPick[gameIndex];
 };
