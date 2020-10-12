@@ -7,14 +7,15 @@ export const weightedRandomGame = (games: Record<string, string[]>) => {
   );
   const rangeForOneVote = 1 / (allVotesNumber || numberOfGames);
 
-  console.log(randomNumber);
-
   let gameLowestNumber = 0;
   for (const name in games) {
     const votesNumberForGame = games[name].length;
     const gameHighestNumber =
       gameLowestNumber + votesNumberForGame * rangeForOneVote;
     if (randomNumber < gameHighestNumber) {
+      console.log(
+        `gameHighestNumber: ${gameHighestNumber}; name: ${name}; random: ${randomNumber}`,
+      );
       return name;
     }
 
