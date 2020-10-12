@@ -1,13 +1,13 @@
 import { useLocalStorage } from 'react-use';
 
-export const USERNAME_LOCAL_STORAGE_KEY = 'USERNAME';
+export const USER_LOCAL_STORAGE_KEY = 'USER';
 
 interface User {
   username: string;
 }
 
 const useUser = () => {
-  return useLocalStorage<User | undefined>(USERNAME_LOCAL_STORAGE_KEY);
+  return useLocalStorage<User | undefined>(USER_LOCAL_STORAGE_KEY);
 };
 
 export default useUser;
