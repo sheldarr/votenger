@@ -101,4 +101,26 @@ describe('weightedRandomGame', () => {
 
     expect(result).toEqual('2Game');
   });
+
+  test('returns 3rd game if random returns number for it even if game does not have the most votes', () => {
+    const games = {
+      '1Game': ['paczek'],
+      '2Game': [
+        'kaczek',
+        'aaczek',
+        'caczek',
+        'daczek',
+        'faczek',
+        'saczek',
+        'taczek',
+      ],
+      '3Game': ['laczek'],
+      '4Game': ['baczek'],
+    };
+    Math.random = () => 0.8;
+
+    const result = weightedRandomGame(games);
+
+    expect(result).toEqual('3Game');
+  });
 });
