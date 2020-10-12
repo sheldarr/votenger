@@ -33,6 +33,8 @@ interface GameCardProps {
 }
 
 const GameCard = styled(Card)`
+  transition: background-color 0.2s !important;
+
   ${(props: GameCardProps) =>
     props.played &&
     `
