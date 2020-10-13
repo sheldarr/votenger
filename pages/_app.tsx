@@ -48,12 +48,8 @@ const VotengerApp = ({ Component, pageProps }) => {
       <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <NavBar />
-          <PageTransition
-            classNames="page-transition"
-            key={router.route}
-            timeout={300}
-          >
-            <Component {...pageProps} />
+          <PageTransition classNames="page-transition" timeout={300}>
+            <Component {...pageProps} key={router.route} />
           </PageTransition>
           <RandomGameDialog />
         </MuiPickersUtilsProvider>
