@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -14,13 +14,7 @@ export const URL = '/login';
 
 const LoginPage: React.FunctionComponent = () => {
   const router = useRouter();
-  const [user, setUser] = useUser();
-
-  useEffect(() => {
-    if (user) {
-      router.push(MAIN_PAGE_URL);
-    }
-  });
+  const [, setUser] = useUser();
 
   return (
     <Container>
