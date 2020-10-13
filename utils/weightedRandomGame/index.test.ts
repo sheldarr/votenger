@@ -1,5 +1,5 @@
 import 'jest';
-import { weightedRandomGame } from './weightedRandomGame';
+import weightedRandomGame from '.';
 
 describe('weightedRandomGame', () => {
   test('returns 1st game if all games have the same number of votes and random returns 0', () => {

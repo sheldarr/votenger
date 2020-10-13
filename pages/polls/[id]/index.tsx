@@ -20,7 +20,7 @@ import useSocket from '../../../hooks/useSocket';
 import { REFRESH_VOTE } from '../../api/polls/[id]/vote';
 import { RANDOM_GAME } from '../../../components/RandomGameDialog';
 import { isUserAdmin } from '../../../auth';
-import { weightedRandomGame } from '../../../utils/weightedRandomGame';
+import weightedRandomGame from '../../../utils/weightedRandomGame';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 

@@ -1,4 +1,4 @@
-export const weightedRandomGame = (games: Record<string, string[]>) => {
+const weightedRandomGame = (games: Record<string, string[]>) => {
   const gamesToPick = Object.entries(
     games,
   ).flatMap(([gameName, peopleVotedOnGame]) =>
@@ -13,3 +13,5 @@ export const weightedRandomGame = (games: Record<string, string[]>) => {
 
   return gamesToPick[gameIndex];
 };
+
+export default weightedRandomGame;
