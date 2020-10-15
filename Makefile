@@ -21,6 +21,9 @@ dev: ## start development
 test: ## run tests
 	$(DOCKER_RUN) yarn test
 
+test--watch: ## run tests in watch mode
+	$(DOCKER_RUN) yarn test:watch
+
 install: ## install dependencies
 	$(DOCKER_RUN) yarn install
 
