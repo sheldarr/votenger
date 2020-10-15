@@ -1,17 +1,49 @@
-const weightedRandomGame = (games: Record<string, string[]>) => {
+export interface RandomGameResult {
+  games: {
+    [gameName: string]: {
+      chances: number;
+      firstIndex: number;
+      lastIndex: number;
+    };
+  };
+  winner: {
+    index: number;
+    name: string;
+  };
+}
+
+const weightedRandomGame = (
+  games: Record<string, string[]>,
+): RandomGameResult => {
   const gamesToPick = Object.entries(
     games,
   ).flatMap(([gameName, peopleVotedOnGame]) =>
     peopleVotedOnGame.map(() => gameName),
   );
+
   const randomNumber = Math.random();
-  const gameIndex = Math.floor(randomNumber * gamesToPick.length);
+  const winnerIndex = Math.floor(randomNumber * gamesToPick.length);
 
-  console.log(
-    `gameIndex: ${gameIndex}; random: ${randomNumber}; gamesToPick length: ${gamesToPick.length}`,
-  );
+  const allGamesChances = Object.keys(games).reduce((gamesRanges, gameName) => {
+    gamesRanges[gameName] = {
+      chances:
+        gamesToPick.filter((game) => {
+          return game === gameName;
+        }).length / gamesToPick.length,
+      firstIndex: gamesToPick.indexOf(gameName),
+      lastIndex: gamesToPick.lastIndexOf(gameName),
+    };
 
-  return gamesToPick[gameIndex];
+    return gamesRanges;
+  }, {});
+
+  return {
+    games: allGamesChances,
+    winner: {
+      index: winnerIndex,
+      name: gamesToPick[winnerIndex],
+    },
+  };
 };
 
 export default weightedRandomGame;
