@@ -1,13 +1,16 @@
+import { NextPage } from 'next';
+import { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { PageTransition } from 'next-page-transitions';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import DateFnsUtils from '@date-io/date-fns';
+
+import 'normalize-css/normalize.css';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -18,8 +21,7 @@ import RandomGameDialog from '../components/RandomGameDialog';
 import { URL as LOGIN_PAGE_URL } from '../pages/login';
 import useUser from '../hooks/useUser';
 
-const VotengerApp = ({ Component, pageProps }) => {
-  const router = useRouter();
+const VotengerApp: NextPage<AppProps> = ({ Component, pageProps, router }) => {
   const [user] = useUser();
 
   useEffect(() => {
