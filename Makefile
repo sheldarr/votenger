@@ -1,34 +1,37 @@
 include .env
 
 USERID=$(shell id -u)
+NODE_IMAGE=node:14
 
 DOCKER_RUN = docker run \
 	--volume ${PWD}:/app \
 	--workdir /app \
 	--user ${USERID} \
-	--publish ${PORT}:${PORT} \
 	--tty \
 	--interactive \
-	--rm \
-	node:14-alpine
+	--rm
+
+DOCKER_RUN_NODE = $(DOCKER_RUN) \
+	--publish ${PORT}:${PORT} \
+	${NODE_IMAGE}
 
 build: ## build for production
-	$(DOCKER_RUN) yarn build
+	$(DOCKER_RUN) ${NODE_IMAGE} yarn build
 
 dev: ## start development
-	$(DOCKER_RUN) yarn dev
+	$(DOCKER_RUN_NODE) yarn dev
 
 test: ## run tests
-	$(DOCKER_RUN) yarn test
+	$(DOCKER_RUN) ${NODE_IMAGE} yarn test
 
 test--watch: ## run tests in watch mode
-	$(DOCKER_RUN) yarn test:watch
+	$(DOCKER_RUN) ${NODE_IMAGE} yarn test:watch
 
 install: ## install dependencies
-	$(DOCKER_RUN) yarn install
+	$(DOCKER_RUN) ${NODE_IMAGE} yarn install
 
 prod: ## start production
-	$(DOCKER_RUN) yarn start
+	$(DOCKER_RUN_NODE) yarn start
 
 lint: ## run linter
-	$(DOCKER_RUN) yarn lint
+	$(DOCKER_RUN) ${NODE_IMAGE} yarn lint
