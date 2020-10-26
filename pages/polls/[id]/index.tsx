@@ -21,6 +21,7 @@ import { REFRESH_VOTE } from '../../api/polls/[id]/vote';
 import { RANDOM_GAME } from '../../../components/RandomGameDialog';
 import { isUserAdmin } from '../../../auth';
 import weightedRandomGame from '../../../utils/weightedRandomGame';
+import { Poll } from '../../api/polls';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
@@ -65,6 +66,12 @@ const PollPage: React.FunctionComponent = () => {
       return games;
     }, {}) || {};
 
+  const userAlreadyVoted = (poll: Poll) => {
+    return poll.votes.some((vote) => {
+      return vote.username === user?.username;
+    });
+  };
+
   return (
     <Container>
       <Typography gutterBottom align="center" variant="h4">
@@ -77,51 +84,56 @@ const PollPage: React.FunctionComponent = () => {
           </Grid>
         ))}
         <FlipMove typeName={null}>
-          {Object.entries(games)
-            .sort(([, votersA], [, votersB]) => {
-              return votersB.length - votersA.length;
-            })
-            .map(([name, voters]) => (
-              <Grid item key={name} xs={12}>
-                <GameCard
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  played={
-                    poll.alreadyPlayed.includes(name) ? 'played' : undefined
-                  }
-                  variant="outlined"
-                >
-                  <CardContent>
-                    <Grid container spacing={1}>
-                      <Grid item>
-                        <Typography component="h2" variant="h6">
-                          {voters.length}pt{voters.length !== 1 && 's'} - {name}
-                        </Typography>
-                      </Grid>
-                      {voters.map((voter) => (
-                        <Grid item key={voter}>
-                          <Chip color="primary" label={voter} />
+          {poll &&
+            userAlreadyVoted(poll) &&
+            Object.entries(games)
+              .sort(([, votersA], [, votersB]) => {
+                return votersB.length - votersA.length;
+              })
+              .map(([name, voters]) => (
+                <Grid item key={name} xs={12}>
+                  <GameCard
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    played={
+                      poll.alreadyPlayed.includes(name) ? 'played' : undefined
+                    }
+                    variant="outlined"
+                  >
+                    <CardContent>
+                      <Grid container spacing={1}>
+                        <Grid item>
+                          <Typography component="h2" variant="h6">
+                            {voters.length}pt{voters.length !== 1 && 's'} -{' '}
+                            {name}
+                          </Typography>
                         </Grid>
-                      ))}
-                    </Grid>
-                  </CardContent>
-                  {isUserAdmin(user?.username) && (
-                    <CardActions>
-                      <Button
-                        color="primary"
-                        onClick={() => {
-                          axios.post(`/api/polls/${poll.id}/played`, { name });
-                        }}
-                      >
-                        {poll?.alreadyPlayed.includes(name)
-                          ? 'Unplay'
-                          : 'Played'}
-                      </Button>
-                    </CardActions>
-                  )}
-                </GameCard>
-              </Grid>
-            ))}
+                        {voters.map((voter) => (
+                          <Grid item key={voter}>
+                            <Chip color="primary" label={voter} />
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </CardContent>
+                    {isUserAdmin(user?.username) && (
+                      <CardActions>
+                        <Button
+                          color="primary"
+                          onClick={() => {
+                            axios.post(`/api/polls/${poll.id}/played`, {
+                              name,
+                            });
+                          }}
+                        >
+                          {poll?.alreadyPlayed.includes(name)
+                            ? 'Unplay'
+                            : 'Played'}
+                        </Button>
+                      </CardActions>
+                    )}
+                  </GameCard>
+                </Grid>
+              ))}
         </FlipMove>
       </Grid>
       {isUserAdmin(user?.username) && (
