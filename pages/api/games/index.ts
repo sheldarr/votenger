@@ -28,10 +28,6 @@ const GAMES: Game[] = [
     type: "H'n'S",
   },
   {
-    name: "Don't Starve Together",
-    type: 'Survival',
-  },
-  {
     name: 'ET: Legacy',
     type: 'FPS',
   },
@@ -50,6 +46,10 @@ const GAMES: Game[] = [
   {
     name: 'Soldat',
     type: '2D Shooter',
+  },
+  {
+    name: 'Stronghold: Crusader',
+    type: 'RTS',
   },
   {
     name: 'Unreal Tournament 2k4',
