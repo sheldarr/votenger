@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Vote } from '../..';
+import { Poll, Vote } from '../..';
 import getDb from '../../../../../getDb';
 
 export const REFRESH_VOTE = 'REFRESH_VOTE';
@@ -27,7 +27,15 @@ const VoteApi = (req: NextApiRequest, res: NextApiResponse<Vote>) => {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const poll = db.get('polls').find({ id }).value();
+    const poll: Poll = db.get('polls').find({ id }).value();
+
+    const alreadyVoted = poll.votes.some(
+      (existingVote) => existingVote.username === vote.username,
+    );
+
+    if (alreadyVoted) {
+      return res.status(StatusCodes.FORBIDDEN).end();
+    }
 
     db.get('polls')
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
