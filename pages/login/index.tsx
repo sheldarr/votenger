@@ -1,6 +1,5 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -9,6 +8,7 @@ import * as Yup from 'yup';
 
 import { URL as MAIN_PAGE_URL } from '..';
 import useUser from '../../hooks/useUser';
+import Page from '../../components/Page';
 
 export const URL = '/login';
 
@@ -17,7 +17,7 @@ const LoginPage: React.FunctionComponent = () => {
   const [, setUser] = useUser();
 
   return (
-    <Container>
+    <Page title="Login">
       <Grid container justify="center">
         <Grid item md={4} xs={12}>
           <Formik
@@ -82,7 +82,7 @@ const LoginPage: React.FunctionComponent = () => {
           </Formik>
         </Grid>
       </Grid>
-    </Container>
+    </Page>
   );
 };
 

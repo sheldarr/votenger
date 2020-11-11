@@ -44,7 +44,6 @@ const VotengerApp: NextPage<AppProps> = ({ Component, pageProps, router }) => {
     <>
       <CssBaseline />
       <Head>
-        <title>Votenger</title>
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <ThemeProvider theme={theme}>

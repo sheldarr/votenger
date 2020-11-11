@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
 import React from 'react';
-import Container from '@material-ui/core/Container';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
@@ -17,6 +16,7 @@ import { useRouter } from 'next/router';
 import usePolls from '../hooks/usePolls';
 import useUser from '../hooks/useUser';
 import { isUserAdmin } from '../auth';
+import Page from '../components/Page';
 import { URL as POLL_URL } from './polls/[id]';
 import { URL as POLL_VOTE_URL } from './polls/[id]/vote';
 import { URL as CREATE_POLL_URL } from './polls/create';
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <Container>
+    <Page title="Polls">
       <Grid container spacing={1}>
         {polls
           ?.sort((a, b) => {
@@ -97,7 +97,7 @@ const Home: NextPage = () => {
           <AddIcon />
         </AddPollFab>
       )}
-    </Container>
+    </Page>
   );
 };
 

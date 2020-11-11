@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +12,7 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 import { URL as MAIN_PAGE_URL } from '../..';
 import useUser from '../../../hooks/useUser';
 import { isUserAdmin } from '../../../auth';
+import Page from '../../../components/Page';
 
 export const URL = '/polls/create';
 
@@ -27,7 +27,7 @@ const CreatePollPage: React.FunctionComponent = () => {
   }, []);
 
   return (
-    <Container>
+    <Page title="Create poll">
       <Grid container justify="center">
         <Grid item md={4} xs={12}>
           <Typography align="center" variant="h4">
@@ -122,7 +122,7 @@ const CreatePollPage: React.FunctionComponent = () => {
           </Formik>
         </Grid>
       </Grid>
-    </Container>
+    </Page>
   );
 };
 

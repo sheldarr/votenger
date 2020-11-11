@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
@@ -17,6 +16,7 @@ import usePoll from '../../../../hooks/usePoll';
 import useUser from '../../../../hooks/useUser';
 
 import { URL as POLL_URL } from '..';
+import Page from '../../../../components/Page';
 
 export const URL = (pollId: string) => `/polls/${pollId}/vote`;
 
@@ -52,7 +52,7 @@ const PollVotePage: React.FunctionComponent = () => {
   };
 
   return (
-    <Container>
+    <Page title={`Vote ${poll?.name}`}>
       <Typography gutterBottom align="center" variant="h2">
         {poll?.name}
       </Typography>
@@ -106,7 +106,7 @@ const PollVotePage: React.FunctionComponent = () => {
       >
         {votesLeft > 0 ? votesLeft : <CheckIcon />}
       </VoteFab>
-    </Container>
+    </Page>
   );
 };
 

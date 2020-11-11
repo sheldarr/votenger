@@ -1,6 +1,5 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
@@ -22,6 +21,7 @@ import { RANDOM_GAME } from '../../../components/RandomGameDialog';
 import { isUserAdmin } from '../../../auth';
 import weightedRandomGame from '../../../utils/weightedRandomGame';
 import { Poll } from '../../api/polls';
+import Page from '../../../components/Page';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
@@ -73,7 +73,7 @@ const PollPage: React.FunctionComponent = () => {
   };
 
   return (
-    <Container>
+    <Page title={poll?.name}>
       <Typography gutterBottom align="center" variant="h4">
         {poll?.name}
       </Typography>
@@ -152,7 +152,7 @@ const PollPage: React.FunctionComponent = () => {
           <CasinoIcon />
         </RandomGameFab>
       )}
-    </Container>
+    </Page>
   );
 };
 
