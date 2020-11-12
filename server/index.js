@@ -19,6 +19,9 @@ io.on('connection', (socket) => {
   socket.on('RANDOM_GAME', (message) => {
     io.emit('RANDOM_GAME', message);
   });
+  socket.on('RANDOM_TEAMS', (message) => {
+    io.emit('RANDOM_TEAMS', message);
+  });
 });
 
 app.prepare().then(() => {

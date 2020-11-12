@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
 import CardActions from '@material-ui/core/CardActions';
 import CasinoIcon from '@material-ui/icons/Casino';
+import GroupIcon from '@material-ui/icons/Group';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -22,6 +23,8 @@ import { isUserAdmin } from '../../../auth';
 import weightedRandomGame from '../../../utils/weightedRandomGame';
 import { Poll } from '../../api/polls';
 import Page from '../../../components/Page';
+import { RANDOM_TEAMS } from '../../../components/RandomTeamsDialog';
+import randomTeams from '../../../utils/randomTeams';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
@@ -29,6 +32,12 @@ const RandomGameFab = styled(Fab)`
   position: fixed !important;
   bottom: 2rem;
   right: 2rem;
+`;
+
+const RandomTeamsFab = styled(Fab)`
+  position: fixed !important;
+  bottom: 2rem;
+  right: 6rem;
 `;
 
 interface GameCardProps {
@@ -151,6 +160,19 @@ const PollPage: React.FunctionComponent = () => {
         >
           <CasinoIcon />
         </RandomGameFab>
+      )}
+      {isUserAdmin(user?.username) && (
+        <RandomTeamsFab
+          color="primary"
+          onClick={() => {
+            socket.emit(
+              RANDOM_TEAMS,
+              randomTeams(poll?.votes.map((vote) => vote.username)),
+            );
+          }}
+        >
+          <GroupIcon />
+        </RandomTeamsFab>
       )}
     </Page>
   );

@@ -20,6 +20,7 @@ import NavBar from '../components/NavBar';
 import RandomGameDialog from '../components/RandomGameDialog';
 import { URL as LOGIN_PAGE_URL } from '../pages/login';
 import useUser from '../hooks/useUser';
+import RandomTeamsDialog from '../components/RandomTeamsDialog';
 
 const VotengerApp: NextPage<AppProps> = ({ Component, pageProps, router }) => {
   const [user] = useUser();
@@ -53,6 +54,7 @@ const VotengerApp: NextPage<AppProps> = ({ Component, pageProps, router }) => {
             <Component {...pageProps} key={router.route} />
           </PageTransition>
           <RandomGameDialog />
+          <RandomTeamsDialog />
         </MuiPickersUtilsProvider>
       </ThemeProvider>
       <style global jsx>{`
