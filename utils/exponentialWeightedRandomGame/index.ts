@@ -26,9 +26,6 @@ const exponentialWeightedRandomGame = (
       ),
   );
 
-  console.log(gamesToPick);
-  console.log(Object.keys(games));
-
   const randomNumber = Math.random();
   const winnerIndex = Math.floor(randomNumber * gamesToPick.length);
 
