@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 
 import useSocket from '../../hooks/useSocket';
-import { RandomGameResult } from '../../utils/weightedRandomGame';
+import { RandomGameResult } from '../../types/RandomGameResult';
 
 export const RANDOM_GAME = 'RANDOM_GAME';
 
