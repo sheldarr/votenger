@@ -1,4 +1,5 @@
 import 'jest';
+
 import weightedRandomGame from '.';
 
 describe('weightedRandomGame', () => {
