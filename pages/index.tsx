@@ -70,7 +70,7 @@ const Home: NextPage = () => {
                         router.push(POLL_URL(poll.id));
                       }}
                     >
-                      Summary
+                      Dashboard
                     </Button>
                   ) : (
                     <Button
