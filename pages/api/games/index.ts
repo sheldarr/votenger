@@ -1,6 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
 
+export enum GameType {
+  ACTION = 'Action',
+  FPS = 'FPS',
+  HACK_AND_SLASH = 'Hack and slash',
+  OTHER = 'Other',
+  RACING = 'Racing',
+  RTS = 'RTS',
+  SURVIVAL = 'Survival',
+}
+
 export interface Game {
   name: string;
   type: string;
@@ -9,51 +19,51 @@ export interface Game {
 const GAMES: Game[] = [
   {
     name: 'Alien vs Predator 2',
-    type: 'FPS',
+    type: GameType.FPS,
   },
   {
     name: 'Among us',
-    type: 'Detective Survival',
+    type: GameType.SURVIVAL,
   },
   {
     name: 'Battle for the Middle Earth 2',
-    type: 'RTS',
+    type: GameType.RTS,
   },
   {
     name: 'CS 1.6',
-    type: 'FPS',
+    type: GameType.FPS,
   },
   {
     name: 'Diablo II',
-    type: "H'n'S",
+    type: GameType.HACK_AND_SLASH,
   },
   {
     name: 'ET: Legacy',
-    type: 'FPS',
+    type: GameType.FPS,
   },
   {
     name: 'Mount & Blade',
-    type: 'Action',
+    type: GameType.ACTION,
   },
   {
     name: 'Re-Volt',
-    type: 'Racing',
+    type: GameType.RACING,
   },
   {
     name: 'Settlers 3',
-    type: 'RTS',
+    type: GameType.RTS,
   },
   {
     name: 'Soldat',
-    type: '2D Shooter',
+    type: GameType.ACTION,
   },
   {
     name: 'Stronghold: Crusader',
-    type: 'RTS',
+    type: GameType.RTS,
   },
   {
     name: 'Unreal Tournament 2k4',
-    type: 'FPS',
+    type: GameType.FPS,
   },
 ];
 
