@@ -12,8 +12,9 @@ export enum GameType {
 }
 
 export enum GameState {
-  AVAILABLE = 'Available',
-  EXCLUDED = 'Excluded',
+  AVAILABLE = 'AVAILABLE',
+  EXCLUDED = 'EXCLUDED',
+  UNAVAILABLE = 'UNAVAILABLE',
 }
 
 export interface Game {
