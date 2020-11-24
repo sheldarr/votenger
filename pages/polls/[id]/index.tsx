@@ -60,22 +60,22 @@ const GameCard = styled(Card)`
   `}
 `;
 
-enum UserRandomTeamState {
+export enum PlayerRandomTeamState {
   FIRST_TEAM = 'FIRST_TEAM',
   SECOND_TEAM = 'SECONDS_TEAM',
-  INCLUDE = 'INCLUDE',
+  RANDOM = 'RANDOM',
   EXCLUDE = 'EXCLUDE',
 }
 
-interface User {
+export interface Player {
   name: string;
-  randomTeamState: UserRandomTeamState;
+  randomTeamState: PlayerRandomTeamState;
 }
 
-const RandomTeamStateIcon: Record<UserRandomTeamState, React.ReactElement> = {
+const RandomTeamStateIcon: Record<PlayerRandomTeamState, React.ReactElement> = {
   EXCLUDE: <BlockIcon />,
   FIRST_TEAM: <MouseIcon />,
-  INCLUDE: <CasinoIcon />,
+  RANDOM: <CasinoIcon />,
   SECONDS_TEAM: <KeyboardIcon />,
 };
 
@@ -106,38 +106,38 @@ const PollPage: React.FunctionComponent = () => {
     });
   };
 
-  const [users, setUsers] = useState<User[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
 
   useEffect(() => {
-    setUsers(
+    setPlayers(
       poll?.votes.map((vote) => ({
         name: vote.username,
-        randomTeamState: UserRandomTeamState.INCLUDE,
+        randomTeamState: PlayerRandomTeamState.RANDOM,
       })) ?? [],
     );
   }, [poll?.votes]);
 
-  const switchUserRandaomTeamState = (user: User) => {
-    const userIndex = users.indexOf(user);
-    let nextRandomTeamState: UserRandomTeamState = user.randomTeamState;
+  const switchUserRandaomTeamState = (user: Player) => {
+    const userIndex = players.indexOf(user);
+    let nextRandomTeamState: PlayerRandomTeamState = user.randomTeamState;
 
     switch (user.randomTeamState) {
-      case UserRandomTeamState.EXCLUDE:
-        nextRandomTeamState = UserRandomTeamState.INCLUDE;
+      case PlayerRandomTeamState.EXCLUDE:
+        nextRandomTeamState = PlayerRandomTeamState.RANDOM;
         break;
-      case UserRandomTeamState.INCLUDE:
-        nextRandomTeamState = UserRandomTeamState.FIRST_TEAM;
+      case PlayerRandomTeamState.RANDOM:
+        nextRandomTeamState = PlayerRandomTeamState.FIRST_TEAM;
         break;
-      case UserRandomTeamState.FIRST_TEAM:
-        nextRandomTeamState = UserRandomTeamState.SECOND_TEAM;
+      case PlayerRandomTeamState.FIRST_TEAM:
+        nextRandomTeamState = PlayerRandomTeamState.SECOND_TEAM;
         break;
-      case UserRandomTeamState.SECOND_TEAM:
-        nextRandomTeamState = UserRandomTeamState.EXCLUDE;
+      case PlayerRandomTeamState.SECOND_TEAM:
+        nextRandomTeamState = PlayerRandomTeamState.EXCLUDE;
         break;
     }
 
-    setUsers(
-      update(users, {
+    setPlayers(
+      update(players, {
         [userIndex]: {
           randomTeamState: { $set: nextRandomTeamState },
         },
@@ -154,7 +154,7 @@ const PollPage: React.FunctionComponent = () => {
         <Grid container item justify="space-between" spacing={1} xs={12}>
           <Grid item>
             <Grid container spacing={1}>
-              {users.map((user) => (
+              {players.map((user) => (
                 <Grid item key={user.name}>
                   <Chip
                     color="primary"
@@ -276,10 +276,7 @@ const PollPage: React.FunctionComponent = () => {
         <RandomTeamsFab
           color="primary"
           onClick={() => {
-            socket.emit(
-              RANDOM_TEAMS,
-              randomTeams(poll?.votes.map((vote) => vote.username)),
-            );
+            socket.emit(RANDOM_TEAMS, randomTeams(players));
           }}
         >
           <GroupIcon />

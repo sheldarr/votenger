@@ -6,6 +6,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import MouseIcon from '@material-ui/icons/Mouse';
+import KeyboardIcon from '@material-ui/icons/Keyboard';
 
 import useSocket from '../../hooks/useSocket';
 import { RandomTeamsResult } from '../../utils/randomTeams';
@@ -36,9 +38,7 @@ const RandomTeamsDialog: React.FunctionComponent = () => {
           <Grid item xs={6}>
             <List dense>
               <ListItem>
-                <ListItemText
-                  primary={<Typography variant="h6">Team 1</Typography>}
-                />
+                <ListItemText primary={<MouseIcon />} />
               </ListItem>
               {firstTeam.map((player, index) => (
                 <ListItem key={player}>
@@ -50,9 +50,7 @@ const RandomTeamsDialog: React.FunctionComponent = () => {
           <Grid item xs={6}>
             <List dense>
               <ListItem>
-                <ListItemText
-                  primary={<Typography variant="h6">Team 2</Typography>}
-                />
+                <ListItemText primary={<KeyboardIcon />} />
               </ListItem>
               {secondTeam.map((player, index) => (
                 <ListItem key={player}>
