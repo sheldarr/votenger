@@ -26,6 +26,8 @@ const RandomTeamsDialog: React.FunctionComponent = () => {
 
   return (
     <Dialog
+      fullWidth
+      maxWidth="xs"
       onClose={() => {
         setRandomGameResult([[], []]);
         setIsOpen(false);
