@@ -4,7 +4,6 @@ import Dialog from '@material-ui/core/Dialog';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import MouseIcon from '@material-ui/icons/Mouse';
 import KeyboardIcon from '@material-ui/icons/Keyboard';
