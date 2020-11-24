@@ -25,6 +25,7 @@ import Page from '../../../components/Page';
 import { RANDOM_TEAMS } from '../../../components/RandomTeamsDialog';
 import randomTeams from '../../../utils/randomTeams';
 import exponentialWeightedRandomGame from '../../../utils/exponentialWeightedRandomGame';
+import linearWeightedRandomGame from '../../../utils/linearWeightedRandomGame';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
@@ -155,10 +156,25 @@ const PollPage: React.FunctionComponent = () => {
               }),
             );
 
-            socket.emit(
-              RANDOM_GAME,
-              exponentialWeightedRandomGame(unplayedGames),
+            console.info(
+              `Selected random game alogorithm: ${process.env.NEXT_PUBLIC_RANDOM_GAME_IMPLEMENTATION}`,
             );
+            switch (process.env.NEXT_PUBLIC_RANDOM_GAME_IMPLEMENTATION) {
+              case 'linear':
+                socket.emit(
+                  RANDOM_GAME,
+                  linearWeightedRandomGame(unplayedGames),
+                );
+                break;
+              case 'exponential':
+                socket.emit(
+                  RANDOM_GAME,
+                  exponentialWeightedRandomGame(unplayedGames),
+                );
+                break;
+              default:
+                console.error('No valid random game algorithm selected');
+            }
           }}
         >
           <CasinoIcon />

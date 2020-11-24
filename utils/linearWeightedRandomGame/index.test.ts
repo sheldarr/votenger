@@ -1,8 +1,8 @@
 import 'jest';
 
-import weightedRandomGame from '.';
+import linearWeightedRandomGame from '.';
 
-describe('weightedRandomGame', () => {
+describe('linearWeightedRandomGame', () => {
   test('returns 1st game as winner if all games have the same number of votes and random returns 0', () => {
     // given
     const games = {
@@ -15,7 +15,7 @@ describe('weightedRandomGame', () => {
     Math.random = () => 0;
 
     // when
-    const result = weightedRandomGame(games);
+    const result = linearWeightedRandomGame(games);
 
     // then
     expect(result).toEqual({
@@ -57,7 +57,7 @@ describe('weightedRandomGame', () => {
     Math.random = () => 0.999999;
 
     // when
-    const result = weightedRandomGame(games);
+    const result = linearWeightedRandomGame(games);
 
     // then
     expect(result).toEqual({
@@ -99,7 +99,7 @@ describe('weightedRandomGame', () => {
     Math.random = () => 0.5;
 
     // when
-    const result = weightedRandomGame(games);
+    const result = linearWeightedRandomGame(games);
 
     // then
     expect(result).toEqual({
@@ -141,7 +141,7 @@ describe('weightedRandomGame', () => {
     Math.random = () => 0.74;
 
     // when
-    const result = weightedRandomGame(games);
+    const result = linearWeightedRandomGame(games);
 
     // then
     expect(result).toEqual({
@@ -183,7 +183,7 @@ describe('weightedRandomGame', () => {
     Math.random = () => 0;
 
     // when
-    const result = weightedRandomGame(games);
+    const result = linearWeightedRandomGame(games);
 
     // then
     expect(result).toEqual({
@@ -233,7 +233,7 @@ describe('weightedRandomGame', () => {
     Math.random = () => 0.1;
 
     // when
-    const result = weightedRandomGame(games);
+    const result = linearWeightedRandomGame(games);
 
     // then
     expect(result).toEqual({
@@ -283,7 +283,7 @@ describe('weightedRandomGame', () => {
     Math.random = () => 0.79;
 
     // when
-    const result = weightedRandomGame(games);
+    const result = linearWeightedRandomGame(games);
 
     // then
     expect(result).toEqual({
@@ -333,7 +333,7 @@ describe('weightedRandomGame', () => {
     Math.random = () => 0.8;
 
     // when
-    const result = weightedRandomGame(games);
+    const result = linearWeightedRandomGame(games);
 
     // then
     expect(result).toEqual({

@@ -1,6 +1,6 @@
 import { RandomGameResult } from '../../types/RandomGameResult';
 
-const weightedRandomGame = (
+const linearWeightedRandomGame = (
   games: Record<string, string[]>,
 ): RandomGameResult => {
   const gamesToPick = Object.entries(
@@ -34,4 +34,4 @@ const weightedRandomGame = (
   };
 };
 
-export default weightedRandomGame;
+export default linearWeightedRandomGame;
