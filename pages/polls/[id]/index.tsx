@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
@@ -7,6 +7,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CasinoIcon from '@material-ui/icons/Casino';
 import GroupIcon from '@material-ui/icons/Group';
 import GamesIcon from '@material-ui/icons/Games';
+import BlockIcon from '@material-ui/icons/Block';
+import MouseIcon from '@material-ui/icons/Mouse';
+import KeyboardIcon from '@material-ui/icons/Keyboard';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -14,6 +17,7 @@ import FlipMove from 'react-flip-move';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import update from 'immutability-helper';
 
 import usePoll from '../../../hooks/usePoll';
 import useUser from '../../../hooks/useUser';
@@ -56,6 +60,25 @@ const GameCard = styled(Card)`
   `}
 `;
 
+enum UserRandomTeamState {
+  FIRST_TEAM = 'FIRST_TEAM',
+  SECOND_TEAM = 'SECONDS_TEAM',
+  INCLUDE = 'INCLUDE',
+  EXCLUDE = 'EXCLUDE',
+}
+
+interface User {
+  name: string;
+  randomTeamState: UserRandomTeamState;
+}
+
+const RandomTeamStateIcon: Record<UserRandomTeamState, React.ReactElement> = {
+  EXCLUDE: <BlockIcon />,
+  FIRST_TEAM: <MouseIcon />,
+  INCLUDE: <CasinoIcon />,
+  SECONDS_TEAM: <KeyboardIcon />,
+};
+
 const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
   const [user] = useUser();
@@ -83,6 +106,45 @@ const PollPage: React.FunctionComponent = () => {
     });
   };
 
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    setUsers(
+      poll?.votes.map((vote) => ({
+        name: vote.username,
+        randomTeamState: UserRandomTeamState.INCLUDE,
+      })) ?? [],
+    );
+  }, [poll?.votes]);
+
+  const switchUserRandaomTeamState = (user: User) => {
+    const userIndex = users.indexOf(user);
+    let nextRandomTeamState: UserRandomTeamState = user.randomTeamState;
+
+    switch (user.randomTeamState) {
+      case UserRandomTeamState.EXCLUDE:
+        nextRandomTeamState = UserRandomTeamState.INCLUDE;
+        break;
+      case UserRandomTeamState.INCLUDE:
+        nextRandomTeamState = UserRandomTeamState.FIRST_TEAM;
+        break;
+      case UserRandomTeamState.FIRST_TEAM:
+        nextRandomTeamState = UserRandomTeamState.SECOND_TEAM;
+        break;
+      case UserRandomTeamState.SECOND_TEAM:
+        nextRandomTeamState = UserRandomTeamState.EXCLUDE;
+        break;
+    }
+
+    setUsers(
+      update(users, {
+        [userIndex]: {
+          randomTeamState: { $set: nextRandomTeamState },
+        },
+      }),
+    );
+  };
+
   return (
     <Page title={poll?.name}>
       <Typography gutterBottom align="center" variant="h4">
@@ -92,9 +154,14 @@ const PollPage: React.FunctionComponent = () => {
         <Grid container item justify="space-between" spacing={1} xs={12}>
           <Grid item>
             <Grid container spacing={1}>
-              {poll?.votes.map((vote) => (
-                <Grid item key={vote.id}>
-                  <Chip color="primary" label={vote.username} />
+              {users.map((user) => (
+                <Grid item key={user.name}>
+                  <Chip
+                    color="primary"
+                    icon={RandomTeamStateIcon[user.randomTeamState]}
+                    label={user.name}
+                    onClick={() => switchUserRandaomTeamState(user)}
+                  />
                 </Grid>
               ))}
             </Grid>
