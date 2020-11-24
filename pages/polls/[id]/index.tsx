@@ -6,6 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import CardActions from '@material-ui/core/CardActions';
 import CasinoIcon from '@material-ui/icons/Casino';
 import GroupIcon from '@material-ui/icons/Group';
+import GamesIcon from '@material-ui/icons/Games';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -88,11 +89,35 @@ const PollPage: React.FunctionComponent = () => {
         {poll?.name}
       </Typography>
       <Grid container spacing={1}>
-        {poll?.votes.map((vote) => (
-          <Grid item key={vote.id}>
-            <Chip color="primary" label={vote.username} />
+        <Grid container item justify="space-between" spacing={1} xs={12}>
+          <Grid item>
+            <Grid container spacing={1}>
+              {poll?.votes.map((vote) => (
+                <Grid item key={vote.id}>
+                  <Chip color="primary" label={vote.username} />
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
-        ))}
+          <Grid item>
+            <Grid container spacing={1}>
+              <Grid item>
+                <Chip
+                  color="primary"
+                  icon={<GroupIcon />}
+                  label={poll?.votes.length}
+                />
+              </Grid>
+              <Grid item>
+                <Chip
+                  color="primary"
+                  icon={<GamesIcon />}
+                  label={Object.keys(games).length}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
         <FlipMove typeName={null}>
           {poll &&
             userAlreadyVoted(poll) &&
