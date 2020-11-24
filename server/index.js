@@ -22,6 +22,9 @@ io.on('connection', (socket) => {
   socket.on('RANDOM_TEAMS', (message) => {
     io.emit('RANDOM_TEAMS', message);
   });
+  socket.on('UPDATE_PLAYERS', (message) => {
+    io.emit('UPDATE_PLAYERS', message);
+  });
 });
 
 app.prepare().then(() => {

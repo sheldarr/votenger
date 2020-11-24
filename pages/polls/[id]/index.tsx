@@ -79,6 +79,8 @@ const RandomTeamStateIcon: Record<PlayerRandomTeamState, React.ReactElement> = {
   SECONDS_TEAM: <KeyboardIcon />,
 };
 
+const UPDATE_PLAYERS = 'UPDATE_PLAYERS';
+
 const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
   const [user] = useUser();
@@ -108,6 +110,10 @@ const PollPage: React.FunctionComponent = () => {
 
   const [players, setPlayers] = useState<Player[]>([]);
 
+  useSocket<Player[]>(UPDATE_PLAYERS, (players) => {
+    setPlayers(players);
+  });
+
   useEffect(() => {
     setPlayers(
       poll?.votes.map((vote) => ({
@@ -117,7 +123,7 @@ const PollPage: React.FunctionComponent = () => {
     );
   }, [poll?.votes]);
 
-  const switchUserRandaomTeamState = (user: Player) => {
+  const switchUserRandomTeamState = (user: Player) => {
     const userIndex = players.indexOf(user);
     let nextRandomTeamState: PlayerRandomTeamState = user.randomTeamState;
 
@@ -136,13 +142,15 @@ const PollPage: React.FunctionComponent = () => {
         break;
     }
 
-    setPlayers(
-      update(players, {
-        [userIndex]: {
-          randomTeamState: { $set: nextRandomTeamState },
-        },
-      }),
-    );
+    const newPlayers = update(players, {
+      [userIndex]: {
+        randomTeamState: { $set: nextRandomTeamState },
+      },
+    });
+
+    setPlayers(newPlayers);
+
+    socket.emit(UPDATE_PLAYERS, newPlayers);
   };
 
   return (
@@ -160,7 +168,7 @@ const PollPage: React.FunctionComponent = () => {
                     color="primary"
                     icon={RandomTeamStateIcon[user.randomTeamState]}
                     label={user.name}
-                    onClick={() => switchUserRandaomTeamState(user)}
+                    onClick={() => switchUserRandomTeamState(user)}
                   />
                 </Grid>
               ))}
