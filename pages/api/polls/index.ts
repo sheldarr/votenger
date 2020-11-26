@@ -3,6 +3,20 @@ import StatusCodes from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
 
 import getDb from '../../../getDb';
+import { Game } from '../../../getDb/games';
+
+type GameProposition = Pick<Game, 'name' | 'type'>;
+
+interface SummaryVote {
+  proposedGames: GameProposition[];
+  username: string;
+  votedForRemoval: string[];
+}
+
+export interface Summary {
+  createdAt: string;
+  votes: SummaryVote[];
+}
 
 export interface Vote {
   id: string;
@@ -17,6 +31,7 @@ export interface Poll {
   id: string;
   name: string;
   plannedFor: string;
+  summary?: Summary;
   votes: Vote[];
 }
 
