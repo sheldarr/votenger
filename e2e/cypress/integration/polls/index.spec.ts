@@ -9,16 +9,6 @@ describe('Admin', () => {
     const someDescription = faker.lorem.sentence();
 
     cy.login();
-    cy.intercept('POST', '/api/identifier/someValidIdentifier', {
-      statusCode: 200,
-      body: [
-        {
-          name: 'someService',
-          redirectUrl: '/some/url',
-        },
-      ],
-    });
-
     cy.visit('/');
 
     cy.get('[data-cy="create-poll"]').click();
