@@ -1,7 +1,7 @@
 import axios from 'axios';
 import useSWR from 'swr';
 
-import { Game } from '../../pages/api/games';
+import { Game } from '../../getDb/games';
 
 const fetcher = (url: string) =>
   axios.get<Game[]>(url).then(({ data }) => data);
