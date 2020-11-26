@@ -1,0 +1,10 @@
+{
+  "fixturesFolder": false,
+  "pluginsFile": false,
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  },
+  "supportFile": "./cypress/support",
+  "$schema": "https://on.cypress.io/cypress.schema.json"
+}

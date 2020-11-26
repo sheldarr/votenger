@@ -90,6 +90,7 @@ const Home: NextPage = () => {
       {isUserAdmin(user?.username) && (
         <AddPollFab
           color="primary"
+          data-cy="create-poll"
           onClick={() => {
             router.push(CREATE_POLL_URL);
           }}
