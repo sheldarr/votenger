@@ -29,10 +29,10 @@ test--watch: ## run tests in watch mode
 	$(DOCKER_RUN) ${NODE_IMAGE} yarn test:watch
 
 test-e2e:
-	docker run -it --ipc=host -v ${PWD}/e2e:/app/e2e --net=host -v ${PWD}/node_modules:/app/e2e/node_modules -e CYPRESS_BASE_URL=http://localhost:${PORT} -w /app/e2e --entrypoint=cypress ${CYPRESS_IMAGE} run
+	docker run -it --ipc=host -v ${PWD}/e2e:/app/e2e --net=host -v ${PWD}/db.json:/app/e2e/db.json -v ${PWD}/node_modules:/app/e2e/node_modules -e CYPRESS_BASE_URL=http://localhost:${PORT} -w /app/e2e --entrypoint=cypress ${CYPRESS_IMAGE} run
 
 test-e2e--interactive:
-	docker run -it --ipc=host -v ${PWD}/e2e:/app/e2e --net=host -v ${PWD}/node_modules:/app/e2e/node_modules -e CYPRESS_BASE_URL=http://localhost:${PORT} -v /tmp/.X11-unix:/tmp/.X11-unix -w /app/e2e -e DISPLAY --entrypoint cypress ${CYPRESS_IMAGE} open --project .
+	docker run -it --ipc=host -v ${PWD}/e2e:/app/e2e --net=host -v ${PWD}/db.json:/app/e2e/db.json -v ${PWD}/node_modules:/app/e2e/node_modules -e CYPRESS_BASE_URL=http://localhost:${PORT} -v /tmp/.X11-unix:/tmp/.X11-unix -w /app/e2e -e DISPLAY --entrypoint cypress ${CYPRESS_IMAGE} open --project .
 
 install: ## install dependencies
 	$(DOCKER_RUN) ${NODE_IMAGE} yarn install

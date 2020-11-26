@@ -1,6 +1,6 @@
 {
   "fixturesFolder": false,
-  "pluginsFile": false,
+  "pluginsFile": "./cypress/plugins",
   "retries": {
     "runMode": 2,
     "openMode": 0
