@@ -21,9 +21,10 @@ export const RANDOM_TEAMS = 'RANDOM_TEAMS';
 
 const RandomTeamsDialog: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [[firstTeam, secondTeam], setRandomGameResult] = useState<
-    RandomTeamsResult
-  >([[], []]);
+  const [
+    [firstTeam, secondTeam],
+    setRandomGameResult,
+  ] = useState<RandomTeamsResult>([[], []]);
 
   useSocket<RandomTeamsResult>(RANDOM_TEAMS, (data) => {
     setRandomGameResult(data);
