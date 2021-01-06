@@ -16,7 +16,7 @@ const GamePropositionSchema = yup.object().shape({
 });
 
 const SummaryEntrySchema = yup.object().shape({
-  proposedGames: yup.array().of(GamePropositionSchema),
+  proposedGames: yup.array().of(GamePropositionSchema).required(),
   selectedForRemoval: yup.array().of(yup.string().required()),
   username: yup.string().required(),
 });
