@@ -64,7 +64,7 @@ const Dashboard: NextPage = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  {userAlreadyVoted(poll) ? (
+                  {!poll.summary && userAlreadyVoted(poll) && (
                     <Button
                       color="primary"
                       onClick={() => {
@@ -73,7 +73,8 @@ const Dashboard: NextPage = () => {
                     >
                       Dashboard
                     </Button>
-                  ) : (
+                  )}
+                  {!poll.summary && !userAlreadyVoted(poll) && (
                     <Button
                       color="primary"
                       onClick={() => {
@@ -83,14 +84,16 @@ const Dashboard: NextPage = () => {
                       Vote
                     </Button>
                   )}
-                  <Button
-                    color="primary"
-                    onClick={() => {
-                      router.push(POLL_SUMMARY_URL(poll.id));
-                    }}
-                  >
-                    Summary
-                  </Button>
+                  {poll.summary && (
+                    <Button
+                      color="primary"
+                      onClick={() => {
+                        router.push(POLL_SUMMARY_URL(poll.id));
+                      }}
+                    >
+                      Summary
+                    </Button>
+                  )}
                 </CardActions>
               </Card>
             </Grid>
