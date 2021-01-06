@@ -17,11 +17,11 @@ import usePolls from '../hooks/usePolls';
 import useUser from '../hooks/useUser';
 import { isUserAdmin } from '../auth';
 import Page from '../components/Page';
+import { Poll } from '../getDb/polls';
 import { URL as POLL_URL } from './polls/[id]';
 import { URL as POLL_SUMMARY_URL } from './polls/[id]/summary';
 import { URL as POLL_VOTE_URL } from './polls/[id]/vote';
 import { URL as CREATE_POLL_URL } from './polls/create';
-import { Poll } from './api/polls';
 
 export const URL = '/';
 

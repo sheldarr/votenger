@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Poll, Vote } from '../..';
 import getDb from '../../../../../getDb';
+import { Vote } from '../../../../../getDb/polls';
 
 export const REFRESH_VOTE = 'REFRESH_VOTE';
 
@@ -25,9 +25,10 @@ const VoteApi = (req: NextApiRequest, res: NextApiResponse<Vote>) => {
       votedFor: req.body.votedFor,
     };
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const poll: Poll = db.get('polls').find({ id }).value();
+    const poll = db
+      .get('polls')
+      .find({ id: id as string })
+      .value();
 
     const alreadyVoted = poll.votes.some(
       (existingVote) => existingVote.username === vote.username,
@@ -38,9 +39,7 @@ const VoteApi = (req: NextApiRequest, res: NextApiResponse<Vote>) => {
     }
 
     db.get('polls')
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      .find({ id })
+      .find({ id: id as string })
       .assign({
         votes: [...poll.votes, vote],
       })

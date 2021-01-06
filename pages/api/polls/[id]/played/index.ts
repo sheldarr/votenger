@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
 
-import { Poll } from '../..';
 import { REFRESH_VOTE } from '../vote';
 import getDb from '../../../../../getDb';
+import { Poll } from '../../../../../getDb/polls';
 
 const PlayedApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
   const db = getDb();
@@ -17,15 +17,14 @@ const PlayedApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
       return res.status(StatusCodes.BAD_REQUEST).end();
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const poll = db.get('polls').find({ id }).value();
+    const poll = db
+      .get('polls')
+      .find({ id: id as string })
+      .value();
 
     if (poll.alreadyPlayed.includes(req.body.name)) {
       db.get('polls')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .find({ id })
+        .find({ id: id as string })
         .assign({
           alreadyPlayed: poll.alreadyPlayed.filter((name) => {
             return name !== req.body.name;
@@ -34,9 +33,7 @@ const PlayedApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
         .write();
     } else {
       db.get('polls')
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        .find({ id })
+        .find({ id: id as string })
         .assign({
           alreadyPlayed: [...poll.alreadyPlayed, req.body.name],
         })

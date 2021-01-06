@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
 
-import { Poll, Summary } from '../..';
 import getDb from '../../../../../getDb';
 import { WebSocketEvents } from '../../../../../events';
+import { Poll, Summary } from '../../../../../getDb/polls';
 
 const SummaryApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
   const db = getDb();
@@ -16,9 +16,10 @@ const SummaryApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
     return res.status(StatusCodes.NOT_FOUND).end();
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const poll: Poll = db.get('polls').find({ id }).value();
+  const poll = db
+    .get('polls')
+    .find({ id: id as string })
+    .value();
 
   if (!poll) {
     return res.status(StatusCodes.NOT_FOUND).end();
@@ -34,9 +35,7 @@ const SummaryApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
   };
 
   db.get('polls')
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    .find({ id })
+    .find({ id: id as string })
     .assign({
       summary,
     })

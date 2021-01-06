@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
 
-import { Poll } from '..';
 import getDb from '../../../../getDb';
+import { Poll } from '../../../../getDb/polls';
 
 export default (req: NextApiRequest, res: NextApiResponse<Poll>) => {
   const db = getDb();
@@ -11,9 +11,10 @@ export default (req: NextApiRequest, res: NextApiResponse<Poll>) => {
     query: { id },
   } = req;
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const poll = db.get('polls').find({ id }).value();
+  const poll = db
+    .get('polls')
+    .find({ id: id as string })
+    .value();
 
   if (!poll) {
     return res.status(StatusCodes.NOT_FOUND).end();
