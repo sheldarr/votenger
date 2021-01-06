@@ -20,6 +20,7 @@ import { isUserAdmin } from '../auth';
 import Page from '../components/Page';
 import { Poll } from '../getDb/polls';
 import { URL as POLL_URL } from './polls/[id]';
+import { URL as POLL_SUMMARY_URL } from './polls/[id]/summary';
 import { URL as POLL_SUMMARY_ENTRY_URL } from './polls/[id]/summary/entry';
 import { URL as POLL_VOTE_URL } from './polls/[id]/vote';
 import { URL as CREATE_POLL_URL } from './polls/create';
@@ -109,7 +110,7 @@ const Dashboard: NextPage = () => {
                       <Button
                         color="primary"
                         onClick={() => {
-                          router.push(POLL_SUMMARY_ENTRY_URL(poll.id));
+                          router.push(POLL_SUMMARY_URL(poll.id));
                         }}
                       >
                         Summary
