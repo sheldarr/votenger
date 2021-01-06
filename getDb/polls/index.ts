@@ -1,23 +1,26 @@
 import * as yup from 'yup';
 
-import { Game } from '../games';
+export type Decision = 'KEEP' | 'REMOVE';
 
-type GameProposition = Pick<Game, 'name' | 'type'>;
+export interface GameDecision {
+  decision: Decision;
+  name: string;
+}
 
 export interface SummaryEntry {
-  proposedGames: GameProposition[];
-  selectedForRemoval: string[];
+  gamesDecisions: GameDecision[];
+  proposedGames: string[];
   username: string;
 }
 
-const GamePropositionSchema = yup.object().shape({
+const GameDecisionSchema = yup.object().shape({
+  decision: yup.string().oneOf(['KEEP', 'REMOVE']),
   name: yup.string().required(),
-  type: yup.string().required(),
 });
 
 const SummaryEntrySchema = yup.object().shape({
-  proposedGames: yup.array().of(GamePropositionSchema).required(),
-  selectedForRemoval: yup.array().of(yup.string().required()),
+  gamesDecisions: yup.array().of(GameDecisionSchema).required(),
+  proposedGames: yup.array().of(yup.string().required()).required(),
   username: yup.string().required(),
 });
 

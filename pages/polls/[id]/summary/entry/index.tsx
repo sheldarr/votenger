@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
@@ -10,13 +10,15 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
+import update from 'immutability-helper';
 
 import useGames from '../../../../../hooks/useGames';
 import usePoll from '../../../../../hooks/usePoll';
 import useUser from '../../../../../hooks/useUser';
 
-import { URL as DASHBOARD_URL } from '../../../../';
+import { URL as SUMMARY_URL } from '..';
 import Page from '../../../../../components/Page';
+import { Decision, GameDecision } from '../../../../../getDb/polls';
 
 export const URL = (pollId: string) => `/polls/${pollId}/summary/entry`;
 
@@ -48,27 +50,40 @@ const PollSummaryPage: React.FunctionComponent = () => {
   const { data: poll } = usePoll(router.query.id as string);
   const { data: games } = useGames();
 
-  const [selectedForRemoval, setSelectedForRemoval] = useState<string[]>([]);
-
-  const addVote = (vote: string) => {
-    setSelectedForRemoval([...selectedForRemoval, vote]);
-  };
-
-  const removeVote = (vote: string) => {
-    setSelectedForRemoval(
-      selectedForRemoval.filter((voted) => {
-        return voted !== vote;
-      }),
-    );
-  };
+  const [gamesDecisions, setGamesDecisions] = useState<GameDecision[]>([]);
 
   const playedGames = [
     ...new Set(poll?.votes.flatMap((vote) => vote.votedFor)),
   ].map((playedGame) => {
-    return games?.find((game) => {
-      return game.name === playedGame;
-    });
+    return games?.find((game) => game.name === playedGame);
   });
+
+  useEffect(() => {
+    setGamesDecisions(
+      games?.map((game) => ({
+        decision: 'KEEP',
+        name: game.name,
+      })),
+    );
+  }, [playedGames]);
+
+  const findGameDecision = (name: string) => {
+    return gamesDecisions.find((gameDecision) => gameDecision.name === name);
+  };
+
+  const changeDecision = (name: string, decision: Decision) => {
+    const index = gamesDecisions.findIndex(
+      (gameDecision) => gameDecision.name === name,
+    );
+
+    setGamesDecisions(
+      update(gamesDecisions, {
+        [index]: {
+          decision: { $set: decision },
+        },
+      }),
+    );
+  };
 
   return (
     <Page title={`Summarize ${poll?.name}`}>
@@ -79,7 +94,7 @@ const PollSummaryPage: React.FunctionComponent = () => {
         {playedGames?.map((game) => (
           <Grid item key={game.name} lg={4} md={6} xs={12}>
             <GameCard
-              toRemove={selectedForRemoval.includes(game.name)}
+              toRemove={findGameDecision(game.name).decision === 'REMOVE'}
               variant="outlined"
             >
               <CardContent>
@@ -89,23 +104,23 @@ const PollSummaryPage: React.FunctionComponent = () => {
                 <Typography color="textSecondary">{game.type}</Typography>
               </CardContent>
               <CardActions>
-                {selectedForRemoval.includes(game.name) ? (
-                  <Button
-                    color="primary"
-                    onClick={() => {
-                      removeVote(game.name);
-                    }}
-                  >
-                    Keep
-                  </Button>
-                ) : (
+                {findGameDecision(game.name).decision === 'KEEP' ? (
                   <Button
                     color="secondary"
                     onClick={() => {
-                      addVote(game.name);
+                      changeDecision(game.name, 'REMOVE');
                     }}
                   >
                     Remove
+                  </Button>
+                ) : (
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      changeDecision(game.name, 'KEEP');
+                    }}
+                  >
+                    Keep
                   </Button>
                 )}
               </CardActions>
@@ -117,12 +132,12 @@ const PollSummaryPage: React.FunctionComponent = () => {
         color="primary"
         onClick={async () => {
           await axios.post(`/api/polls/${router.query.id}/summary/entry`, {
+            gamesDecisions,
             proposedGames: [],
-            selectedForRemoval,
             username: user?.username,
           });
 
-          router.replace(DASHBOARD_URL);
+          router.replace(SUMMARY_URL(poll.id));
         }}
       >
         <CheckIcon />
