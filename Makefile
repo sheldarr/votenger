@@ -2,7 +2,7 @@ include .env
 
 USERID=$(shell id -u)
 CYPRESS_IMAGE=cypress/included:6.0.0
-NODE_IMAGE=node:14
+NODE_IMAGE=node:14-alpine
 
 DOCKER_RUN = docker run \
 	--volume ${PWD}:/app \
