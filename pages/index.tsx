@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { NextPage } from 'next';
 import React from 'react';
 import Fab from '@material-ui/core/Fab';
@@ -84,14 +85,27 @@ const Dashboard: NextPage = () => {
                       Vote
                     </Button>
                   )}
-                  {poll.summary && (
+                  {poll.summary &&
+                    poll.votes.find((vote) => {
+                      return vote.username === user.username;
+                    }) && (
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          router.push(POLL_SUMMARY_URL(poll.id));
+                        }}
+                      >
+                        Summarize
+                      </Button>
+                    )}
+                  {!poll.summary && isUserAdmin(user.username) && (
                     <Button
                       color="primary"
                       onClick={() => {
-                        router.push(POLL_SUMMARY_URL(poll.id));
+                        axios.post(`/api/polls/${poll.id}/summary`);
                       }}
                     >
-                      Summary
+                      Create summary
                     </Button>
                   )}
                 </CardActions>
