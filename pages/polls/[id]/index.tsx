@@ -25,12 +25,12 @@ import useSocket from '../../../hooks/useSocket';
 import { REFRESH_VOTE } from '../../api/polls/[id]/vote';
 import { RANDOM_GAME } from '../../../components/RandomGameDialog';
 import { isUserAdmin } from '../../../auth';
-import { Poll } from '../../api/polls';
 import Page from '../../../components/Page';
 import { RANDOM_TEAMS } from '../../../components/RandomTeamsDialog';
 import randomTeams from '../../../utils/randomTeams';
 import exponentialWeightedRandomGame from '../../../utils/exponentialWeightedRandomGame';
 import linearWeightedRandomGame from '../../../utils/linearWeightedRandomGame';
+import { Poll } from '../../../getDb/polls';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
