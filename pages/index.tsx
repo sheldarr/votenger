@@ -18,6 +18,7 @@ import useUser from '../hooks/useUser';
 import { isUserAdmin } from '../auth';
 import Page from '../components/Page';
 import { URL as POLL_URL } from './polls/[id]';
+import { URL as POLL_SUMMARY_URL } from './polls/[id]/summary';
 import { URL as POLL_VOTE_URL } from './polls/[id]/vote';
 import { URL as CREATE_POLL_URL } from './polls/create';
 import { Poll } from './api/polls';
@@ -30,7 +31,7 @@ const AddPollFab = styled(Fab)`
   right: 2rem;
 `;
 
-const Home: NextPage = () => {
+const Dashboard: NextPage = () => {
   const router = useRouter();
   const { data: polls } = usePolls();
   const [user] = useUser();
@@ -82,6 +83,14 @@ const Home: NextPage = () => {
                       Vote
                     </Button>
                   )}
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      router.push(POLL_SUMMARY_URL(poll.id));
+                    }}
+                  >
+                    Summary
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -102,4 +111,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Dashboard;
