@@ -1,3 +1,4 @@
 export enum WebSocketEvents {
   REFRESH_POLLS = 'REFRESH_POLLS',
+  UPDATE_PLAYERS = 'UPDATE_PLAYERS',
 }

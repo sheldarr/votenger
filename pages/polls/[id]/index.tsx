@@ -22,7 +22,6 @@ import update from 'immutability-helper';
 import usePoll from '../../../hooks/usePoll';
 import useUser from '../../../hooks/useUser';
 import useSocket from '../../../hooks/useSocket';
-import { REFRESH_VOTE } from '../../api/polls/[id]/vote';
 import { RANDOM_GAME } from '../../../components/RandomGameDialog';
 import { isUserAdmin } from '../../../auth';
 import Page from '../../../components/Page';
@@ -31,6 +30,7 @@ import randomTeams from '../../../utils/randomTeams';
 import exponentialWeightedRandomGame from '../../../utils/exponentialWeightedRandomGame';
 import linearWeightedRandomGame from '../../../utils/linearWeightedRandomGame';
 import { Poll } from '../../../getDb/polls';
+import { WebSocketEvents } from '../../../events';
 
 export const URL = (pollId: string) => `/polls/${pollId}`;
 
@@ -79,15 +79,10 @@ const RandomTeamStateIcon: Record<PlayerRandomTeamState, React.ReactElement> = {
   SECONDS_TEAM: <KeyboardIcon />,
 };
 
-const UPDATE_PLAYERS = 'UPDATE_PLAYERS';
-
 const PollPage: React.FunctionComponent = () => {
   const router = useRouter();
   const [user] = useUser();
-  const { data: poll, mutate } = usePoll(router.query.id as string);
-  const socket = useSocket(REFRESH_VOTE, () => {
-    mutate();
-  });
+  const { data: poll } = usePoll(router.query.id as string);
 
   const games =
     poll?.votes.reduce<Record<string, string[]>>((games, vote) => {
@@ -110,9 +105,12 @@ const PollPage: React.FunctionComponent = () => {
 
   const [players, setPlayers] = useState<Player[]>([]);
 
-  useSocket<Player[]>(UPDATE_PLAYERS, (players) => {
-    setPlayers(players);
-  });
+  const socket = useSocket<Player[]>(
+    WebSocketEvents.UPDATE_PLAYERS,
+    (players) => {
+      setPlayers(players);
+    },
+  );
 
   useEffect(() => {
     setPlayers(
@@ -150,7 +148,7 @@ const PollPage: React.FunctionComponent = () => {
 
     setPlayers(newPlayers);
 
-    socket.emit(UPDATE_PLAYERS, newPlayers);
+    socket.emit(WebSocketEvents.UPDATE_PLAYERS, newPlayers);
   };
 
   return (

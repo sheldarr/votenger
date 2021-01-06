@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
 
-import { REFRESH_VOTE } from '../vote';
 import getDb from '../../../../../getDb';
 import { Poll } from '../../../../../getDb/polls';
+import { WebSocketEvents } from '../../../../../events';
 
 const PlayedApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
   const db = getDb();
@@ -42,7 +42,7 @@ const PlayedApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    req.io.emit(REFRESH_VOTE);
+    req.io.emit(WebSocketEvents.REFRESH_POLLS);
 
     return res.status(StatusCodes.OK).send(poll);
   }

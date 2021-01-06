@@ -4,8 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import getDb from '../../../../../getDb';
 import { Vote } from '../../../../../getDb/polls';
-
-export const REFRESH_VOTE = 'REFRESH_VOTE';
+import { WebSocketEvents } from '../../../../../events';
 
 const VoteApi = (req: NextApiRequest, res: NextApiResponse<Vote>) => {
   const db = getDb();
@@ -47,7 +46,7 @@ const VoteApi = (req: NextApiRequest, res: NextApiResponse<Vote>) => {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    req.io.emit(REFRESH_VOTE);
+    req.io.emit(WebSocketEvents.REFRESH_POLLS);
 
     return res.status(StatusCodes.OK).send(vote);
   }
