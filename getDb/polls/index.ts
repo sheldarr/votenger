@@ -1,16 +1,33 @@
+import * as yup from 'yup';
+
 import { Game } from '../games';
 
 type GameProposition = Pick<Game, 'name' | 'type'>;
 
-interface SummaryVote {
+export interface SummaryEntry {
   proposedGames: GameProposition[];
+  selecetedForRemoval: string[];
   username: string;
-  votedForRemoval: string[];
+}
+
+const GamePropositionSchema = yup.object().shape({
+  name: yup.string().required(),
+  type: yup.string().required(),
+});
+
+const SummaryEntrySchema = yup.object().shape({
+  proposedGames: yup.array().of(GamePropositionSchema),
+  selectedForRemoval: yup.array().of(yup.string().required()),
+  username: yup.string().required(),
+});
+
+export function isSummaryEntry(entry: SummaryEntry): entry is SummaryEntry {
+  return SummaryEntrySchema.isValidSync(entry);
 }
 
 export interface Summary {
   createdAt: string;
-  votes: SummaryVote[];
+  entries: SummaryEntry[];
 }
 
 export interface Vote {

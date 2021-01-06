@@ -26,12 +26,12 @@ const SummaryApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
   }
 
   if (poll.summary) {
-    return res.status(StatusCodes.BAD_REQUEST).end();
+    return res.status(StatusCodes.FORBIDDEN).end();
   }
 
   const summary: Summary = {
     createdAt: new Date().toString(),
-    votes: [],
+    entries: [],
   };
 
   db.get('polls')
