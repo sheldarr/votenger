@@ -10,8 +10,7 @@ import styled from 'styled-components';
 
 import useSocket from '../../hooks/useSocket';
 import { RandomGameResult } from '../../types/RandomGameResult';
-
-export const RANDOM_GAME = 'RANDOM_GAME';
+import { WebSocketEvents } from '../../events';
 
 const MainListItem = styled(ListItem)`
   justify-content: center !important;
@@ -22,7 +21,7 @@ const RandomGameDialog: React.FunctionComponent = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [randomGameResult, setRandomGameResult] = useState<RandomGameResult>();
 
-  useSocket<RandomGameResult>(RANDOM_GAME, (data) => {
+  useSocket<RandomGameResult>(WebSocketEvents.RANDOM_GAME, (data) => {
     setRandomGameResult(data);
     setIsOpen(true);
   });

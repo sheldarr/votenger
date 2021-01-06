@@ -11,13 +11,12 @@ import styled from 'styled-components';
 
 import useSocket from '../../hooks/useSocket';
 import { RandomTeamsResult } from '../../utils/randomTeams';
+import { WebSocketEvents } from '../../events';
 
 const CenteredListItemText = styled(ListItemText)`
   display: flex;
   justify-content: center;
 `;
-
-export const RANDOM_TEAMS = 'RANDOM_TEAMS';
 
 const RandomTeamsDialog: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +25,7 @@ const RandomTeamsDialog: React.FunctionComponent = () => {
     setRandomGameResult,
   ] = useState<RandomTeamsResult>([[], []]);
 
-  useSocket<RandomTeamsResult>(RANDOM_TEAMS, (data) => {
+  useSocket<RandomTeamsResult>(WebSocketEvents.RANDOM_TEAMS, (data) => {
     setRandomGameResult(data);
     setIsOpen(true);
   });

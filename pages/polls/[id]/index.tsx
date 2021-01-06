@@ -22,10 +22,8 @@ import update from 'immutability-helper';
 import usePoll from '../../../hooks/usePoll';
 import useUser from '../../../hooks/useUser';
 import useSocket from '../../../hooks/useSocket';
-import { RANDOM_GAME } from '../../../components/RandomGameDialog';
 import { isUserAdmin } from '../../../auth';
 import Page from '../../../components/Page';
-import { RANDOM_TEAMS } from '../../../components/RandomTeamsDialog';
 import randomTeams from '../../../utils/randomTeams';
 import exponentialWeightedRandomGame from '../../../utils/exponentialWeightedRandomGame';
 import linearWeightedRandomGame from '../../../utils/linearWeightedRandomGame';
@@ -260,13 +258,13 @@ const PollPage: React.FunctionComponent = () => {
             switch (process.env.NEXT_PUBLIC_RANDOM_GAME_IMPLEMENTATION) {
               case 'linear':
                 socket.emit(
-                  RANDOM_GAME,
+                  WebSocketEvents.RANDOM_GAME,
                   linearWeightedRandomGame(unplayedGames),
                 );
                 break;
               case 'exponential':
                 socket.emit(
-                  RANDOM_GAME,
+                  WebSocketEvents.RANDOM_GAME,
                   exponentialWeightedRandomGame(unplayedGames),
                 );
                 break;
@@ -282,7 +280,7 @@ const PollPage: React.FunctionComponent = () => {
         <RandomTeamsFab
           color="primary"
           onClick={() => {
-            socket.emit(RANDOM_TEAMS, randomTeams(players));
+            socket.emit(WebSocketEvents.RANDOM_TEAMS, randomTeams(players));
           }}
         >
           <GroupIcon />
