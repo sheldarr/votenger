@@ -11,14 +11,14 @@ import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
 
-import useGames from '../../../../hooks/useGames';
-import usePoll from '../../../../hooks/usePoll';
-import useUser from '../../../../hooks/useUser';
+import useGames from '../../../../../hooks/useGames';
+import usePoll from '../../../../../hooks/usePoll';
+import useUser from '../../../../../hooks/useUser';
 
-import { URL as DASHBOARD_URL } from '../../../';
-import Page from '../../../../components/Page';
+import { URL as DASHBOARD_URL } from '../../../../';
+import Page from '../../../../../components/Page';
 
-export const URL = (pollId: string) => `/polls/${pollId}/summary`;
+export const URL = (pollId: string) => `/polls/${pollId}/summary/entry`;
 
 const SummarizeFab = styled(Fab)`
   position: fixed !important;
@@ -48,30 +48,38 @@ const PollSummaryPage: React.FunctionComponent = () => {
   const { data: poll } = usePoll(router.query.id as string);
   const { data: games } = useGames();
 
-  const [votedForRemove, setVotedForRemove] = useState<string[]>([]);
+  const [selectedForRemoval, setSelectedForRemoval] = useState<string[]>([]);
 
   const addVote = (vote: string) => {
-    setVotedForRemove([...votedForRemove, vote]);
+    setSelectedForRemoval([...selectedForRemoval, vote]);
   };
 
   const removeVote = (vote: string) => {
-    setVotedForRemove(
-      votedForRemove.filter((voted) => {
+    setSelectedForRemoval(
+      selectedForRemoval.filter((voted) => {
         return voted !== vote;
       }),
     );
   };
 
+  const playedGames = [
+    ...new Set(poll?.votes.flatMap((vote) => vote.votedFor)),
+  ].map((playedGame) => {
+    return games?.find((game) => {
+      return game.name === playedGame;
+    });
+  });
+
   return (
-    <Page title={`Vote ${poll?.name}`}>
+    <Page title={`Summarize ${poll?.name}`}>
       <Typography gutterBottom align="center" variant="h2">
         {poll?.name}
       </Typography>
       <Grid container spacing={1}>
-        {games?.map((game) => (
+        {playedGames?.map((game) => (
           <Grid item key={game.name} lg={4} md={6} xs={12}>
             <GameCard
-              toRemove={votedForRemove.includes(game.name)}
+              toRemove={selectedForRemoval.includes(game.name)}
               variant="outlined"
             >
               <CardContent>
@@ -81,7 +89,7 @@ const PollSummaryPage: React.FunctionComponent = () => {
                 <Typography color="textSecondary">{game.type}</Typography>
               </CardContent>
               <CardActions>
-                {votedForRemove.includes(game.name) ? (
+                {selectedForRemoval.includes(game.name) ? (
                   <Button
                     color="primary"
                     onClick={() => {
@@ -108,9 +116,10 @@ const PollSummaryPage: React.FunctionComponent = () => {
       <SummarizeFab
         color="primary"
         onClick={async () => {
-          await axios.post(`/api/polls/${router.query.id}/summary`, {
+          await axios.post(`/api/polls/${router.query.id}/summary/entry`, {
+            proposedGames: [],
+            selectedForRemoval,
             username: user?.username,
-            votedFor: votedForRemove,
           });
 
           router.replace(DASHBOARD_URL);

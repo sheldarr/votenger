@@ -6,7 +6,7 @@ type GameProposition = Pick<Game, 'name' | 'type'>;
 
 export interface SummaryEntry {
   proposedGames: GameProposition[];
-  selecetedForRemoval: string[];
+  selectedForRemoval: string[];
   username: string;
 }
 

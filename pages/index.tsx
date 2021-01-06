@@ -20,7 +20,7 @@ import { isUserAdmin } from '../auth';
 import Page from '../components/Page';
 import { Poll } from '../getDb/polls';
 import { URL as POLL_URL } from './polls/[id]';
-import { URL as POLL_SUMMARY_URL } from './polls/[id]/summary';
+import { URL as POLL_SUMMARY_ENTRY_URL } from './polls/[id]/summary/entry';
 import { URL as POLL_VOTE_URL } from './polls/[id]/vote';
 import { URL as CREATE_POLL_URL } from './polls/create';
 
@@ -40,6 +40,12 @@ const Dashboard: NextPage = () => {
   const userAlreadyVoted = (poll: Poll) => {
     return poll.votes.some((vote) => {
       return vote.username === user?.username;
+    });
+  };
+
+  const userAlreadyCreatedSummaryEntry = (poll: Poll) => {
+    return poll.summary.entries.some((entry) => {
+      return entry.username === user?.username;
     });
   };
 
@@ -86,16 +92,27 @@ const Dashboard: NextPage = () => {
                     </Button>
                   )}
                   {poll.summary &&
-                    poll.votes.find((vote) => {
-                      return vote.username === user.username;
-                    }) && (
+                    userAlreadyVoted(poll) &&
+                    !userAlreadyCreatedSummaryEntry(poll) && (
                       <Button
                         color="primary"
                         onClick={() => {
-                          router.push(POLL_SUMMARY_URL(poll.id));
+                          router.push(POLL_SUMMARY_ENTRY_URL(poll.id));
                         }}
                       >
                         Summarize
+                      </Button>
+                    )}
+                  {poll.summary &&
+                    userAlreadyVoted(poll) &&
+                    userAlreadyCreatedSummaryEntry(poll) && (
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          router.push(POLL_SUMMARY_ENTRY_URL(poll.id));
+                        }}
+                      >
+                        Summary
                       </Button>
                     )}
                   {!poll.summary && isUserAdmin(user.username) && (
