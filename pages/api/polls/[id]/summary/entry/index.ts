@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
+import update from 'immutability-helper';
 
 import getDb from '../../../../../../getDb';
 import { WebSocketEvents } from '../../../../../../events';
@@ -41,12 +42,13 @@ const SummaryEntryApi = (
 
     db.get('polls')
       .find({ id: id as string })
-      .assign({
-        summary: {
-          ...poll.summary,
-          entries: [...poll.summary.entries, entry],
-        },
-      })
+      .assign(
+        update(poll, {
+          summary: {
+            entries: { $push: [entry] },
+          },
+        }),
+      )
       .write();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
