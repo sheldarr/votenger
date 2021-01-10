@@ -4,35 +4,49 @@ import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import GroupIcon from '@material-ui/icons/Group';
 import GamesIcon from '@material-ui/icons/Games';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import FlipMove from 'react-flip-move';
 import Chip from '@material-ui/core/Chip';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import { green } from '@material-ui/core/colors';
 
 import usePoll from '../../../../hooks/usePoll';
-import useUser from '../../../../hooks/useUser';
 import Page from '../../../../components/Page';
 
 export const URL = (pollId: string) => `/polls/${pollId}/summary`;
 
 interface GameCardProps {
-  played: boolean;
+  forRemoval: boolean;
 }
 
 const GameCard = styled(Card)`
   transition: background-color 0.2s !important;
 
   ${(props: GameCardProps) =>
-    props.played &&
+    props.forRemoval &&
     `
-      background-color: #f6e1ff !important;
+      border-color: #f50057 !important;
+      color: #f50057 !important;
   `}
+
+  ${(props: GameCardProps) =>
+    !props.forRemoval &&
+    `
+      border-color: ${green[500]} !important;
+      color: ${green[500]} !important;
+  `}
+`;
+
+const Score = styled.div`
+  align-items: center;
+  display: flex;
 `;
 
 const SummaryPage: React.FunctionComponent = () => {
   const router = useRouter();
-  const [] = useUser();
   const { data: poll } = usePoll(router.query.id as string);
 
   const games =
@@ -54,8 +68,6 @@ const SummaryPage: React.FunctionComponent = () => {
       },
       {},
     ) || {};
-
-  console.log(games);
 
   const players = poll?.summary.entries.map((entry) => entry.username);
 
@@ -94,28 +106,69 @@ const SummaryPage: React.FunctionComponent = () => {
             </Grid>
           </Grid>
         </Grid>
-        <FlipMove typeName={null}>
+        <Grid item>
+          <Typography gutterBottom component="h2" variant="h4">
+            Vox Populi
+          </Typography>
+        </Grid>
+        <Grid container spacing={1}>
           {poll &&
             Object.entries(games)
               .sort(([nameA], [nameB]) => {
                 return nameA.localeCompare(nameB);
               })
               .map(([name, [inFavour, against]]) => (
-                <Grid item key={name} xs={12}>
-                  <GameCard played variant="outlined">
+                <Grid item key={name} lg={4} md={6} xs={12}>
+                  <GameCard forRemoval={against > inFavour} variant="outlined">
                     <CardContent>
-                      <Grid container spacing={1}>
-                        <Grid item>
-                          <Typography component="h2" variant="h6">
-                            {name} {inFavour}/{against}
-                          </Typography>
-                        </Grid>
-                      </Grid>
+                      <Typography gutterBottom component="h2" variant="h6">
+                        {name}
+                      </Typography>
                     </CardContent>
+                    <CardActions>
+                      <Score>
+                        {[...Array(inFavour).keys()].map((index) => (
+                          <AddCircleOutlineIcon
+                            key={index}
+                            style={{ color: green[500] }}
+                          />
+                        ))}
+                        {[...Array(against).keys()].map((index) => (
+                          <RemoveCircleOutlineIcon
+                            color="secondary"
+                            key={index}
+                          />
+                        ))}
+                      </Score>
+                    </CardActions>
                   </GameCard>
                 </Grid>
               ))}
-        </FlipMove>
+        </Grid>
+        <Grid item>
+          <Typography gutterBottom component="h2" variant="h4">
+            New propositions
+          </Typography>
+        </Grid>
+        <Grid container item spacing={1}>
+          {poll &&
+            poll.summary.entries
+              .flatMap((entry) => entry.proposedGames)
+              .sort((gameA, gameB) => {
+                return gameA.localeCompare(gameB);
+              })
+              .map((game) => (
+                <Grid item key={game} lg={4} md={6} xs={12}>
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Typography component="h2" variant="h6">
+                        {game}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+        </Grid>
       </Grid>
     </Page>
   );
