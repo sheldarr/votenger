@@ -72,7 +72,7 @@ const Dashboard: NextPage = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  {!poll.summary && userAlreadyVoted(poll) && (
+                  {userAlreadyVoted(poll) && (
                     <Button
                       color="primary"
                       onClick={() => {
