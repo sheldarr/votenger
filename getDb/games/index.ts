@@ -6,11 +6,12 @@ export enum GameType {
   RACING = 'Racing',
   RTS = 'RTS',
   SURVIVAL = 'Survival',
+  UNKNOWN = 'Unknown',
 }
 
 export enum GameState {
   AVAILABLE = 'AVAILABLE',
-  EXCLUDED = 'EXCLUDED',
+  REMOVED = 'REMOVED',
   UNAVAILABLE = 'UNAVAILABLE',
 }
 
