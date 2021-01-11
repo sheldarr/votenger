@@ -40,6 +40,7 @@ export interface Vote {
 }
 
 export interface Poll {
+  appliedAt?: string;
   alreadyPlayed: string[];
   createdAt: string;
   description: string;
