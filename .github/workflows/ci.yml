@@ -1,22 +1,13 @@
 on: [push, pull_request]
 jobs:
-  checkout:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-  install:
-    runs-on: ubuntu-latest
-    steps:
       - name: Install Dependencies
-        run: npm install
-  lint:
-    runs-on: ubuntu-latest
-    steps:
+        run: yarn install
       - name: Run linter
         run: yarn lint
-  tests:
-    runs-on: ubuntu-latest
-    steps:
       - name: Run tests
-        run: npm run test
+        run: yarn test
