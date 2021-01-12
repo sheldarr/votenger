@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import StatusCodes from 'http-status-codes';
-import update from 'immutability-helper';
 import { v4 as uuidv4 } from 'uuid';
 
 import getDb from '../../../../../../getDb';
@@ -63,7 +62,7 @@ const ApplySummaryEntryApi = (
         .write();
     });
 
-    const newGames = poll.summary.entries
+    const gamesToAdd = poll.summary.entries
       .flatMap((entry) => entry.proposedGames)
       .map<Game>((proposition) => ({
         id: uuidv4(),
@@ -72,26 +71,24 @@ const ApplySummaryEntryApi = (
         type: GameType.UNKNOWN,
       }));
 
-    console.log(`Games to add: ${newGames}`);
+    console.log(`Games to add: ${gamesToAdd.map((game) => game.name)}`);
 
     db.get('games')
-      .push(...newGames)
+      .push(...gamesToAdd)
       .write();
 
     db.get('polls')
       .find({ id: id as string })
-      .assign(
-        update(poll, {
-          appliedAt: { $set: new Date().toString() },
-        }),
-      )
+      .assign({
+        appliedAt: new Date().toString(),
+      })
       .write();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     req.io.emit(WebSocketEvents.REFRESH_POLLS);
 
-    return res.status(StatusCodes.OK).send();
+    return res.status(StatusCodes.OK).end();
   }
 };
 
