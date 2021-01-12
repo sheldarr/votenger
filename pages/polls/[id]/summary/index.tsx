@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import GroupIcon from '@material-ui/icons/Group';
@@ -12,9 +13,20 @@ import CardContent from '@material-ui/core/CardContent';
 import Chip from '@material-ui/core/Chip';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import { green } from '@material-ui/core/colors';
+import Fab from '@material-ui/core/Fab';
+import CheckIcon from '@material-ui/icons/Check';
 
 import usePoll from '../../../../hooks/usePoll';
 import Page from '../../../../components/Page';
+import { isUserAdmin } from '../../../../auth';
+import useUser from '../../../../hooks/useUser';
+import { URL as HOME_URL } from '../../../';
+
+const VoteFab = styled(Fab)`
+  position: fixed !important;
+  bottom: 2rem;
+  right: 2rem;
+`;
 
 export const URL = (pollId: string) => `/polls/${pollId}/summary`;
 
@@ -47,6 +59,7 @@ const Score = styled.div`
 
 const SummaryPage: React.FunctionComponent = () => {
   const router = useRouter();
+  const [user] = useUser();
   const { data: poll } = usePoll(router.query.id as string);
 
   const games =
@@ -169,6 +182,19 @@ const SummaryPage: React.FunctionComponent = () => {
                 </Grid>
               ))}
         </Grid>
+        {!poll?.appliedAt && isUserAdmin(user?.username) && (
+          <VoteFab
+            color="primary"
+            disabled={poll?.summary.entries.length < poll?.votes.length}
+            onClick={async () => {
+              await axios.post(`/api/polls/${router.query.id}/summary/apply`);
+
+              router.replace(HOME_URL);
+            }}
+          >
+            <CheckIcon />
+          </VoteFab>
+        )}
       </Grid>
     </Page>
   );

@@ -33,7 +33,7 @@ const AddPollFab = styled(Fab)`
   right: 2rem;
 `;
 
-const Dashboard: NextPage = () => {
+const Home: NextPage = () => {
   const router = useRouter();
   const { data: polls } = usePolls();
   const [user] = useUser();
@@ -146,4 +146,4 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export default Dashboard;
+export default Home;
