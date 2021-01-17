@@ -24,6 +24,7 @@ import { Event } from '../../getDb/events';
 // import { URL as POLL_SUMMARY_ENTRY_URL } from './polls/[id]/summary/entry';
 // import { URL as POLL_VOTE_URL } from './polls/[id]/vote';
 import { URL as CREATE_EVENT_URL } from './create';
+import { URL as PREPARE_EVENT_URL } from './[id]/prepare';
 
 export const URL = '/events';
 
@@ -75,6 +76,16 @@ const Home: NextPage = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
+                  {!event.preparation.appliedAt && (
+                    <Button
+                      color="primary"
+                      onClick={() => {
+                        router.push(PREPARE_EVENT_URL(event.id));
+                      }}
+                    >
+                      Prepare
+                    </Button>
+                  )}
                   {/* {userAlreadyVoted(poll) && (
                     <Button
                       color="primary"

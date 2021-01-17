@@ -48,7 +48,7 @@ export interface Summary {
 }
 
 export interface PossibleTerm {
-  date: string[];
+  date: string;
   usernames: string[];
 }
 
