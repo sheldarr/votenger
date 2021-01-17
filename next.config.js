@@ -4,6 +4,15 @@
 const withOffline = require('next-offline');
 
 module.exports = withOffline({
+  redirects: async () => {
+    return [
+      {
+        destination: '/events',
+        permanent: false,
+        source: '/',
+      },
+    ];
+  },
   webpack: (config) => {
     // Fixes npm packages that depend on `fs` module
     config.node = {
