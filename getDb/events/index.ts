@@ -12,6 +12,7 @@ export type EventType =
   | 'RPG';
 
 export interface Event {
+  id: string;
   name: string;
   scheduledFor?: string;
   type?: EventType;
