@@ -14,8 +14,11 @@ export default (req: NextApiRequest, res: NextApiResponse<Event[] | Event>) => {
     }
 
     const event: Event = {
+      alreadyPlayedGames: [],
+      createdAt: new Date().toISOString(),
       id: uuidv4(),
       name: req.body.name,
+      votes: [],
     };
 
     db.get('events').push(event).write();
