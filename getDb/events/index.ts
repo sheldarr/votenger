@@ -62,6 +62,8 @@ export interface Preparation {
   createdAt: string;
   eventTypeVotes: EventTypeVote[];
   possibleTerms: PossibleTerm[];
+  selectedEventType?: EventType;
+  selectedTerm?: string;
 }
 
 export interface Vote {
