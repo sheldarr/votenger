@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { DatePicker } from '@material-ui/pickers';
+import { format } from 'date-fns';
 
 import useEvent from '../../../../hooks/useEvent';
 import Page from '../../../../components/Page';
@@ -18,7 +20,6 @@ const PrepareEventPage: React.FunctionComponent = () => {
   const router = useRouter();
   const [user] = useUser();
   const { data: event } = useEvent(router.query.id as string);
-  const [possibleTerms, setPossibleTerms] = useState([]);
   const [isNewTermPickerOpen, setIsNewTermPickerOpen] = useState(false);
 
   const votedForTerms =
@@ -33,6 +34,12 @@ const PrepareEventPage: React.FunctionComponent = () => {
   console.log(votedForTerms, votedForEventType);
 
   const players = [...votedForTerms, ...votedForEventType];
+
+  const addTermProposition = (termProposition: string) => {
+    axios.put(`/api/events/${router.query.id}/preparation`, {
+      termProposition,
+    });
+  };
 
   return (
     <Page title={`${event?.name} preparation`}>
@@ -63,38 +70,30 @@ const PrepareEventPage: React.FunctionComponent = () => {
           <DatePicker
             disablePast
             TextFieldComponent={() => null}
-            onChange={(newTerm) => {
-              setPossibleTerms([...possibleTerms, newTerm.toISOString()]);
-            }}
+            onChange={(term) => addTermProposition(term.toISOString())}
             onClose={() => setIsNewTermPickerOpen(false)}
             onOpen={() => setIsNewTermPickerOpen(true)}
             open={isNewTermPickerOpen}
             value={undefined}
           />
         </Grid>
-        {possibleTerms
-          .sort((a, b) => {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            return new Date(b.date) - new Date(a.date);
-          })
-          .map((possibleTerm) => (
-            <Grid item key={possibleTerm.date}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked
-                    color="primary"
-                    name={possibleTerm.date}
-                    onChange={(value) => {
-                      console.log(value);
-                    }}
-                  />
-                }
-                label={possibleTerm}
-              />
-            </Grid>
-          ))}
+        {event?.preparation.possibleTerms.map((possibleTerm) => (
+          <Grid item key={possibleTerm.date}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked
+                  color="primary"
+                  name={possibleTerm.date}
+                  onChange={(value) => {
+                    console.log(value);
+                  }}
+                />
+              }
+              label={format(new Date(possibleTerm.date), 'dd.MM.yyyy')}
+            />
+          </Grid>
+        ))}
       </Grid>
     </Page>
   );
