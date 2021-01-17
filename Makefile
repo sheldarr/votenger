@@ -9,6 +9,7 @@ DOCKER_RUN = docker run \
 	--workdir /app \
 	--user ${USERID} \
 	--tty \
+	--interactive \
 	--rm
 
 DOCKER_RUN_NODE = $(DOCKER_RUN) \
