@@ -13,11 +13,18 @@ export default (req: NextApiRequest, res: NextApiResponse<Event[] | Event>) => {
       return res.status(StatusCodes.BAD_REQUEST).send([]);
     }
 
+    const createdAt = new Date().toISOString();
+
     const event: Event = {
       alreadyPlayedGames: [],
-      createdAt: new Date().toISOString(),
+      createdAt,
       id: uuidv4(),
       name: req.body.name,
+      preparation: {
+        createdAt,
+        eventTypeVotes: [],
+        possibleTerms: [],
+      },
       votes: [],
     };
 

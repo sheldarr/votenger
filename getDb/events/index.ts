@@ -47,6 +47,23 @@ export interface Summary {
   entries: SummaryEntry[];
 }
 
+export interface PossibleTerm {
+  date: string[];
+  usernames: string[];
+}
+
+export interface EventTypeVote {
+  createdAt: string;
+  username: string;
+}
+
+export interface Preparation {
+  appliedAt?: string;
+  createdAt: string;
+  eventTypeVotes: EventTypeVote[];
+  possibleTerms: PossibleTerm[];
+}
+
 export interface Vote {
   createdAt: string;
   id: string;
@@ -61,6 +78,7 @@ export interface Event {
   id: string;
   name: string;
   scheduledFor?: string;
+  preparation: Preparation;
   summary?: Summary;
   type?: EventType;
   votes: Vote[];
