@@ -15,7 +15,11 @@ export default (req: NextApiRequest, res: NextApiResponse<Event | string>) => {
   } = req;
 
   if (req.method === 'PUT') {
-    if (!req.body.termProposition) {
+    if (
+      !req.body.termProposition &&
+      !req.body.termToSwitch &&
+      !req.body.username
+    ) {
       return res
         .status(StatusCodes.BAD_REQUEST)
         .send(ReasonPhrases.BAD_REQUEST);
@@ -56,6 +60,53 @@ export default (req: NextApiRequest, res: NextApiResponse<Event | string>) => {
           }),
         })
         .write();
+    }
+
+    if (req.body.termToSwitch && req.body.username) {
+      const termToUpdate = event.preparation.possibleTerms.find(
+        (term) => term.date === req.body.termToSwitch,
+      );
+      const indexOfTermToUpdate = event.preparation.possibleTerms.indexOf(
+        termToUpdate,
+      );
+
+      if (
+        termToUpdate.usernames.some(
+          (username) => username === req.body.username,
+        )
+      ) {
+        db.get('events')
+          .find({ id: id as string })
+          .assign({
+            preparation: update(event.preparation, {
+              possibleTerms: {
+                [indexOfTermToUpdate]: {
+                  usernames: {
+                    $set: termToUpdate.usernames.filter(
+                      (username) => username !== req.body.username,
+                    ),
+                  },
+                },
+              },
+            }),
+          })
+          .write();
+      } else {
+        db.get('events')
+          .find({ id: id as string })
+          .assign({
+            preparation: update(event.preparation, {
+              possibleTerms: {
+                [indexOfTermToUpdate]: {
+                  usernames: {
+                    $push: [req.body.username],
+                  },
+                },
+              },
+            }),
+          })
+          .write();
+      }
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

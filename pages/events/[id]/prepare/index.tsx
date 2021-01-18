@@ -41,6 +41,13 @@ const PrepareEventPage: React.FunctionComponent = () => {
     });
   };
 
+  const switchTerm = (termToSwitch: string) => {
+    axios.put(`/api/events/${router.query.id}/preparation`, {
+      termToSwitch,
+      username: user.username,
+    });
+  };
+
   return (
     <Page title={`${event?.name} preparation`}>
       <Typography gutterBottom align="center" variant="h4">
@@ -82,11 +89,13 @@ const PrepareEventPage: React.FunctionComponent = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked
+                  checked={possibleTerm.usernames.some(
+                    (username) => username === user.username,
+                  )}
                   color="primary"
                   name={possibleTerm.date}
-                  onChange={(value) => {
-                    console.log(value);
+                  onChange={() => {
+                    switchTerm(possibleTerm.date);
                   }}
                 />
               }
