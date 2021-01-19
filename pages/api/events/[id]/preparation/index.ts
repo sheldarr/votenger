@@ -78,7 +78,7 @@ export default (req: NextApiRequest, res: NextApiResponse<Event | string>) => {
               eventTypeVotes: {
                 $set: event.preparation.eventTypeVotes.filter(
                   (eventTypeVote) =>
-                    eventTypeVote.username !== req.body.username &&
+                    eventTypeVote.username !== req.body.username ||
                     eventTypeVote.type !== req.body.eventTypeToSwitch,
                 ),
               },

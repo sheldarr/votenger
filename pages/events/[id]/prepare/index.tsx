@@ -25,6 +25,14 @@ const PrepareEventPage: React.FunctionComponent = () => {
   const { data: event } = useEvent(router.query.id as string);
   const [isNewTermPickerOpen, setIsNewTermPickerOpen] = useState(false);
 
+  const sortByCurrentUserAndThenAlphabetically = (a: string, b: string) => {
+    if (a === user.username) {
+      return -1;
+    }
+
+    return a.localeCompare(b);
+  };
+
   const votedForTerms =
     event?.preparation.possibleTerms.flatMap(
       (possibleTerm) => possibleTerm.usernames,
@@ -66,15 +74,17 @@ const PrepareEventPage: React.FunctionComponent = () => {
       <Grid container spacing={1}>
         <Box paddingBottom={3}>
           <Grid container item spacing={1}>
-            {players?.sort().map((player) => (
-              <Grid item key={player}>
-                <Chip
-                  color="primary"
-                  label={player}
-                  variant={player === user.username ? 'default' : 'outlined'}
-                />
-              </Grid>
-            ))}
+            {players
+              ?.sort(sortByCurrentUserAndThenAlphabetically)
+              .map((player) => (
+                <Grid item key={player}>
+                  <Chip
+                    color="primary"
+                    label={player}
+                    variant={player === user.username ? 'default' : 'outlined'}
+                  />
+                </Grid>
+              ))}
           </Grid>
         </Box>
         <Grid container item spacing={1} xs={12}>
@@ -104,6 +114,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
                       (username) => username === user.username,
                     )}
                     color="primary"
+                    disabled={!!event?.preparation.selectedTerm}
                     name={possibleTerm.date}
                     onChange={() => {
                       switchTerm(possibleTerm.date);
@@ -113,15 +124,19 @@ const PrepareEventPage: React.FunctionComponent = () => {
                 label={format(new Date(possibleTerm.date), 'dd.MM.yyyy')}
               />
             </Grid>
-            {possibleTerm.usernames.sort().map((username) => (
-              <Grid item key={username}>
-                <Chip
-                  color="primary"
-                  label={username}
-                  variant={username === user.username ? 'default' : 'outlined'}
-                />
-              </Grid>
-            ))}
+            {possibleTerm.usernames
+              .sort(sortByCurrentUserAndThenAlphabetically)
+              .map((username) => (
+                <Grid item key={username}>
+                  <Chip
+                    color="primary"
+                    label={username}
+                    variant={
+                      username === user.username ? 'default' : 'outlined'
+                    }
+                  />
+                </Grid>
+              ))}
           </Grid>
         ))}
         <Grid container item spacing={1} xs={12}>
@@ -138,9 +153,11 @@ const PrepareEventPage: React.FunctionComponent = () => {
                     <Checkbox
                       checked={event?.preparation.eventTypeVotes.some(
                         (eventTypeVote) =>
-                          eventTypeVote.username === user.username,
+                          eventTypeVote.username === user.username &&
+                          eventTypeVote.type === eventType,
                       )}
                       color="primary"
+                      disabled={!!event?.preparation.selectedEventType}
                       name={eventType}
                       onChange={() => {
                         switchEventType(eventType);
@@ -152,8 +169,13 @@ const PrepareEventPage: React.FunctionComponent = () => {
               </Grid>
               {event?.preparation.eventTypeVotes
                 .filter((eventTypeVote) => eventTypeVote.type === eventType)
+                .sort((a, b) => {
+                  return sortByCurrentUserAndThenAlphabetically(
+                    a.username,
+                    b.username,
+                  );
+                })
                 .map((eventTypeVote) => eventTypeVote.username)
-                .sort()
                 .map((username) => (
                   <Grid item key={`${eventType}-${username}`}>
                     <Chip
