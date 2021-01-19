@@ -8,17 +8,20 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { DatePicker } from '@material-ui/pickers';
+import Box from '@material-ui/core/Box';
 import { format } from 'date-fns';
 
 import useEvent from '../../../../hooks/useEvent';
 import Page from '../../../../components/Page';
 import useUser from '../../../../hooks/useUser';
+import useEventTypes from '../../../../hooks/useEventTypes';
 
 export const URL = (eventId: string) => `/events/${eventId}/prepare`;
 
 const PrepareEventPage: React.FunctionComponent = () => {
   const router = useRouter();
   const [user] = useUser();
+  const { data: eventTypes } = useEventTypes();
   const { data: event } = useEvent(router.query.id as string);
   const [isNewTermPickerOpen, setIsNewTermPickerOpen] = useState(false);
 
@@ -54,23 +57,19 @@ const PrepareEventPage: React.FunctionComponent = () => {
         {event?.name}
       </Typography>
       <Grid container spacing={1}>
-        <Grid container item justify="space-between" spacing={1} xs={12}>
-          <Grid item>
-            <Grid container spacing={1}>
-              {players?.map((player) => (
-                <Grid item key={player}>
-                  <Chip color="primary" label={player} />
-                </Grid>
-              ))}
-            </Grid>
+        <Box paddingBottom={3}>
+          <Grid container item spacing={1}>
+            {players?.sort().map((player) => (
+              <Grid item key={player}>
+                <Chip color="primary" label={player} />
+              </Grid>
+            ))}
           </Grid>
-        </Grid>
-        <Grid item>
+        </Box>
+        <Grid container item spacing={1} xs={12}>
           <Typography gutterBottom variant="h4">
             Term
           </Typography>
-        </Grid>
-        <Grid item>
           <Button color="primary" onClick={() => setIsNewTermPickerOpen(true)}>
             Add term
           </Button>
@@ -85,24 +84,72 @@ const PrepareEventPage: React.FunctionComponent = () => {
           />
         </Grid>
         {event?.preparation.possibleTerms.map((possibleTerm) => (
-          <Grid item key={possibleTerm.date}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={possibleTerm.usernames.some(
-                    (username) => username === user.username,
-                  )}
-                  color="primary"
-                  name={possibleTerm.date}
-                  onChange={() => {
-                    switchTerm(possibleTerm.date);
-                  }}
-                />
-              }
-              label={format(new Date(possibleTerm.date), 'dd.MM.yyyy')}
-            />
+          <Grid container item key={possibleTerm.date} spacing={1} xs={12}>
+            <Grid item>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={possibleTerm.usernames.some(
+                      (username) => username === user.username,
+                    )}
+                    color="primary"
+                    name={possibleTerm.date}
+                    onChange={() => {
+                      switchTerm(possibleTerm.date);
+                    }}
+                  />
+                }
+                label={format(new Date(possibleTerm.date), 'dd.MM.yyyy')}
+              />
+            </Grid>
+            {possibleTerm.usernames.sort().map((username) => (
+              <Grid item key={username}>
+                <Chip color="primary" label={username} />
+              </Grid>
+            ))}
           </Grid>
         ))}
+        <Grid container item spacing={1} xs={12}>
+          <Typography gutterBottom variant="h4">
+            Type
+          </Typography>
+        </Grid>
+        {eventTypes &&
+          eventTypes.map((eventType) => (
+            <Grid container item key={eventType} spacing={1} xs={12}>
+              <Grid item>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={event?.preparation.eventTypeVotes.some(
+                        (eventTypeVote) =>
+                          eventTypeVote.username === user.username,
+                      )}
+                      color="primary"
+                      name={eventType}
+                      onChange={() => {
+                        // switchTerm(possibleTerm.date);
+                      }}
+                    />
+                  }
+                  label={eventType}
+                />
+              </Grid>
+              {event?.preparation.eventTypeVotes
+                .filter((eventTypeVote) => eventTypeVote.type === eventType)
+                .map((eventTypeVote) => eventTypeVote.username)
+                .sort()
+                .map((username) => (
+                  <Grid item key={username}>
+                    <Chip color="primary" label={username} />
+                  </Grid>
+                ))}
+            </Grid>
+          ))}
+        {eventTypes &&
+          eventTypes.map((eventType) => (
+            <Grid item key={eventType} xs={12}></Grid>
+          ))}
       </Grid>
     </Page>
   );

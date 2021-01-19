@@ -1,18 +1,5 @@
 import * as yup from 'yup';
 
-export enum EventTypeEnum {
-  BOARD_GAME_PARTY = 'BOARD_GAME_PARTY',
-  COUCH_PARTY = 'COUCH_PARTY',
-  LAN_PARTY = 'LAN_PARTY',
-  RPG = 'RPG',
-}
-
-export type EventType =
-  | 'BOARD_GAME_PARTY'
-  | 'COUCH_PARTY'
-  | 'LAN_PARTY'
-  | 'RPG';
-
 export type Decision = 'KEEP' | 'REMOVE';
 
 export interface GameDecision {
@@ -54,6 +41,7 @@ export interface PossibleTerm {
 
 export interface EventTypeVote {
   createdAt: string;
+  type: string;
   username: string;
 }
 
@@ -62,7 +50,7 @@ export interface Preparation {
   createdAt: string;
   eventTypeVotes: EventTypeVote[];
   possibleTerms: PossibleTerm[];
-  selectedEventType?: EventType;
+  selectedEventType?: string;
   selectedTerm?: string;
 }
 
@@ -82,6 +70,6 @@ export interface Event {
   scheduledFor?: string;
   preparation: Preparation;
   summary?: Summary;
-  type?: EventType;
+  type?: string;
   votes: Vote[];
 }
