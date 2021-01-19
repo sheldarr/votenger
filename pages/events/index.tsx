@@ -34,7 +34,7 @@ const AddEventFab = styled(Fab)`
   right: 2rem;
 `;
 
-const Home: NextPage = () => {
+const EventsPage: NextPage = () => {
   const router = useRouter();
   const { data: events } = useEvents();
   const [user] = useUser();
@@ -59,10 +59,10 @@ const Home: NextPage = () => {
       <Grid container spacing={1}>
         {events
           ?.sort((a, b) => {
-            if (a.scheduledFor && b.scheduledFor) {
+            if (a.term && b.term) {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              return new Date(b.scheduledFor) - new Date(a.scheduledFor);
+              return new Date(b.term) - new Date(a.term);
             }
           })
           .map((event) => (
@@ -71,8 +71,9 @@ const Home: NextPage = () => {
                 <CardContent>
                   <Typography gutterBottom component="h2" variant="h6">
                     {event.name}
-                    {event.scheduledFor &&
-                      `(${format(new Date(event.scheduledFor), 'dd/MM/yyyy')})`}
+                    {event.type && ` ${event.type}`}
+                    {event.term &&
+                      ` (${format(new Date(event.term), 'dd/MM/yyyy')})`}
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -159,4 +160,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default EventsPage;

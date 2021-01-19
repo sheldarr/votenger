@@ -66,9 +66,9 @@ export interface Event {
   createdAt: string;
   id: string;
   name: string;
-  scheduledFor?: string;
   preparation: Preparation;
   summary?: Summary;
+  term?: string;
   type?: string;
   votes: Vote[];
 }

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
+import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -12,12 +13,14 @@ import Box from '@material-ui/core/Box';
 import { format } from 'date-fns';
 import { green } from '@material-ui/core/colors';
 import styled from 'styled-components';
+import CheckIcon from '@material-ui/icons/Check';
 
 import useEvent from '../../../../hooks/useEvent';
 import Page from '../../../../components/Page';
 import useUser from '../../../../hooks/useUser';
 import useEventTypes from '../../../../hooks/useEventTypes';
 import { isUserAdmin } from '../../../../auth';
+import { URL as EVENTS_URL } from '../../';
 
 export const URL = (eventId: string) => `/events/${eventId}/prepare`;
 
@@ -33,6 +36,12 @@ const CustomCheckbox = styled(Checkbox)`
     `
       color: ${green[500]} !important;
   `}
+`;
+
+const ApplyFab = styled(Fab)`
+  position: fixed !important;
+  bottom: 2rem;
+  right: 2rem;
 `;
 
 const PrepareEventPage: React.FunctionComponent = () => {
@@ -259,6 +268,24 @@ const PrepareEventPage: React.FunctionComponent = () => {
             <Grid item key={eventType} xs={12}></Grid>
           ))}
       </Grid>
+      {isUserAdmin(user?.username) && (
+        <ApplyFab
+          color="primary"
+          disabled={
+            !event?.preparation.selectedEventType ||
+            !event?.preparation.selectedTerm
+          }
+          onClick={async () => {
+            await axios.post(
+              `/api/events/${router.query.id}/preparation/apply`,
+            );
+
+            router.replace(EVENTS_URL);
+          }}
+        >
+          <CheckIcon />
+        </ApplyFab>
+      )}
     </Page>
   );
 };
