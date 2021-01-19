@@ -73,7 +73,7 @@ const EventsPage: NextPage = () => {
                     {event.name}
                     {event.type && ` ${event.type}`}
                     {event.term &&
-                      ` (${format(new Date(event.term), 'dd/MM/yyyy')})`}
+                      ` (${format(new Date(event.term), 'dd.MM.yyyy')})`}
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -87,60 +87,62 @@ const EventsPage: NextPage = () => {
                       Prepare
                     </Button>
                   )}
-                  {/* {userAlreadyVoted(poll) && (
+                  {userAlreadyVoted(event) && (
                     <Button
                       color="primary"
                       onClick={() => {
-                        router.push(POLL_URL(poll.id));
+                        // router.push(POLL_URL(poll.id));
                       }}
                     >
                       Dashboard
                     </Button>
-                  )} */}
-                  {/* {!poll.summary && !userAlreadyVoted(poll) && (
+                  )}
+                  {!event.summary && !userAlreadyVoted(event) && (
                     <Button
                       color="primary"
                       onClick={() => {
-                        router.push(POLL_VOTE_URL(poll.id));
+                        // router.push(POLL_VOTE_URL(poll.id));
                       }}
                     >
                       Vote
                     </Button>
-                  )} */}
-                  {/* {poll.summary &&
-                    userAlreadyVoted(poll) &&
-                    !userAlreadyCreatedSummaryEntry(poll) && (
+                  )}
+                  {event.summary &&
+                    userAlreadyVoted(event) &&
+                    !userAlreadyCreatedSummaryEntry(event) && (
                       <Button
                         color="primary"
                         onClick={() => {
-                          router.push(POLL_SUMMARY_ENTRY_URL(poll.id));
+                          // router.push(POLL_SUMMARY_ENTRY_URL(poll.id));
                         }}
                       >
                         Summarize
                       </Button>
-                    )} */}
-                  {/* {poll.summary &&
-                    userAlreadyVoted(poll) &&
-                    userAlreadyCreatedSummaryEntry(poll) && (
+                    )}
+                  {event.summary &&
+                    userAlreadyVoted(event) &&
+                    userAlreadyCreatedSummaryEntry(event) && (
                       <Button
                         color="primary"
                         onClick={() => {
-                          router.push(POLL_SUMMARY_URL(poll.id));
+                          // router.push(POLL_SUMMARY_URL(poll.id));
                         }}
                       >
                         Summary
                       </Button>
-                    )} */}
-                  {/* {!poll.summary && isUserAdmin(user.username) && (
-                    <Button
-                      color="primary"
-                      onClick={() => {
-                        axios.post(`/api/polls/${poll.id}/summary`);
-                      }}
-                    >
-                      Create summary
-                    </Button>
-                  )} */}
+                    )}
+                  {!event.summary &&
+                    !!event.votes.length &&
+                    isUserAdmin(user.username) && (
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          // axios.post(`/api/polls/${poll.id}/summary`);
+                        }}
+                      >
+                        Create summary
+                      </Button>
+                    )}
                 </CardActions>
               </Card>
             </Grid>
