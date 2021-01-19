@@ -16,6 +16,7 @@ export default (req: NextApiRequest, res: NextApiResponse<Event | string>) => {
 
   if (req.method === 'PUT') {
     if (
+      !req.body.eventTypeToSwitch &&
       !req.body.termProposition &&
       !req.body.termToSwitch &&
       !req.body.username
@@ -60,6 +61,47 @@ export default (req: NextApiRequest, res: NextApiResponse<Event | string>) => {
           }),
         })
         .write();
+    }
+
+    if (req.body.eventTypeToSwitch && req.body.username) {
+      if (
+        event.preparation.eventTypeVotes.some(
+          (eventTypeVote) =>
+            eventTypeVote.username === req.body.username &&
+            eventTypeVote.type === req.body.eventTypeToSwitch,
+        )
+      ) {
+        db.get('events')
+          .find({ id: id as string })
+          .assign({
+            preparation: update(event.preparation, {
+              eventTypeVotes: {
+                $set: event.preparation.eventTypeVotes.filter(
+                  (eventTypeVote) =>
+                    eventTypeVote.username !== req.body.username &&
+                    eventTypeVote.type !== req.body.eventTypeToSwitch,
+                ),
+              },
+            }),
+          })
+          .write();
+      } else {
+        db.get('events')
+          .find({ id: id as string })
+          .assign({
+            preparation: update(event.preparation, {
+              eventTypeVotes: {
+                $push: [
+                  {
+                    type: req.body.eventTypeToSwitch,
+                    username: req.body.username,
+                  },
+                ],
+              },
+            }),
+          })
+          .write();
+      }
     }
 
     if (req.body.termToSwitch && req.body.username) {

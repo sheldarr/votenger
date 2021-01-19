@@ -36,7 +36,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
 
   console.log(votedForTerms, votedForEventType);
 
-  const players = [...votedForTerms, ...votedForEventType];
+  const players = [...new Set([...votedForEventType, ...votedForTerms])];
 
   const addTermProposition = (termProposition: string) => {
     axios.put(`/api/events/${router.query.id}/preparation`, {
@@ -51,6 +51,13 @@ const PrepareEventPage: React.FunctionComponent = () => {
     });
   };
 
+  const switchEventType = (eventTypeToSwitch: string) => {
+    axios.put(`/api/events/${router.query.id}/preparation`, {
+      eventTypeToSwitch: eventTypeToSwitch,
+      username: user.username,
+    });
+  };
+
   return (
     <Page title={`${event?.name} preparation`}>
       <Typography gutterBottom align="center" variant="h4">
@@ -61,7 +68,11 @@ const PrepareEventPage: React.FunctionComponent = () => {
           <Grid container item spacing={1}>
             {players?.sort().map((player) => (
               <Grid item key={player}>
-                <Chip color="primary" label={player} />
+                <Chip
+                  color="primary"
+                  label={player}
+                  variant={player === user.username ? 'default' : 'outlined'}
+                />
               </Grid>
             ))}
           </Grid>
@@ -104,7 +115,11 @@ const PrepareEventPage: React.FunctionComponent = () => {
             </Grid>
             {possibleTerm.usernames.sort().map((username) => (
               <Grid item key={username}>
-                <Chip color="primary" label={username} />
+                <Chip
+                  color="primary"
+                  label={username}
+                  variant={username === user.username ? 'default' : 'outlined'}
+                />
               </Grid>
             ))}
           </Grid>
@@ -128,7 +143,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
                       color="primary"
                       name={eventType}
                       onChange={() => {
-                        // switchTerm(possibleTerm.date);
+                        switchEventType(eventType);
                       }}
                     />
                   }
@@ -140,8 +155,14 @@ const PrepareEventPage: React.FunctionComponent = () => {
                 .map((eventTypeVote) => eventTypeVote.username)
                 .sort()
                 .map((username) => (
-                  <Grid item key={username}>
-                    <Chip color="primary" label={username} />
+                  <Grid item key={`${eventType}-${username}`}>
+                    <Chip
+                      color="primary"
+                      label={username}
+                      variant={
+                        username === user.username ? 'default' : 'outlined'
+                      }
+                    />
                   </Grid>
                 ))}
             </Grid>

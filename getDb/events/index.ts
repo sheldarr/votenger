@@ -40,7 +40,6 @@ export interface PossibleTerm {
 }
 
 export interface EventTypeVote {
-  createdAt: string;
   type: string;
   username: string;
 }
