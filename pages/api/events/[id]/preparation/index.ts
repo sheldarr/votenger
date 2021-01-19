@@ -17,6 +17,7 @@ export default (req: NextApiRequest, res: NextApiResponse<Event | string>) => {
   if (req.method === 'PUT') {
     if (
       !req.body.eventTypeToSwitch &&
+      !req.body.switchSelectedTerm &&
       !req.body.termProposition &&
       !req.body.termToSwitch &&
       !req.body.username
@@ -39,6 +40,32 @@ export default (req: NextApiRequest, res: NextApiResponse<Event | string>) => {
       return res
         .status(StatusCodes.BAD_REQUEST)
         .send(ReasonPhrases.BAD_REQUEST);
+    }
+
+    if (req.body.switchSelectedTerm) {
+      if (event.preparation.selectedTerm === req.body.switchSelectedTerm) {
+        db.get('events')
+          .find({ id: id as string })
+          .assign({
+            preparation: update(event.preparation, {
+              selectedTerm: {
+                $set: undefined,
+              },
+            }),
+          })
+          .write();
+      } else {
+        db.get('events')
+          .find({ id: id as string })
+          .assign({
+            preparation: update(event.preparation, {
+              selectedTerm: {
+                $set: req.body.switchSelectedTerm,
+              },
+            }),
+          })
+          .write();
+      }
     }
 
     if (

@@ -10,13 +10,30 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { DatePicker } from '@material-ui/pickers';
 import Box from '@material-ui/core/Box';
 import { format } from 'date-fns';
+import { green } from '@material-ui/core/colors';
+import styled from 'styled-components';
 
 import useEvent from '../../../../hooks/useEvent';
 import Page from '../../../../components/Page';
 import useUser from '../../../../hooks/useUser';
 import useEventTypes from '../../../../hooks/useEventTypes';
+import { isUserAdmin } from '../../../../auth';
 
 export const URL = (eventId: string) => `/events/${eventId}/prepare`;
+
+interface CustomCheckboxProps {
+  selected: boolean;
+}
+
+const CustomCheckbox = styled(Checkbox)`
+  transition: background-color 0.2s !important;
+
+  ${(props: CustomCheckboxProps) =>
+    props.selected &&
+    `
+      color: ${green[500]} !important;
+  `}
+`;
 
 const PrepareEventPage: React.FunctionComponent = () => {
   const router = useRouter();
@@ -42,8 +59,6 @@ const PrepareEventPage: React.FunctionComponent = () => {
       (eventTypeVote) => eventTypeVote.username,
     ) || [];
 
-  console.log(votedForTerms, votedForEventType);
-
   const players = [...new Set([...votedForEventType, ...votedForTerms])];
 
   const addTermProposition = (termProposition: string) => {
@@ -63,6 +78,12 @@ const PrepareEventPage: React.FunctionComponent = () => {
     axios.put(`/api/events/${router.query.id}/preparation`, {
       eventTypeToSwitch: eventTypeToSwitch,
       username: user.username,
+    });
+  };
+
+  const switchSelectedTerm = (termProposition: string) => {
+    axios.put(`/api/events/${router.query.id}/preparation`, {
+      switchSelectedTerm: termProposition,
     });
   };
 
@@ -109,7 +130,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
             <Grid item>
               <FormControlLabel
                 control={
-                  <Checkbox
+                  <CustomCheckbox
                     checked={possibleTerm.usernames.some(
                       (username) => username === user.username,
                     )}
@@ -119,10 +140,29 @@ const PrepareEventPage: React.FunctionComponent = () => {
                     onChange={() => {
                       switchTerm(possibleTerm.date);
                     }}
+                    selected={
+                      event?.preparation.selectedTerm === possibleTerm.date
+                    }
                   />
                 }
                 label={format(new Date(possibleTerm.date), 'dd.MM.yyyy')}
               />
+              {isUserAdmin(user?.username) && (
+                <Button
+                  color="primary"
+                  disabled={
+                    event?.preparation.selectedTerm &&
+                    possibleTerm.date !== event?.preparation.selectedTerm
+                  }
+                  onClick={() => {
+                    switchSelectedTerm(possibleTerm.date);
+                  }}
+                >
+                  {event?.preparation.selectedTerm === possibleTerm.date
+                    ? 'Unselect'
+                    : 'Select'}
+                </Button>
+              )}
             </Grid>
             {possibleTerm.usernames
               .sort(sortByCurrentUserAndThenAlphabetically)
@@ -150,7 +190,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
               <Grid item>
                 <FormControlLabel
                   control={
-                    <Checkbox
+                    <CustomCheckbox
                       checked={event?.preparation.eventTypeVotes.some(
                         (eventTypeVote) =>
                           eventTypeVote.username === user.username &&
@@ -162,6 +202,9 @@ const PrepareEventPage: React.FunctionComponent = () => {
                       onChange={() => {
                         switchEventType(eventType);
                       }}
+                      selected={
+                        event?.preparation.selectedEventType === eventType
+                      }
                     />
                   }
                   label={eventType}
