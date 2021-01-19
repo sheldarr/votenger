@@ -18,6 +18,7 @@ export default (req: NextApiRequest, res: NextApiResponse<Event | string>) => {
     if (
       !req.body.eventTypeToSwitch &&
       !req.body.switchSelectedTerm &&
+      !req.body.switchSelectedEventType &&
       !req.body.termProposition &&
       !req.body.termToSwitch &&
       !req.body.username
@@ -61,6 +62,34 @@ export default (req: NextApiRequest, res: NextApiResponse<Event | string>) => {
             preparation: update(event.preparation, {
               selectedTerm: {
                 $set: req.body.switchSelectedTerm,
+              },
+            }),
+          })
+          .write();
+      }
+    }
+
+    if (req.body.switchSelectedEventType) {
+      if (
+        event.preparation.selectedEventType === req.body.switchSelectedEventType
+      ) {
+        db.get('events')
+          .find({ id: id as string })
+          .assign({
+            preparation: update(event.preparation, {
+              selectedEventType: {
+                $set: undefined,
+              },
+            }),
+          })
+          .write();
+      } else {
+        db.get('events')
+          .find({ id: id as string })
+          .assign({
+            preparation: update(event.preparation, {
+              selectedEventType: {
+                $set: req.body.switchSelectedEventType,
               },
             }),
           })

@@ -87,6 +87,12 @@ const PrepareEventPage: React.FunctionComponent = () => {
     });
   };
 
+  const switchSelectedEventType = (eventType: string) => {
+    axios.put(`/api/events/${router.query.id}/preparation`, {
+      switchSelectedEventType: eventType,
+    });
+  };
+
   return (
     <Page title={`${event?.name} preparation`}>
       <Typography gutterBottom align="center" variant="h4">
@@ -209,6 +215,22 @@ const PrepareEventPage: React.FunctionComponent = () => {
                   }
                   label={eventType}
                 />
+                {isUserAdmin(user?.username) && (
+                  <Button
+                    color="primary"
+                    disabled={
+                      event?.preparation.selectedEventType &&
+                      eventType !== event?.preparation.selectedEventType
+                    }
+                    onClick={() => {
+                      switchSelectedEventType(eventType);
+                    }}
+                  >
+                    {event?.preparation.selectedEventType === eventType
+                      ? 'Unselect'
+                      : 'Select'}
+                  </Button>
+                )}
               </Grid>
               {event?.preparation.eventTypeVotes
                 .filter((eventTypeVote) => eventTypeVote.type === eventType)
