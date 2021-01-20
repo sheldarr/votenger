@@ -97,16 +97,18 @@ const EventsPage: NextPage = () => {
                       Dashboard
                     </Button>
                   )}
-                  {!event.summary && !userAlreadyVoted(event) && (
-                    <Button
-                      color="primary"
-                      onClick={() => {
-                        // router.push(POLL_VOTE_URL(poll.id));
-                      }}
-                    >
-                      Vote
-                    </Button>
-                  )}
+                  {event.preparation.appliedAt &&
+                    !event.summary &&
+                    !userAlreadyVoted(event) && (
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          // router.push(POLL_VOTE_URL(poll.id));
+                        }}
+                      >
+                        Vote
+                      </Button>
+                    )}
                   {event.summary &&
                     userAlreadyVoted(event) &&
                     !userAlreadyCreatedSummaryEntry(event) && (
