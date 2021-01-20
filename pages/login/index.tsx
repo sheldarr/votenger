@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { URL as MAIN_PAGE_URL } from '..';
+import { URL as EVENTS_PAGE_URL } from '../events';
 import useUser from '../../hooks/useUser';
 import Page from '../../components/Page';
 
@@ -27,7 +27,7 @@ const LoginPage: React.FunctionComponent = () => {
                 username: values.username,
               });
 
-              router.push(MAIN_PAGE_URL);
+              router.push(EVENTS_PAGE_URL);
             }}
             validationSchema={Yup.object().shape({
               username: Yup.string().required('Field is required'),
