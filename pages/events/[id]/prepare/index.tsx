@@ -14,6 +14,7 @@ import { format } from 'date-fns';
 import { green } from '@material-ui/core/colors';
 import styled from 'styled-components';
 import CheckIcon from '@material-ui/icons/Check';
+import GroupIcon from '@material-ui/icons/Group';
 
 import useEvent from '../../../../hooks/useEvent';
 import Page from '../../../../components/Page';
@@ -108,21 +109,28 @@ const PrepareEventPage: React.FunctionComponent = () => {
         {event?.name}
       </Typography>
       <Grid container spacing={1}>
-        <Box paddingBottom={3}>
-          <Grid container item spacing={1}>
-            {players
-              ?.sort(sortByCurrentUserAndThenAlphabetically)
-              .map((player) => (
-                <Grid item key={player}>
-                  <Chip
-                    color="primary"
-                    label={player}
-                    variant={player === user.username ? 'default' : 'outlined'}
-                  />
-                </Grid>
-              ))}
+        <Grid container item justify="space-between" spacing={1} xs={12}>
+          <Grid item>
+            <Grid container spacing={1}>
+              {players
+                ?.sort(sortByCurrentUserAndThenAlphabetically)
+                .map((player) => (
+                  <Grid item key={player}>
+                    <Chip
+                      color="primary"
+                      label={player}
+                      variant={
+                        player === user.username ? 'default' : 'outlined'
+                      }
+                    />
+                  </Grid>
+                ))}
+            </Grid>
           </Grid>
-        </Box>
+          <Grid item>
+            <Chip color="primary" icon={<GroupIcon />} label={players.length} />
+          </Grid>
+        </Grid>
         <Grid container item spacing={1} xs={12}>
           <Typography gutterBottom variant="h4">
             Term
