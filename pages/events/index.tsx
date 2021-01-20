@@ -19,10 +19,10 @@ import useUser from '../../hooks/useUser';
 import { isUserAdmin } from '../../auth';
 import Page from '../../components/Page';
 import { Event } from '../../getDb/events';
-// import { URL as POLL_URL } from './polls/[id]';
+import { URL as EVENT_DASHBOARD_URL } from './[id]/dashboard';
 // import { URL as POLL_SUMMARY_URL } from './polls/[id]/summary';
 // import { URL as POLL_SUMMARY_ENTRY_URL } from './polls/[id]/summary/entry';
-// import { URL as POLL_VOTE_URL } from './polls/[id]/vote';
+import { URL as EVENT_VOTE_URL } from './[id]/vote';
 import { URL as CREATE_EVENT_URL } from './create';
 import { URL as PREPARE_EVENT_URL } from './[id]/prepare';
 
@@ -91,7 +91,7 @@ const EventsPage: NextPage = () => {
                     <Button
                       color="primary"
                       onClick={() => {
-                        // router.push(POLL_URL(poll.id));
+                        router.push(EVENT_DASHBOARD_URL(event.id));
                       }}
                     >
                       Dashboard
@@ -103,7 +103,7 @@ const EventsPage: NextPage = () => {
                       <Button
                         color="primary"
                         onClick={() => {
-                          // router.push(POLL_VOTE_URL(poll.id));
+                          router.push(EVENT_VOTE_URL(event.id));
                         }}
                       >
                         Vote
