@@ -1,15 +1,15 @@
-on: [push, pull_request]
-jobs:
-  ci:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-      - name: Prepare .env
-        run: cp .env.example .env
-      - name: Install Dependencies
-        run: make install
-      - name: Run linter
-        run: make lint
-      - name: Run tests
-        run: make test
+# on: [push, pull_request]
+# jobs:
+#   ci:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out repository
+#         uses: actions/checkout@v2
+#       - name: Prepare .env
+#         run: cp .env.example .env
+#       - name: Install Dependencies
+#         run: make install
+#       - name: Run linter
+#         run: make lint
+#       - name: Run tests
+#         run: make test
