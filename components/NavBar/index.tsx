@@ -17,7 +17,7 @@ const NavBar: React.FunctionComponent = () => {
     <StyledAppBar position="static">
       <Toolbar>
         <Typography variant="h6">
-          Votenger {user?.username ? `- ${user.username}` : ''}
+          Votenger {user?.username ? `- ${user?.username}` : ''}
         </Typography>
       </Toolbar>
     </StyledAppBar>
