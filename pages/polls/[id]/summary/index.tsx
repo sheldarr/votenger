@@ -20,7 +20,6 @@ import usePoll from '../../../../hooks/usePoll';
 import Page from '../../../../components/Page';
 import { isUserAdmin } from '../../../../auth';
 import useUser from '../../../../hooks/useUser';
-import { URL as HOME_URL } from '../../../';
 
 const VoteFab = styled(Fab)`
   position: fixed !important;
@@ -189,7 +188,7 @@ const SummaryPage: React.FunctionComponent = () => {
             onClick={async () => {
               await axios.post(`/api/polls/${router.query.id}/summary/apply`);
 
-              router.replace(HOME_URL);
+              // router.replace(HOME_URL);
             }}
           >
             <CheckIcon />
