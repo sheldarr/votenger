@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { DatePicker } from '@material-ui/pickers';
-import Box from '@material-ui/core/Box';
 import { format } from 'date-fns';
 import { green } from '@material-ui/core/colors';
 import styled from 'styled-components';
