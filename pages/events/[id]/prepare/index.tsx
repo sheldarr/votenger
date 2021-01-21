@@ -21,6 +21,7 @@ import useUser from '../../../../hooks/useUser';
 import useEventTypes from '../../../../hooks/useEventTypes';
 import { isUserAdmin } from '../../../../auth';
 import { URL as EVENTS_URL } from '../../';
+import sortByCurrentUserAndThenAlphabetically from '../../../../utils/sortByCurrentUserAndThenAlphabetically';
 
 export const URL = (eventId: string) => `/events/${eventId}/prepare`;
 
@@ -50,14 +51,6 @@ const PrepareEventPage: React.FunctionComponent = () => {
   const { data: eventTypes } = useEventTypes();
   const { data: event } = useEvent(router.query.id as string);
   const [isNewTermPickerOpen, setIsNewTermPickerOpen] = useState(false);
-
-  const sortByCurrentUserAndThenAlphabetically = (a: string, b: string) => {
-    if (a === user.username) {
-      return -1;
-    }
-
-    return a.localeCompare(b);
-  };
 
   const votedForTerms =
     event?.preparation.possibleTerms.flatMap(
@@ -112,14 +105,14 @@ const PrepareEventPage: React.FunctionComponent = () => {
           <Grid item>
             <Grid container spacing={1}>
               {players
-                ?.sort(sortByCurrentUserAndThenAlphabetically)
+                ?.sort(sortByCurrentUserAndThenAlphabetically(user?.username))
                 .map((player) => (
                   <Grid item key={player}>
                     <Chip
                       color="primary"
                       label={player}
                       variant={
-                        player === user.username ? 'default' : 'outlined'
+                        player === user?.username ? 'default' : 'outlined'
                       }
                     />
                   </Grid>
@@ -154,7 +147,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
                 control={
                   <CustomCheckbox
                     checked={possibleTerm.usernames.some(
-                      (username) => username === user.username,
+                      (username) => username === user?.username,
                     )}
                     color="primary"
                     disabled={!!event?.preparation.selectedTerm}
@@ -187,14 +180,14 @@ const PrepareEventPage: React.FunctionComponent = () => {
               )}
             </Grid>
             {possibleTerm.usernames
-              .sort(sortByCurrentUserAndThenAlphabetically)
+              .sort(sortByCurrentUserAndThenAlphabetically(user?.username))
               .map((username) => (
                 <Grid item key={username}>
                   <Chip
                     color="primary"
                     label={username}
                     variant={
-                      username === user.username ? 'default' : 'outlined'
+                      username === user?.username ? 'default' : 'outlined'
                     }
                   />
                 </Grid>
@@ -215,7 +208,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
                     <CustomCheckbox
                       checked={event?.preparation.eventTypeVotes.some(
                         (eventTypeVote) =>
-                          eventTypeVote.username === user.username &&
+                          eventTypeVote.username === user?.username &&
                           eventTypeVote.type === eventType,
                       )}
                       color="primary"
@@ -251,7 +244,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
               {event?.preparation.eventTypeVotes
                 .filter((eventTypeVote) => eventTypeVote.type === eventType)
                 .sort((a, b) => {
-                  return sortByCurrentUserAndThenAlphabetically(
+                  return sortByCurrentUserAndThenAlphabetically(user?.username)(
                     a.username,
                     b.username,
                   );
@@ -263,7 +256,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
                       color="primary"
                       label={username}
                       variant={
-                        username === user.username ? 'default' : 'outlined'
+                        username === user?.username ? 'default' : 'outlined'
                       }
                     />
                   </Grid>

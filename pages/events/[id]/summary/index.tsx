@@ -21,6 +21,7 @@ import Page from '../../../../components/Page';
 import { isUserAdmin } from '../../../../auth';
 import useUser from '../../../../hooks/useUser';
 import { URL as EVENTS_URL } from '../../';
+import sortByCurrentUserAndThenAlphabetically from '../../../../utils/sortByCurrentUserAndThenAlphabetically';
 
 const VoteFab = styled(Fab)`
   position: fixed !important;
@@ -93,11 +94,19 @@ const EventSummaryPage: React.FunctionComponent = () => {
         <Grid container item justify="space-between" spacing={1} xs={12}>
           <Grid item>
             <Grid container spacing={1}>
-              {players?.map((player) => (
-                <Grid item key={player}>
-                  <Chip color="primary" label={player} />
-                </Grid>
-              ))}
+              {players
+                ?.sort(sortByCurrentUserAndThenAlphabetically(user?.username))
+                .map((player) => (
+                  <Grid item key={player}>
+                    <Chip
+                      color="primary"
+                      label={player}
+                      variant={
+                        player === user?.username ? 'default' : 'outlined'
+                      }
+                    />
+                  </Grid>
+                ))}
             </Grid>
           </Grid>
           <Grid item>

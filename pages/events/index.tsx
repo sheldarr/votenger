@@ -135,7 +135,7 @@ const EventsPage: NextPage = () => {
                     )}
                   {!event.summary &&
                     !!event.votes.length &&
-                    isUserAdmin(user.username) && (
+                    isUserAdmin(user?.username) && (
                       <Button
                         color="primary"
                         onClick={() => {

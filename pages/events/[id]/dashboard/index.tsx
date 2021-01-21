@@ -29,6 +29,7 @@ import exponentialWeightedRandomGame from '../../../../utils/exponentialWeighted
 import linearWeightedRandomGame from '../../../../utils/linearWeightedRandomGame';
 import { Event } from '../../../../getDb/events';
 import { WebSocketEvents } from '../../../../events';
+import sortByCurrentUserAndThenAlphabetically from '../../../../utils/sortByCurrentUserAndThenAlphabetically';
 
 export const URL = (eventId: string) => `/events/${eventId}/dashboard`;
 
@@ -158,16 +159,26 @@ const EventDashboardPage: React.FunctionComponent = () => {
         <Grid container item justify="space-between" spacing={1} xs={12}>
           <Grid item>
             <Grid container spacing={1}>
-              {players.map((user) => (
-                <Grid item key={user.name}>
-                  <Chip
-                    color="primary"
-                    icon={RandomTeamStateIcon[user.randomTeamState]}
-                    label={user.name}
-                    onClick={() => switchUserRandomTeamState(user)}
-                  />
-                </Grid>
-              ))}
+              {players
+                .sort((a, b) => {
+                  return sortByCurrentUserAndThenAlphabetically(user?.username)(
+                    a.name,
+                    b.name,
+                  );
+                })
+                .map((player) => (
+                  <Grid item key={player.name}>
+                    <Chip
+                      color="primary"
+                      icon={RandomTeamStateIcon[player.randomTeamState]}
+                      label={player.name}
+                      onClick={() => switchUserRandomTeamState(player)}
+                      variant={
+                        player.name === user?.username ? 'default' : 'outlined'
+                      }
+                    />
+                  </Grid>
+                ))}
             </Grid>
           </Grid>
           <Grid item>
@@ -216,11 +227,25 @@ const EventDashboardPage: React.FunctionComponent = () => {
                             {name}
                           </Typography>
                         </Grid>
-                        {voters.map((voter) => (
-                          <Grid item key={voter}>
-                            <Chip color="primary" label={voter} />
-                          </Grid>
-                        ))}
+                        {voters
+                          .sort(
+                            sortByCurrentUserAndThenAlphabetically(
+                              user?.username,
+                            ),
+                          )
+                          .map((voter) => (
+                            <Grid item key={voter}>
+                              <Chip
+                                color="primary"
+                                label={voter}
+                                variant={
+                                  voter === user?.username
+                                    ? 'default'
+                                    : 'outlined'
+                                }
+                              />
+                            </Grid>
+                          ))}
                       </Grid>
                     </CardContent>
                     {isUserAdmin(user?.username) && (
