@@ -29,7 +29,6 @@ import exponentialWeightedRandomGame from '../../../../utils/exponentialWeighted
 import linearWeightedRandomGame from '../../../../utils/linearWeightedRandomGame';
 import { Event } from '../../../../getDb/events';
 import { WebSocketEvents } from '../../../../events';
-import sortByCurrentUserAndThenAlphabetically from '../../../../utils/sortByCurrentUserAndThenAlphabetically';
 
 export const URL = (eventId: string) => `/events/${eventId}/dashboard`;
 
@@ -160,12 +159,7 @@ const EventDashboardPage: React.FunctionComponent = () => {
           <Grid item>
             <Grid container spacing={1}>
               {players
-                .sort((a, b) => {
-                  return sortByCurrentUserAndThenAlphabetically(user?.username)(
-                    a.name,
-                    b.name,
-                  );
-                })
+                .sort((a, b) => a.name.localeCompare(b.name))
                 .map((player) => (
                   <Grid item key={player.name}>
                     <Chip
@@ -228,11 +222,7 @@ const EventDashboardPage: React.FunctionComponent = () => {
                           </Typography>
                         </Grid>
                         {voters
-                          .sort(
-                            sortByCurrentUserAndThenAlphabetically(
-                              user?.username,
-                            ),
-                          )
+                          .sort((a, b) => a.localeCompare(b))
                           .map((voter) => (
                             <Grid item key={voter}>
                               <Chip

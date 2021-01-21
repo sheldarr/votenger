@@ -21,7 +21,6 @@ import useUser from '../../../../hooks/useUser';
 import useEventTypes from '../../../../hooks/useEventTypes';
 import { isUserAdmin } from '../../../../auth';
 import { URL as EVENTS_URL } from '../../';
-import sortByCurrentUserAndThenAlphabetically from '../../../../utils/sortByCurrentUserAndThenAlphabetically';
 
 export const URL = (eventId: string) => `/events/${eventId}/prepare`;
 
@@ -105,7 +104,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
           <Grid item>
             <Grid container spacing={1}>
               {players
-                ?.sort(sortByCurrentUserAndThenAlphabetically(user?.username))
+                ?.sort((a, b) => a.localeCompare(b))
                 .map((player) => (
                   <Grid item key={player}>
                     <Chip
@@ -180,7 +179,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
               )}
             </Grid>
             {possibleTerm.usernames
-              .sort(sortByCurrentUserAndThenAlphabetically(user?.username))
+              .sort((a, b) => a.localeCompare(b))
               .map((username) => (
                 <Grid item key={username}>
                   <Chip
@@ -243,12 +242,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
               </Grid>
               {event?.preparation.eventTypeVotes
                 .filter((eventTypeVote) => eventTypeVote.type === eventType)
-                .sort((a, b) => {
-                  return sortByCurrentUserAndThenAlphabetically(user?.username)(
-                    a.username,
-                    b.username,
-                  );
-                })
+                .sort((a, b) => a.username.localeCompare(b.username))
                 .map((eventTypeVote) => eventTypeVote.username)
                 .map((username) => (
                   <Grid item key={`${eventType}-${username}`}>

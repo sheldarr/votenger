@@ -21,7 +21,6 @@ import Page from '../../../../components/Page';
 import { isUserAdmin } from '../../../../auth';
 import useUser from '../../../../hooks/useUser';
 import { URL as EVENTS_URL } from '../../';
-import sortByCurrentUserAndThenAlphabetically from '../../../../utils/sortByCurrentUserAndThenAlphabetically';
 
 const VoteFab = styled(Fab)`
   position: fixed !important;
@@ -95,7 +94,7 @@ const EventSummaryPage: React.FunctionComponent = () => {
           <Grid item>
             <Grid container spacing={1}>
               {players
-                ?.sort(sortByCurrentUserAndThenAlphabetically(user?.username))
+                ?.sort((a, b) => a.localeCompare(b))
                 .map((player) => (
                   <Grid item key={player}>
                     <Chip
@@ -136,9 +135,7 @@ const EventSummaryPage: React.FunctionComponent = () => {
         <Grid container spacing={1}>
           {event &&
             Object.entries(games)
-              .sort(([nameA], [nameB]) => {
-                return nameA.localeCompare(nameB);
-              })
+              .sort(([nameA], [nameB]) => nameA.localeCompare(nameB))
               .map(([name, [inFavour, against]]) => (
                 <Grid item key={name} lg={4} md={6} xs={12}>
                   <GameCard forRemoval={against >= inFavour} variant="outlined">
@@ -176,9 +173,7 @@ const EventSummaryPage: React.FunctionComponent = () => {
           {event &&
             event.summary.entries
               .flatMap((entry) => entry.proposedGames)
-              .sort((gameA, gameB) => {
-                return gameA.localeCompare(gameB);
-              })
+              .sort((gameA, gameB) => gameA.localeCompare(gameB))
               .map((game) => (
                 <Grid item key={game} lg={4} md={6} xs={12}>
                   <Card variant="outlined">
