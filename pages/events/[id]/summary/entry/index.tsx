@@ -17,7 +17,7 @@ import useGames from '../../../../../hooks/useGames';
 import useEvent from '../../../../../hooks/useEvent';
 import useUser from '../../../../../hooks/useUser';
 
-// import { URL as EVENT_SUMMARY_URL } from '..';
+import { URL as EVENT_SUMMARY_URL } from '..';
 import Page from '../../../../../components/Page';
 import { Decision, GameDecision } from '../../../../../getDb/polls';
 import { Game } from '../../../../../getDb/games';
@@ -185,7 +185,7 @@ const EventSummaryEntryPage: React.FunctionComponent = () => {
             username: user?.username,
           });
 
-          // router.replace(EVENT_SUMMARY_URL(event.id));
+          router.replace(EVENT_SUMMARY_URL(event.id));
         }}
       >
         <CheckIcon />

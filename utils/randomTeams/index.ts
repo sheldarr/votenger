@@ -1,4 +1,7 @@
-import { Player, PlayerRandomTeamState } from '../../pages/polls/[id]';
+import {
+  Player,
+  PlayerRandomTeamState,
+} from '../../pages/events/[id]/dashboard';
 
 export type RandomTeamsResult = [string[], string[]];
 
