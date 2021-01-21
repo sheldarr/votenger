@@ -19,10 +19,10 @@ import useUser from '../../../../../hooks/useUser';
 
 import { URL as EVENT_SUMMARY_URL } from '..';
 import Page from '../../../../../components/Page';
-import { Decision, GameDecision } from '../../../../../getDb/polls';
+import { Decision, GameDecision } from '../../../../../getDb/events';
 import { Game } from '../../../../../getDb/games';
 
-export const URL = (eventId: string) => `/evens/${eventId}/summary/entry`;
+export const URL = (eventId: string) => `/events/${eventId}/summary/entry`;
 
 const SummarizeFab = styled(Fab)`
   position: fixed !important;

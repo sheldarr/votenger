@@ -3,14 +3,12 @@ import FileSync from 'lowdb/adapters/FileSync';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Game, LAN_PARTY_GAMES } from './games';
-import { Poll } from './polls';
 import { Event } from './events';
 
 interface Database {
   eventTypes: string[];
   events: Event[];
   games: Game[];
-  polls: Poll[];
 }
 
 const getDb = () => {
@@ -26,7 +24,6 @@ const getDb = () => {
         id: uuidv4(),
       })),
     ],
-    polls: [],
   }).write();
 
   return db;

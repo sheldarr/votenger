@@ -153,7 +153,7 @@ const EventDashboardPage: React.FunctionComponent = () => {
   return (
     <Page title={event?.name}>
       <Typography gutterBottom align="center" variant="h4">
-        {event?.name}
+        {event?.name} {event?.summary && '(closed)'}
       </Typography>
       <Grid container spacing={1}>
         <Grid container item justify="space-between" spacing={1} xs={12}>
@@ -248,7 +248,7 @@ const EventDashboardPage: React.FunctionComponent = () => {
                           ))}
                       </Grid>
                     </CardContent>
-                    {isUserAdmin(user?.username) && (
+                    {isUserAdmin(user?.username) && !event?.summary && (
                       <CardActions>
                         <Button
                           color="primary"

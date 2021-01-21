@@ -98,7 +98,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
   return (
     <Page title={`${event?.name} preparation`}>
       <Typography gutterBottom align="center" variant="h4">
-        {event?.name}
+        {event?.name} {event?.preparation.appliedAt && '(applied)'}
       </Typography>
       <Grid container spacing={1}>
         <Grid container item justify="space-between" spacing={1} xs={12}>

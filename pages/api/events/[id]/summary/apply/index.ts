@@ -5,8 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 import getDb from '../../../../../../getDb';
 import { WebSocketEvents } from '../../../../../../events';
 import { Game, GameState, GameType } from '../../../../../../getDb/games';
+import logger from '../../../../../../server/logger';
 
-const ApplySummaryEntryApi = (
+const ApplyEventSummaryApi = (
   req: NextApiRequest,
   res: NextApiResponse<void>,
 ) => {
@@ -17,21 +18,21 @@ const ApplySummaryEntryApi = (
   } = req;
 
   if (req.method === 'POST') {
-    const poll = db
-      .get('polls')
+    const event = db
+      .get('events')
       .find({ id: id as string })
       .value();
 
-    if (!poll.summary) {
+    if (!event.summary) {
       return res.status(StatusCodes.FORBIDDEN).end();
     }
 
-    if (poll.appliedAt) {
+    if (event.appliedAt) {
       return res.status(StatusCodes.FORBIDDEN).end();
     }
 
     const gamesToRemove = Object.entries(
-      poll.summary.entries.reduce<Record<string, [number, number]>>(
+      event.summary.entries.reduce<Record<string, [number, number]>>(
         (games, entry) => {
           entry.gamesDecisions.forEach((gameDecision) => {
             if (!games[gameDecision.name]) {
@@ -50,10 +51,10 @@ const ApplySummaryEntryApi = (
         {},
       ),
     )
-      .filter(([, [inFavour, against]]) => against > inFavour)
+      .filter(([, [inFavour, against]]) => against >= inFavour)
       .map(([game]) => game);
 
-    console.log(`Games to remove: ${gamesToRemove}`);
+    logger.warn(`Games to remove: ${gamesToRemove}`);
 
     gamesToRemove.forEach((gameName) => {
       db.get('games')
@@ -62,34 +63,35 @@ const ApplySummaryEntryApi = (
         .write();
     });
 
-    const gamesToAdd = poll.summary.entries
+    const gamesToAdd = event.summary.entries
       .flatMap((entry) => entry.proposedGames)
       .map<Game>((proposition) => ({
+        forEventType: event.type,
         id: uuidv4(),
         name: proposition,
         state: GameState.AVAILABLE,
         type: GameType.UNKNOWN,
       }));
 
-    console.log(`Games to add: ${gamesToAdd.map((game) => game.name)}`);
+    logger.warn(`Games to add: ${gamesToAdd.map((game) => game.name)}`);
 
     db.get('games')
       .push(...gamesToAdd)
       .write();
 
-    db.get('polls')
+    db.get('events')
       .find({ id: id as string })
       .assign({
-        appliedAt: new Date().toString(),
+        appliedAt: new Date().toISOString(),
       })
       .write();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    req.io.emit(WebSocketEvents.REFRESH_POLLS);
+    req.io.emit(WebSocketEvents.REFRESH_EVENTS);
 
     return res.status(StatusCodes.OK).end();
   }
 };
 
-export default ApplySummaryEntryApi;
+export default ApplyEventSummaryApi;

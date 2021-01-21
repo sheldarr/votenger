@@ -88,7 +88,7 @@ const EventSummaryPage: React.FunctionComponent = () => {
   return (
     <Page title={`${event?.name} summary`}>
       <Typography gutterBottom align="center" variant="h4">
-        {event?.name}
+        {event?.name} summary {event?.appliedAt && '(applied)'}
       </Typography>
       <Grid container spacing={1}>
         <Grid container item justify="space-between" spacing={1} xs={12}>
@@ -115,7 +115,7 @@ const EventSummaryPage: React.FunctionComponent = () => {
                 <Chip
                   color="primary"
                   icon={<GroupIcon />}
-                  label={event?.summary.entries.length}
+                  label={`${event?.summary.entries.length}/${event?.votes.length}`}
                 />
               </Grid>
               <Grid item>
@@ -141,7 +141,7 @@ const EventSummaryPage: React.FunctionComponent = () => {
               })
               .map(([name, [inFavour, against]]) => (
                 <Grid item key={name} lg={4} md={6} xs={12}>
-                  <GameCard forRemoval={against > inFavour} variant="outlined">
+                  <GameCard forRemoval={against >= inFavour} variant="outlined">
                     <CardContent>
                       <Typography gutterBottom component="h2" variant="h6">
                         {name}

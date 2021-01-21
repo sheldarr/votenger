@@ -3,9 +3,9 @@ import StatusCodes from 'http-status-codes';
 
 import getDb from '../../../../../getDb';
 import { WebSocketEvents } from '../../../../../events';
-import { Poll, Summary } from '../../../../../getDb/polls';
+import { Event, Summary } from '../../../../../getDb/events';
 
-const SummaryApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
+const EventSummaryApi = (req: NextApiRequest, res: NextApiResponse<Event>) => {
   const db = getDb();
 
   const {
@@ -16,25 +16,25 @@ const SummaryApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
     return res.status(StatusCodes.NOT_FOUND).end();
   }
 
-  const poll = db
-    .get('polls')
+  const event = db
+    .get('events')
     .find({ id: id as string })
     .value();
 
-  if (!poll) {
+  if (!event) {
     return res.status(StatusCodes.NOT_FOUND).end();
   }
 
-  if (poll.summary) {
+  if (event.summary) {
     return res.status(StatusCodes.FORBIDDEN).end();
   }
 
   const summary: Summary = {
-    createdAt: new Date().toString(),
+    createdAt: new Date().toISOString(),
     entries: [],
   };
 
-  db.get('polls')
+  db.get('events')
     .find({ id: id as string })
     .assign({
       summary,
@@ -43,9 +43,9 @@ const SummaryApi = (req: NextApiRequest, res: NextApiResponse<Poll>) => {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  req.io.emit(WebSocketEvents.REFRESH_POLLS);
+  req.io.emit(WebSocketEvents.REFRESH_EVENTS);
 
-  return res.status(StatusCodes.OK).send(poll);
+  return res.status(StatusCodes.OK).send(event);
 };
 
-export default SummaryApi;
+export default EventSummaryApi;

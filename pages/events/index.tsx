@@ -20,8 +20,8 @@ import { isUserAdmin } from '../../auth';
 import Page from '../../components/Page';
 import { Event } from '../../getDb/events';
 import { URL as EVENT_DASHBOARD_URL } from './[id]/dashboard';
-// import { URL as POLL_SUMMARY_URL } from './polls/[id]/summary';
-// import { URL as POLL_SUMMARY_ENTRY_URL } from './polls/[id]/summary/entry';
+import { URL as EVENT_SUMMARY_URL } from './[id]/summary';
+import { URL as EVENT_SUMMARY_ENTRY_URL } from './[id]/summary/entry';
 import { URL as EVENT_VOTE_URL } from './[id]/vote';
 import { URL as CREATE_EVENT_URL } from './create';
 import { URL as PREPARE_EVENT_URL } from './[id]/prepare';
@@ -64,6 +64,8 @@ const EventsPage: NextPage = () => {
               // @ts-ignore
               return new Date(b.term) - new Date(a.term);
             }
+
+            return -1;
           })
           .map((event) => (
             <Grid item key={event.id} xs={12}>
@@ -115,7 +117,7 @@ const EventsPage: NextPage = () => {
                       <Button
                         color="primary"
                         onClick={() => {
-                          // router.push(POLL_SUMMARY_ENTRY_URL(poll.id));
+                          router.push(EVENT_SUMMARY_ENTRY_URL(event.id));
                         }}
                       >
                         Summarize
@@ -127,7 +129,7 @@ const EventsPage: NextPage = () => {
                       <Button
                         color="primary"
                         onClick={() => {
-                          // router.push(POLL_SUMMARY_URL(poll.id));
+                          router.push(EVENT_SUMMARY_URL(event.id));
                         }}
                       >
                         Summary
@@ -139,7 +141,7 @@ const EventsPage: NextPage = () => {
                       <Button
                         color="primary"
                         onClick={() => {
-                          // axios.post(`/api/polls/${poll.id}/summary`);
+                          axios.post(`/api/events/${event.id}/summary`);
                         }}
                       >
                         Create summary
