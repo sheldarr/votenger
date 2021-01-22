@@ -139,60 +139,66 @@ const PrepareEventPage: React.FunctionComponent = () => {
             value={undefined}
           />
         </Grid>
-        {event?.preparation.possibleTerms.map((possibleTerm) => (
-          <Grid container item key={possibleTerm.date} spacing={1} xs={12}>
-            <Grid item>
-              <FormControlLabel
-                control={
-                  <CustomCheckbox
-                    checked={possibleTerm.usernames.some(
-                      (username) => username === user?.username,
-                    )}
-                    color="primary"
-                    disabled={!!event?.preparation.selectedTerm}
-                    name={possibleTerm.date}
-                    onChange={() => {
-                      switchTerm(possibleTerm.date);
-                    }}
-                    selected={
-                      event?.preparation.selectedTerm === possibleTerm.date
-                    }
-                  />
-                }
-                label={format(new Date(possibleTerm.date), 'dd.MM.yyyy')}
-              />
-              {isUserAdmin(user?.username) && (
-                <Button
-                  color="primary"
-                  disabled={
-                    event?.preparation.selectedTerm &&
-                    possibleTerm.date !== event?.preparation.selectedTerm
+        {event?.preparation.possibleTerms
+          .sort((a, b) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            return new Date(a.date) - new Date(b.date);
+          })
+          .map((possibleTerm) => (
+            <Grid container item key={possibleTerm.date} spacing={1} xs={12}>
+              <Grid item>
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      checked={possibleTerm.usernames.some(
+                        (username) => username === user?.username,
+                      )}
+                      color="primary"
+                      disabled={!!event?.preparation.selectedTerm}
+                      name={possibleTerm.date}
+                      onChange={() => {
+                        switchTerm(possibleTerm.date);
+                      }}
+                      selected={
+                        event?.preparation.selectedTerm === possibleTerm.date
+                      }
+                    />
                   }
-                  onClick={() => {
-                    switchSelectedTerm(possibleTerm.date);
-                  }}
-                >
-                  {event?.preparation.selectedTerm === possibleTerm.date
-                    ? 'Unselect'
-                    : 'Select'}
-                </Button>
-              )}
-            </Grid>
-            {possibleTerm.usernames
-              .sort((a, b) => a.localeCompare(b))
-              .map((username) => (
-                <Grid item key={username}>
-                  <Chip
+                  label={format(new Date(possibleTerm.date), 'dd.MM.yyyy')}
+                />
+                {isUserAdmin(user?.username) && (
+                  <Button
                     color="primary"
-                    label={username}
-                    variant={
-                      username === user?.username ? 'default' : 'outlined'
+                    disabled={
+                      event?.preparation.selectedTerm &&
+                      possibleTerm.date !== event?.preparation.selectedTerm
                     }
-                  />
-                </Grid>
-              ))}
-          </Grid>
-        ))}
+                    onClick={() => {
+                      switchSelectedTerm(possibleTerm.date);
+                    }}
+                  >
+                    {event?.preparation.selectedTerm === possibleTerm.date
+                      ? 'Unselect'
+                      : 'Select'}
+                  </Button>
+                )}
+              </Grid>
+              {possibleTerm.usernames
+                .sort((a, b) => a.localeCompare(b))
+                .map((username) => (
+                  <Grid item key={username}>
+                    <Chip
+                      color="primary"
+                      label={username}
+                      variant={
+                        username === user?.username ? 'default' : 'outlined'
+                      }
+                    />
+                  </Grid>
+                ))}
+            </Grid>
+          ))}
         <Grid container item spacing={1} xs={12}>
           <Typography gutterBottom variant="h4">
             Type
