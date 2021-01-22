@@ -34,7 +34,9 @@ const EventVotePage: React.FunctionComponent = () => {
   const { data: allGames } = useGames();
 
   const games =
-    allGames?.filter((game) => game.forEventType === event?.type) || [];
+    allGames?.filter(
+      (game) => game.state === 'AVAILABLE' && game.forEventType === event?.type,
+    ) || [];
 
   const [votedFor, setVotedFor] = useState<string[]>([]);
 
