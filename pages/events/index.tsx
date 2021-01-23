@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NextPage } from 'next';
-import React from 'react';
+import React, { useState } from 'react';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
@@ -11,6 +11,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { format } from 'date-fns';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { useRouter } from 'next/router';
 
@@ -38,6 +43,12 @@ const EventsPage: NextPage = () => {
   const router = useRouter();
   const { data: events } = useEvents();
   const [user] = useUser();
+
+  const [
+    isRemoveEventConfirmationModalOpen,
+    setIsRemoveEventConfirmationModalOpen,
+  ] = useState(false);
+  const [eventToRemove, setEventToRemove] = useState<Event | undefined>();
 
   const userAlreadyVoted = (event: Event) => {
     return event.votes.some((vote) => {
@@ -154,7 +165,8 @@ const EventsPage: NextPage = () => {
                       <Button
                         color="secondary"
                         onClick={() => {
-                          axios.delete(`/api/events/${event.id}`);
+                          setEventToRemove(event);
+                          setIsRemoveEventConfirmationModalOpen(true);
                         }}
                       >
                         Remove
@@ -168,6 +180,42 @@ const EventsPage: NextPage = () => {
 
         <Grid item></Grid>
       </Grid>
+      <Dialog
+        onClose={() => {
+          setEventToRemove(undefined);
+          setIsRemoveEventConfirmationModalOpen(false);
+        }}
+        open={isRemoveEventConfirmationModalOpen}
+      >
+        <DialogTitle>Remove event</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Do you really want to remove event {eventToRemove?.name}?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            color="primary"
+            onClick={() => {
+              setEventToRemove(undefined);
+              setIsRemoveEventConfirmationModalOpen(false);
+            }}
+          >
+            No
+          </Button>
+          <Button
+            color="secondary"
+            onClick={() => {
+              axios.delete(`/api/events/${eventToRemove?.id}`);
+
+              setEventToRemove(undefined);
+              setIsRemoveEventConfirmationModalOpen(false);
+            }}
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
       {isUserAdmin(user?.username) && (
         <AddEventFab
           color="primary"
