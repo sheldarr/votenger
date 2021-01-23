@@ -110,69 +110,78 @@ const EventSummaryEntryPage: React.FunctionComponent = () => {
 
   return (
     <Page title={`Summarize ${event?.name}`}>
-      <Typography gutterBottom align="center" variant="h2">
-        {event?.name}
-      </Typography>
-      <Grid container spacing={1}>
-        {gamesDecisions &&
-          playedGames.map((game) => (
-            <Grid item key={game.name} lg={4} md={6} xs={12}>
-              <GameCard
-                toRemove={findGameDecision(game.name)?.decision === 'REMOVE'}
-                variant="outlined"
-              >
-                <CardContent>
-                  <Typography gutterBottom component="h2" variant="h6">
-                    {game.name}
-                  </Typography>
-                  <Typography color="textSecondary">{game.type}</Typography>
-                </CardContent>
-                <CardActions>
-                  {findGameDecision(game.name).decision === 'KEEP' ? (
-                    <Button
-                      color="secondary"
-                      onClick={() => {
-                        changeDecision(game.name, 'REMOVE');
-                      }}
-                    >
-                      Remove
-                    </Button>
-                  ) : (
-                    <Button
-                      color="primary"
-                      onClick={() => {
-                        changeDecision(game.name, 'KEEP');
-                      }}
-                    >
-                      Keep
-                    </Button>
-                  )}
-                </CardActions>
-              </GameCard>
-            </Grid>
-          ))}
-      </Grid>
-      <Grid container spacing={1}>
+      <Grid container direction="column" spacing={3}>
         <Grid item>
-          <Typography gutterBottom component="h2" variant="h4">
-            New propositions
+          <Typography gutterBottom align="center" variant="h2">
+            {event?.name}
           </Typography>
         </Grid>
-        <Grid container item spacing={1}>
-          {gamesPropositions.map((proposition, index) => (
-            <TextField
-              fullWidth
-              id={`proposition-${index}`}
-              inputProps={{ maxLength: 48 }}
-              key={index}
-              label={`Proposition ${index + 1}`}
-              margin="normal"
-              onChange={(event) =>
-                handlePropositionChange(event.target.value, index)
-              }
-              value={proposition}
-            />
-          ))}
+        <Grid item>
+          <Grid container spacing={1}>
+            {gamesDecisions &&
+              playedGames.map((game) => (
+                <Grid item key={game.name} lg={4} md={6} xs={12}>
+                  <GameCard
+                    toRemove={
+                      findGameDecision(game.name)?.decision === 'REMOVE'
+                    }
+                    variant="outlined"
+                  >
+                    <CardContent>
+                      <Typography gutterBottom component="h2" variant="h6">
+                        {game.name}
+                      </Typography>
+                      <Typography color="textSecondary">{game.type}</Typography>
+                    </CardContent>
+                    <CardActions>
+                      {findGameDecision(game.name).decision === 'KEEP' ? (
+                        <Button
+                          color="secondary"
+                          onClick={() => {
+                            changeDecision(game.name, 'REMOVE');
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      ) : (
+                        <Button
+                          color="primary"
+                          onClick={() => {
+                            changeDecision(game.name, 'KEEP');
+                          }}
+                        >
+                          Keep
+                        </Button>
+                      )}
+                    </CardActions>
+                  </GameCard>
+                </Grid>
+              ))}
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container direction="column" spacing={1}>
+            <Grid item>
+              <Typography gutterBottom variant="h4">
+                New propositions
+              </Typography>
+            </Grid>
+            {gamesPropositions.map((proposition, index) => (
+              <Grid item key={index}>
+                <TextField
+                  fullWidth
+                  id={`proposition-${index}`}
+                  inputProps={{ maxLength: 48 }}
+                  label={`Proposition ${index + 1}`}
+                  margin="dense"
+                  onChange={(event) =>
+                    handlePropositionChange(event.target.value, index)
+                  }
+                  value={proposition}
+                />
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
       </Grid>
       <SummarizeFab
