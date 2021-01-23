@@ -56,44 +56,50 @@ const EventVotePage: React.FunctionComponent = () => {
 
   return (
     <Page title={`Vote for ${event?.name}`}>
-      <Typography gutterBottom align="center" variant="h2">
-        {event?.name}
-      </Typography>
-      <Grid container spacing={1}>
-        {games?.map((game) => (
-          <Grid item key={game.name} lg={4} md={6} xs={12}>
-            <Card variant="outlined">
-              <CardContent>
-                <Typography gutterBottom component="h2" variant="h6">
-                  {game.name}
-                </Typography>
-                <Typography color="textSecondary">{game.type}</Typography>
-              </CardContent>
-              <CardActions>
-                {votedFor.includes(game.name) ? (
-                  <Button
-                    color="secondary"
-                    onClick={() => {
-                      removeVote(game.name);
-                    }}
-                  >
-                    Unvote
-                  </Button>
-                ) : (
-                  <Button
-                    color="primary"
-                    disabled={votesLeft === 0}
-                    onClick={() => {
-                      addVote(game.name);
-                    }}
-                  >
-                    Vote
-                  </Button>
-                )}
-              </CardActions>
-            </Card>
+      <Grid container direction="column" spacing={3}>
+        <Grid item>
+          <Typography gutterBottom align="center" variant="h2">
+            {event?.name}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Grid container spacing={1}>
+            {games?.map((game) => (
+              <Grid item key={game.name} lg={4} md={6} xs={12}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography gutterBottom component="h2" variant="h6">
+                      {game.name}
+                    </Typography>
+                    <Typography color="textSecondary">{game.type}</Typography>
+                  </CardContent>
+                  <CardActions>
+                    {votedFor.includes(game.name) ? (
+                      <Button
+                        color="secondary"
+                        onClick={() => {
+                          removeVote(game.name);
+                        }}
+                      >
+                        Unvote
+                      </Button>
+                    ) : (
+                      <Button
+                        color="primary"
+                        disabled={votesLeft === 0}
+                        onClick={() => {
+                          addVote(game.name);
+                        }}
+                      >
+                        Vote
+                      </Button>
+                    )}
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        ))}
+        </Grid>
       </Grid>
       <VoteFab
         color="primary"
