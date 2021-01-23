@@ -86,120 +86,135 @@ const EventSummaryPage: React.FunctionComponent = () => {
 
   return (
     <Page title={`${event?.name} summary`}>
-      <Typography gutterBottom align="center" variant="h4">
-        {event?.name} summary {event?.appliedAt && '(applied)'}
-      </Typography>
-      <Grid container spacing={1}>
-        <Grid container item justify="space-between" spacing={1} xs={12}>
-          <Grid item>
-            <Grid container spacing={1}>
-              {players
-                ?.sort((a, b) => a.localeCompare(b))
-                .map((player) => (
-                  <Grid item key={player}>
-                    <Chip
-                      color="primary"
-                      label={player}
-                      variant={
-                        player === user?.username ? 'default' : 'outlined'
-                      }
-                    />
-                  </Grid>
-                ))}
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Grid container spacing={1}>
-              <Grid item>
-                <Chip
-                  color="primary"
-                  icon={<GroupIcon />}
-                  label={`${event?.summary.entries.length}/${event?.votes.length}`}
-                />
+      <Grid container direction="column" spacing={3}>
+        <Grid item>
+          <Typography gutterBottom align="center" variant="h4">
+            {event?.name} summary {event?.appliedAt && '(applied)'}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Grid container item justify="space-between" spacing={1}>
+            <Grid item>
+              <Grid container spacing={1}>
+                {players
+                  ?.sort((a, b) => a.localeCompare(b))
+                  .map((player) => (
+                    <Grid item key={player}>
+                      <Chip
+                        color="primary"
+                        label={player}
+                        variant={
+                          player === user?.username ? 'default' : 'outlined'
+                        }
+                      />
+                    </Grid>
+                  ))}
               </Grid>
-              <Grid item>
-                <Chip
-                  color="primary"
-                  icon={<GamesIcon />}
-                  label={Object.keys(games).length}
-                />
+            </Grid>
+            <Grid item>
+              <Grid container spacing={1}>
+                <Grid item>
+                  <Chip
+                    color="primary"
+                    icon={<GroupIcon />}
+                    label={`${event?.summary.entries.length}/${event?.votes.length}`}
+                  />
+                </Grid>
+                <Grid item>
+                  <Chip
+                    color="primary"
+                    icon={<GamesIcon />}
+                    label={Object.keys(games).length}
+                  />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
-          <Typography gutterBottom component="h2" variant="h4">
-            Vox Populi
-          </Typography>
-        </Grid>
-        <Grid container spacing={1}>
-          {event &&
-            Object.entries(games)
-              .sort(([nameA], [nameB]) => nameA.localeCompare(nameB))
-              .map(([name, [inFavour, against]]) => (
-                <Grid item key={name} lg={4} md={6} xs={12}>
-                  <GameCard forRemoval={against >= inFavour} variant="outlined">
-                    <CardContent>
-                      <Typography gutterBottom component="h2" variant="h6">
-                        {name}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Score>
-                        {[...Array(inFavour).keys()].map((index) => (
-                          <AddCircleOutlineIcon
-                            key={index}
-                            style={{ color: green[500] }}
-                          />
-                        ))}
-                        {[...Array(against).keys()].map((index) => (
-                          <RemoveCircleOutlineIcon
-                            color="secondary"
-                            key={index}
-                          />
-                        ))}
-                      </Score>
-                    </CardActions>
-                  </GameCard>
-                </Grid>
-              ))}
+          <Grid container spacing={1}>
+            <Grid item>
+              <Typography gutterBottom component="h2" variant="h4">
+                Vox Populi
+              </Typography>
+            </Grid>
+            <Grid container item spacing={1}>
+              {event &&
+                Object.entries(games)
+                  .sort(([nameA], [nameB]) => nameA.localeCompare(nameB))
+                  .map(([name, [inFavour, against]]) => (
+                    <Grid item key={name} lg={4} md={6} xs={12}>
+                      <GameCard
+                        forRemoval={against >= inFavour}
+                        variant="outlined"
+                      >
+                        <CardContent>
+                          <Typography gutterBottom component="h2" variant="h6">
+                            {name}
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Score>
+                            {[...Array(inFavour).keys()].map((index) => (
+                              <AddCircleOutlineIcon
+                                key={index}
+                                style={{ color: green[500] }}
+                              />
+                            ))}
+                            {[...Array(against).keys()].map((index) => (
+                              <RemoveCircleOutlineIcon
+                                color="secondary"
+                                key={index}
+                              />
+                            ))}
+                          </Score>
+                        </CardActions>
+                      </GameCard>
+                    </Grid>
+                  ))}
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item>
-          <Typography gutterBottom component="h2" variant="h4">
-            New propositions
-          </Typography>
+          <Grid container spacing={1}>
+            <Grid item>
+              <Typography gutterBottom component="h2" variant="h4">
+                New propositions
+              </Typography>
+            </Grid>
+            <Grid container item spacing={1}>
+              {event &&
+                event.summary.entries
+                  .flatMap((entry) => entry.proposedGames)
+                  .sort((gameA, gameB) => gameA.localeCompare(gameB))
+                  .map((game) => (
+                    <Grid item key={game} lg={4} md={6} xs={12}>
+                      <Card variant="outlined">
+                        <CardContent>
+                          <Typography component="h2" variant="h6">
+                            {game}
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid container item spacing={1}>
-          {event &&
-            event.summary.entries
-              .flatMap((entry) => entry.proposedGames)
-              .sort((gameA, gameB) => gameA.localeCompare(gameB))
-              .map((game) => (
-                <Grid item key={game} lg={4} md={6} xs={12}>
-                  <Card variant="outlined">
-                    <CardContent>
-                      <Typography component="h2" variant="h6">
-                        {game}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-        </Grid>
-        {!event?.appliedAt && isUserAdmin(user?.username) && (
-          <VoteFab
-            color="primary"
-            disabled={event?.summary.entries.length < event?.votes.length}
-            onClick={async () => {
-              await axios.post(`/api/events/${router.query.id}/summary/apply`);
-
-              router.replace(EVENTS_URL);
-            }}
-          >
-            <CheckIcon />
-          </VoteFab>
-        )}
       </Grid>
+      {!event?.appliedAt && isUserAdmin(user?.username) && (
+        <VoteFab
+          color="primary"
+          disabled={event?.summary.entries.length < event?.votes.length}
+          onClick={async () => {
+            await axios.post(`/api/events/${router.query.id}/summary/apply`);
+
+            router.replace(EVENTS_URL);
+          }}
+        >
+          <CheckIcon />
+        </VoteFab>
+      )}
     </Page>
   );
 };
