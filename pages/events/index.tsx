@@ -53,104 +53,110 @@ const EventsPage: NextPage = () => {
 
   return (
     <Page title="Events">
-      <Typography gutterBottom align="center" variant="h4">
-        Events
-      </Typography>
-      <Grid container spacing={1}>
-        {events
-          ?.sort((a, b) => {
-            if (a.term && b.term) {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              return new Date(b.term) - new Date(a.term);
-            }
+      <Grid container direction="column" spacing={3}>
+        <Grid item>
+          <Typography gutterBottom align="center" variant="h4">
+            Events
+          </Typography>
+        </Grid>
+        <Grid container item direction="column" spacing={1}>
+          {events
+            ?.sort((a, b) => {
+              if (a.term && b.term) {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                return new Date(b.term) - new Date(a.term);
+              }
 
-            return -1;
-          })
-          .map((event) => (
-            <Grid item key={event.id} xs={12}>
-              <Card variant="outlined">
-                <CardContent>
-                  <Typography gutterBottom component="h2" variant="h6">
-                    {event.name}
-                    {event.type && ` ${event.type}`}
-                    {event.term &&
-                      ` (${format(new Date(event.term), 'dd.MM.yyyy')})`}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  {!event.preparation.appliedAt && (
-                    <Button
-                      color="primary"
-                      onClick={() => {
-                        router.push(PREPARE_EVENT_URL(event.id));
-                      }}
-                    >
-                      Prepare
-                    </Button>
-                  )}
-                  {userAlreadyVoted(event) && (
-                    <Button
-                      color="primary"
-                      onClick={() => {
-                        router.push(EVENT_DASHBOARD_URL(event.id));
-                      }}
-                    >
-                      Dashboard
-                    </Button>
-                  )}
-                  {event.preparation.appliedAt &&
-                    !event.summary &&
-                    !userAlreadyVoted(event) && (
+              return -1;
+            })
+            .map((event) => (
+              <Grid item key={event.id}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography gutterBottom component="h2" variant="h6">
+                      {event.name}
+                      {event.type && ` ${event.type}`}
+                      {event.term &&
+                        ` (${format(new Date(event.term), 'dd.MM.yyyy')})`}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    {!event.preparation.appliedAt && (
                       <Button
                         color="primary"
                         onClick={() => {
-                          router.push(EVENT_VOTE_URL(event.id));
+                          router.push(PREPARE_EVENT_URL(event.id));
                         }}
                       >
-                        Vote
+                        Prepare
                       </Button>
                     )}
-                  {event.summary &&
-                    userAlreadyVoted(event) &&
-                    !userAlreadyCreatedSummaryEntry(event) && (
+                    {userAlreadyVoted(event) && (
                       <Button
                         color="primary"
                         onClick={() => {
-                          router.push(EVENT_SUMMARY_ENTRY_URL(event.id));
+                          router.push(EVENT_DASHBOARD_URL(event.id));
                         }}
                       >
-                        Summarize
+                        Dashboard
                       </Button>
                     )}
-                  {event.summary &&
-                    userAlreadyVoted(event) &&
-                    userAlreadyCreatedSummaryEntry(event) && (
-                      <Button
-                        color="primary"
-                        onClick={() => {
-                          router.push(EVENT_SUMMARY_URL(event.id));
-                        }}
-                      >
-                        Summary
-                      </Button>
-                    )}
-                  {!event.summary &&
-                    !!event.votes.length &&
-                    isUserAdmin(user?.username) && (
-                      <Button
-                        color="primary"
-                        onClick={() => {
-                          axios.post(`/api/events/${event.id}/summary`);
-                        }}
-                      >
-                        Create summary
-                      </Button>
-                    )}
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
+                    {event.preparation.appliedAt &&
+                      !event.summary &&
+                      !userAlreadyVoted(event) && (
+                        <Button
+                          color="primary"
+                          onClick={() => {
+                            router.push(EVENT_VOTE_URL(event.id));
+                          }}
+                        >
+                          Vote
+                        </Button>
+                      )}
+                    {event.summary &&
+                      userAlreadyVoted(event) &&
+                      !userAlreadyCreatedSummaryEntry(event) && (
+                        <Button
+                          color="primary"
+                          onClick={() => {
+                            router.push(EVENT_SUMMARY_ENTRY_URL(event.id));
+                          }}
+                        >
+                          Summarize
+                        </Button>
+                      )}
+                    {event.summary &&
+                      userAlreadyVoted(event) &&
+                      userAlreadyCreatedSummaryEntry(event) && (
+                        <Button
+                          color="primary"
+                          onClick={() => {
+                            router.push(EVENT_SUMMARY_URL(event.id));
+                          }}
+                        >
+                          Summary
+                        </Button>
+                      )}
+                    {!event.summary &&
+                      !!event.votes.length &&
+                      isUserAdmin(user?.username) && (
+                        <Button
+                          color="primary"
+                          onClick={() => {
+                            axios.post(`/api/events/${event.id}/summary`);
+                          }}
+                        >
+                          Create summary
+                        </Button>
+                      )}
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+        </Grid>
+
+        <Grid item></Grid>
       </Grid>
       {isUserAdmin(user?.username) && (
         <AddEventFab
