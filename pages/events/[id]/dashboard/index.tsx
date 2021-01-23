@@ -151,113 +151,123 @@ const EventDashboardPage: React.FunctionComponent = () => {
 
   return (
     <Page title={event?.name}>
-      <Typography gutterBottom align="center" variant="h4">
-        {event?.name} {event?.summary && '(closed)'}
-      </Typography>
-      <Grid container spacing={1}>
-        <Grid container item justify="space-between" spacing={1} xs={12}>
-          <Grid item>
-            <Grid container spacing={1}>
-              {players
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map((player) => (
-                  <Grid item key={player.name}>
-                    <Chip
-                      color="primary"
-                      icon={RandomTeamStateIcon[player.randomTeamState]}
-                      label={player.name}
-                      onClick={() => switchUserRandomTeamState(player)}
-                      variant={
-                        player.name === user?.username ? 'default' : 'outlined'
-                      }
-                    />
-                  </Grid>
-                ))}
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Grid container spacing={1}>
-              <Grid item>
-                <Chip
-                  color="primary"
-                  icon={<GroupIcon />}
-                  label={event?.votes.length}
-                />
+      <Grid container direction="column" spacing={3}>
+        <Grid item>
+          <Typography gutterBottom align="center" variant="h4">
+            {event?.name} {event?.summary && '(closed)'}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Grid container item justify="space-between" spacing={1}>
+            <Grid item>
+              <Grid container spacing={1}>
+                {players
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((player) => (
+                    <Grid item key={player.name}>
+                      <Chip
+                        color="primary"
+                        icon={RandomTeamStateIcon[player.randomTeamState]}
+                        label={player.name}
+                        onClick={() => switchUserRandomTeamState(player)}
+                        variant={
+                          player.name === user?.username
+                            ? 'default'
+                            : 'outlined'
+                        }
+                      />
+                    </Grid>
+                  ))}
               </Grid>
-              <Grid item>
-                <Chip
-                  color="primary"
-                  icon={<GamesIcon />}
-                  label={Object.keys(games).length}
-                />
+            </Grid>
+            <Grid item>
+              <Grid container spacing={1}>
+                <Grid item>
+                  <Chip
+                    color="primary"
+                    icon={<GroupIcon />}
+                    label={event?.votes.length}
+                  />
+                </Grid>
+                <Grid item>
+                  <Chip
+                    color="primary"
+                    icon={<GamesIcon />}
+                    label={Object.keys(games).length}
+                  />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-        <FlipMove typeName={null}>
-          {event &&
-            userAlreadyVoted(event) &&
-            Object.entries(games)
-              .sort(([, votersA], [, votersB]) => {
-                return votersB.length - votersA.length;
-              })
-              .map(([name, voters]) => (
-                <Grid item key={name} xs={12}>
-                  <GameCard
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    played={
-                      event.alreadyPlayedGames.includes(name)
-                        ? 'played'
-                        : undefined
-                    }
-                    variant="outlined"
-                  >
-                    <CardContent>
-                      <Grid container spacing={1}>
-                        <Grid item>
-                          <Typography component="h2" variant="h6">
-                            {voters.length}pt{voters.length !== 1 && 's'} -{' '}
-                            {name}
-                          </Typography>
-                        </Grid>
-                        {voters
-                          .sort((a, b) => a.localeCompare(b))
-                          .map((voter) => (
-                            <Grid item key={voter}>
-                              <Chip
-                                color="primary"
-                                label={voter}
-                                variant={
-                                  voter === user?.username
-                                    ? 'default'
-                                    : 'outlined'
-                                }
-                              />
+        <Grid item>
+          <Grid container spacing={1}>
+            <FlipMove typeName={null}>
+              {event &&
+                userAlreadyVoted(event) &&
+                Object.entries(games)
+                  .sort(([, votersA], [, votersB]) => {
+                    return votersB.length - votersA.length;
+                  })
+                  .map(([name, voters]) => (
+                    <Grid item key={name} xs={12}>
+                      <GameCard
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        played={
+                          event.alreadyPlayedGames.includes(name)
+                            ? 'played'
+                            : undefined
+                        }
+                        variant="outlined"
+                      >
+                        <CardContent>
+                          <Grid container spacing={1}>
+                            <Grid item>
+                              <Typography component="h2" variant="h6">
+                                {voters.length}pt{voters.length !== 1 && 's'} -{' '}
+                                {name}
+                              </Typography>
                             </Grid>
-                          ))}
-                      </Grid>
-                    </CardContent>
-                    {isUserAdmin(user?.username) && !event?.summary && (
-                      <CardActions>
-                        <Button
-                          color="primary"
-                          onClick={() => {
-                            axios.post(`/api/events/${event.id}/played`, {
-                              name,
-                            });
-                          }}
-                        >
-                          {event?.alreadyPlayedGames.includes(name)
-                            ? 'Unplay'
-                            : 'Played'}
-                        </Button>
-                      </CardActions>
-                    )}
-                  </GameCard>
-                </Grid>
-              ))}
-        </FlipMove>
+                            {voters
+                              .sort((a, b) => a.localeCompare(b))
+                              .map((voter) => (
+                                <Grid item key={voter}>
+                                  <Chip
+                                    color="primary"
+                                    label={voter}
+                                    variant={
+                                      voter === user?.username
+                                        ? 'default'
+                                        : 'outlined'
+                                    }
+                                  />
+                                </Grid>
+                              ))}
+                          </Grid>
+                        </CardContent>
+                        {isUserAdmin(user?.username) && !event?.summary && (
+                          <CardActions>
+                            <Button
+                              color="primary"
+                              onClick={() => {
+                                axios.post(`/api/events/${event.id}/played`, {
+                                  name,
+                                });
+                              }}
+                            >
+                              {event?.alreadyPlayedGames.includes(name)
+                                ? 'Unplay'
+                                : 'Played'}
+                            </Button>
+                          </CardActions>
+                        )}
+                      </GameCard>
+                    </Grid>
+                  ))}
+            </FlipMove>
+          </Grid>
+        </Grid>
       </Grid>
       {isUserAdmin(user?.username) && (
         <RandomGameFab
