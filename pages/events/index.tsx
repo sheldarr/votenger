@@ -150,6 +150,16 @@ const EventsPage: NextPage = () => {
                           Create summary
                         </Button>
                       )}
+                    {isUserAdmin(user?.username) && (
+                      <Button
+                        color="secondary"
+                        onClick={() => {
+                          axios.delete(`/api/events/${event.id}`);
+                        }}
+                      >
+                        Remove
+                      </Button>
+                    )}
                   </CardActions>
                 </Card>
               </Grid>
