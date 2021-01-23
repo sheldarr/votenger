@@ -59,7 +59,6 @@ const CreateEventPage: React.FunctionComponent = () => {
               return (
                 <form onSubmit={handleSubmit}>
                   <Grid container direction="column" spacing={3}>
-                    <Grid item></Grid>
                     <Grid item>
                       <TextField
                         fullWidth
