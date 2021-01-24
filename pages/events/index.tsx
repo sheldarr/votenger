@@ -101,16 +101,14 @@ const EventsPage: NextPage = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    {!event.preparation.appliedAt && (
-                      <Button
-                        color="primary"
-                        onClick={() => {
-                          router.push(PREPARE_EVENT_URL(event.id));
-                        }}
-                      >
-                        Prepare
-                      </Button>
-                    )}
+                    <Button
+                      color="primary"
+                      onClick={() => {
+                        router.push(PREPARE_EVENT_URL(event.id));
+                      }}
+                    >
+                      Prepare
+                    </Button>
                     {userAlreadyVoted(event) && (
                       <Button
                         color="primary"
