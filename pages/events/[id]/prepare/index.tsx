@@ -294,7 +294,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
             ))}
         </Grid>
       </Grid>
-      {isUserAdmin(user?.username) && (
+      {isUserAdmin(user?.username) && !event?.preparation?.appliedAt && (
         <ApplyFab
           color="primary"
           disabled={
