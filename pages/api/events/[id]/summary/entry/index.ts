@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import StatusCodes from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 import update from 'immutability-helper';
 
 import getDb from '../../../../../../getDb';

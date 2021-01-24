@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import StatusCodes from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
 
 import getDb from '../../../../../../getDb';
