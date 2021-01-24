@@ -16,6 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import GamesIcon from '@material-ui/icons/Games';
 
 import { useRouter } from 'next/router';
 
@@ -24,6 +25,7 @@ import useUser from '../../hooks/useUser';
 import { isUserAdmin } from '../../auth';
 import Page from '../../components/Page';
 import { Event } from '../../getDb/events';
+import { URL as GAMES_URL } from '../games';
 import { URL as EVENT_DASHBOARD_URL } from './[id]/dashboard';
 import { URL as EVENT_SUMMARY_URL } from './[id]/summary';
 import { URL as EVENT_SUMMARY_ENTRY_URL } from './[id]/summary/entry';
@@ -37,6 +39,12 @@ const AddEventFab = styled(Fab)`
   position: fixed !important;
   bottom: 2rem;
   right: 2rem;
+`;
+
+const GamesFab = styled(Fab)`
+  position: fixed !important;
+  bottom: 2rem;
+  right: 6rem;
 `;
 
 const EventsPage: NextPage = () => {
@@ -225,6 +233,16 @@ const EventsPage: NextPage = () => {
         >
           <AddIcon />
         </AddEventFab>
+      )}
+      {isUserAdmin(user?.username) && (
+        <GamesFab
+          color="primary"
+          onClick={() => {
+            router.push(GAMES_URL);
+          }}
+        >
+          <GamesIcon />
+        </GamesFab>
       )}
     </Page>
   );
