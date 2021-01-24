@@ -16,7 +16,13 @@ const getDb = () => {
   const db = low(adapter);
 
   db.defaults({
-    eventTypes: ['Board Game Party', 'Couch Party', 'LAN Party', 'RPG'],
+    eventTypes: [
+      'Board Game Party',
+      'Couch Party',
+      'LAN Party',
+      'Night Trip',
+      'RPG',
+    ],
     events: [],
     games: [
       ...LAN_PARTY_GAMES.map((game) => ({
