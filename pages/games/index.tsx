@@ -68,6 +68,27 @@ const GamesPage: React.FunctionComponent = () => {
                         <Typography gutterBottom component="h2" variant="h6">
                           {game.name}
                         </Typography>
+                        <Typography
+                          color="textSecondary"
+                          component="p"
+                          variant="body2"
+                        >
+                          {game.forEventType}
+                        </Typography>
+                        <Typography
+                          color="textSecondary"
+                          component="p"
+                          variant="body2"
+                        >
+                          {game.type}
+                        </Typography>
+                        <Typography
+                          color="textSecondary"
+                          component="p"
+                          variant="body2"
+                        >
+                          {game.state}
+                        </Typography>
                       </CardContent>
                       <CardActions>
                         <Button
