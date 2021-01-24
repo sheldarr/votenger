@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
+import { WebSocketEvents } from '../../../events';
 
 import getDb from '../../../getDb';
 import { Event } from '../../../getDb/events';
@@ -38,6 +39,10 @@ export default (
     };
 
     db.get('events').push(event).write();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    req.io.emit(WebSocketEvents.REFRESH_EVENTS);
 
     return res.status(StatusCodes.OK).send(event);
   }

@@ -26,11 +26,11 @@ import { isUserAdmin } from '../../auth';
 import Page from '../../components/Page';
 import { Event } from '../../getDb/events';
 import { URL as GAMES_URL } from '../games';
+import CreateEventModal from '../../components/CreateEventModal';
 import { URL as EVENT_DASHBOARD_URL } from './[id]/dashboard';
 import { URL as EVENT_SUMMARY_URL } from './[id]/summary';
 import { URL as EVENT_SUMMARY_ENTRY_URL } from './[id]/summary/entry';
 import { URL as EVENT_VOTE_URL } from './[id]/vote';
-import { URL as CREATE_EVENT_URL } from './create';
 import { URL as PREPARE_EVENT_URL } from './[id]/prepare';
 
 export const URL = '/events';
@@ -52,6 +52,7 @@ const EventsPage: NextPage = () => {
   const { data: events } = useEvents();
   const [user] = useUser();
 
+  const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
   const [
     isRemoveEventConfirmationModalOpen,
     setIsRemoveEventConfirmationModalOpen,
@@ -226,7 +227,7 @@ const EventsPage: NextPage = () => {
         <AddEventFab
           color="primary"
           onClick={() => {
-            router.push(CREATE_EVENT_URL);
+            setIsCreateEventModalOpen(true);
           }}
         >
           <AddIcon />
@@ -242,6 +243,12 @@ const EventsPage: NextPage = () => {
           <GamesIcon />
         </GamesFab>
       )}
+      <CreateEventModal
+        onClose={() => {
+          setIsCreateEventModalOpen(false);
+        }}
+        open={isCreateEventModalOpen}
+      />
     </Page>
   );
 };
