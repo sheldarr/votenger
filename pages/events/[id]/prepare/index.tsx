@@ -164,7 +164,13 @@ const PrepareEventPage: React.FunctionComponent = () => {
                 return new Date(a.date) - new Date(b.date);
               })
               .map((possibleTerm) => (
-                <Grid container item key={possibleTerm.date} spacing={1}>
+                <Grid
+                  container
+                  item
+                  alignItems="center"
+                  key={possibleTerm.date}
+                  spacing={1}
+                >
                   <Grid item>
                     <FormControlLabel
                       control={
@@ -189,9 +195,9 @@ const PrepareEventPage: React.FunctionComponent = () => {
                       label={format(new Date(possibleTerm.date), 'dd.MM.yyyy')}
                     />
                   </Grid>
-                  <Grid item>
-                    {isUserAdmin(user?.username) &&
-                      !event?.preparation.appliedAt && (
+                  {isUserAdmin(user?.username) &&
+                    !event?.preparation.appliedAt && (
+                      <Grid item>
                         <Button
                           color="primary"
                           disabled={
@@ -207,8 +213,8 @@ const PrepareEventPage: React.FunctionComponent = () => {
                             ? 'Unselect'
                             : 'Select'}
                         </Button>
-                      )}
-                  </Grid>
+                      </Grid>
+                    )}
                   {possibleTerm.usernames
                     .sort((a, b) => a.localeCompare(b))
                     .map((username) => (
@@ -233,7 +239,13 @@ const PrepareEventPage: React.FunctionComponent = () => {
           <Grid container direction="column">
             {eventTypes &&
               eventTypes.map((eventType) => (
-                <Grid container item key={eventType} spacing={1}>
+                <Grid
+                  container
+                  item
+                  alignItems="center"
+                  key={eventType}
+                  spacing={1}
+                >
                   <Grid item>
                     <FormControlLabel
                       control={
@@ -259,9 +271,9 @@ const PrepareEventPage: React.FunctionComponent = () => {
                       label={eventType}
                     />
                   </Grid>
-                  <Grid item>
-                    {isUserAdmin(user?.username) &&
-                      !event?.preparation.appliedAt && (
+                  {isUserAdmin(user?.username) &&
+                    !event?.preparation.appliedAt && (
+                      <Grid item>
                         <Button
                           color="primary"
                           disabled={
@@ -276,8 +288,8 @@ const PrepareEventPage: React.FunctionComponent = () => {
                             ? 'Unselect'
                             : 'Select'}
                         </Button>
-                      )}
-                  </Grid>
+                      </Grid>
+                    )}
                   {event?.preparation.eventTypeVotes
                     .filter((eventTypeVote) => eventTypeVote.type === eventType)
                     .sort((a, b) => a.username.localeCompare(b.username))
