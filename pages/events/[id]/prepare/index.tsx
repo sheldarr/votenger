@@ -20,7 +20,6 @@ import Page from '../../../../components/Page';
 import useUser from '../../../../hooks/useUser';
 import useEventTypes from '../../../../hooks/useEventTypes';
 import { isUserAdmin } from '../../../../auth';
-import { URL as EVENTS_URL } from '../../';
 
 export const URL = (eventId: string) => `/events/${eventId}/prepare`;
 
@@ -314,8 +313,6 @@ const PrepareEventPage: React.FunctionComponent = () => {
             await axios.post(
               `/api/events/${router.query.id}/preparation/apply`,
             );
-
-            router.replace(EVENTS_URL);
           }}
         >
           <CheckIcon />
