@@ -168,9 +168,11 @@ const PrepareEventPage: React.FunctionComponent = () => {
                     <FormControlLabel
                       control={
                         <CustomCheckbox
-                          checked={possibleTerm.usernames.some(
-                            (username) => username === user?.username,
-                          )}
+                          checked={
+                            possibleTerm.usernames.some(
+                              (username) => username === user?.username,
+                            ) || false
+                          }
                           color="primary"
                           disabled={!!event?.preparation.selectedTerm}
                           name={possibleTerm.date}
@@ -233,11 +235,13 @@ const PrepareEventPage: React.FunctionComponent = () => {
                     <FormControlLabel
                       control={
                         <CustomCheckbox
-                          checked={event?.preparation.eventTypeVotes.some(
-                            (eventTypeVote) =>
-                              eventTypeVote.username === user?.username &&
-                              eventTypeVote.type === eventType,
-                          )}
+                          checked={
+                            event?.preparation.eventTypeVotes.some(
+                              (eventTypeVote) =>
+                                eventTypeVote.username === user?.username &&
+                                eventTypeVote.type === eventType,
+                            ) || false
+                          }
                           color="primary"
                           disabled={!!event?.preparation.selectedEventType}
                           name={eventType}
