@@ -130,11 +130,9 @@ const PrepareEventPage: React.FunctionComponent = () => {
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container spacing={1}>
+          <Grid container alignItems="center" spacing={1}>
             <Grid item>
-              <Typography gutterBottom variant="h4">
-                Term
-              </Typography>
+              <Typography variant="h4">Term</Typography>
             </Grid>
             <Grid item>
               {isUserAdmin(user?.username) && (
@@ -233,9 +231,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
           </Grid>
         </Grid>
         <Grid item>
-          <Typography gutterBottom variant="h4">
-            Type
-          </Typography>
+          <Typography variant="h4">Type</Typography>
           <Grid container direction="column">
             {eventTypes &&
               eventTypes.map((eventType) => (
