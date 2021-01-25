@@ -138,12 +138,14 @@ const PrepareEventPage: React.FunctionComponent = () => {
               </Typography>
             </Grid>
             <Grid item>
-              <Button
-                color="primary"
-                onClick={() => setIsNewTermPickerOpen(true)}
-              >
-                Add term
-              </Button>
+              {isUserAdmin(user?.username) && (
+                <Button
+                  color="primary"
+                  onClick={() => setIsNewTermPickerOpen(true)}
+                >
+                  Add term
+                </Button>
+              )}
               <DatePicker
                 disablePast
                 TextFieldComponent={() => null}
@@ -189,22 +191,24 @@ const PrepareEventPage: React.FunctionComponent = () => {
                     />
                   </Grid>
                   <Grid item>
-                    {isUserAdmin(user?.username) && (
-                      <Button
-                        color="primary"
-                        disabled={
-                          event?.preparation.selectedTerm &&
-                          possibleTerm.date !== event?.preparation.selectedTerm
-                        }
-                        onClick={() => {
-                          switchSelectedTerm(possibleTerm.date);
-                        }}
-                      >
-                        {event?.preparation.selectedTerm === possibleTerm.date
-                          ? 'Unselect'
-                          : 'Select'}
-                      </Button>
-                    )}
+                    {isUserAdmin(user?.username) &&
+                      !event?.preparation.appliedAt && (
+                        <Button
+                          color="primary"
+                          disabled={
+                            event?.preparation.selectedTerm &&
+                            possibleTerm.date !==
+                              event?.preparation.selectedTerm
+                          }
+                          onClick={() => {
+                            switchSelectedTerm(possibleTerm.date);
+                          }}
+                        >
+                          {event?.preparation.selectedTerm === possibleTerm.date
+                            ? 'Unselect'
+                            : 'Select'}
+                        </Button>
+                      )}
                   </Grid>
                   {possibleTerm.usernames
                     .sort((a, b) => a.localeCompare(b))
@@ -257,22 +261,23 @@ const PrepareEventPage: React.FunctionComponent = () => {
                     />
                   </Grid>
                   <Grid item>
-                    {isUserAdmin(user?.username) && (
-                      <Button
-                        color="primary"
-                        disabled={
-                          event?.preparation.selectedEventType &&
-                          eventType !== event?.preparation.selectedEventType
-                        }
-                        onClick={() => {
-                          switchSelectedEventType(eventType);
-                        }}
-                      >
-                        {event?.preparation.selectedEventType === eventType
-                          ? 'Unselect'
-                          : 'Select'}
-                      </Button>
-                    )}
+                    {isUserAdmin(user?.username) &&
+                      !event?.preparation.appliedAt && (
+                        <Button
+                          color="primary"
+                          disabled={
+                            event?.preparation.selectedEventType &&
+                            eventType !== event?.preparation.selectedEventType
+                          }
+                          onClick={() => {
+                            switchSelectedEventType(eventType);
+                          }}
+                        >
+                          {event?.preparation.selectedEventType === eventType
+                            ? 'Unselect'
+                            : 'Select'}
+                        </Button>
+                      )}
                   </Grid>
                   {event?.preparation.eventTypeVotes
                     .filter((eventTypeVote) => eventTypeVote.type === eventType)
