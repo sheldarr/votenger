@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
-import Fab from '@material-ui/core/Fab';
 import CardActions from '@material-ui/core/CardActions';
 import CasinoIcon from '@material-ui/icons/Casino';
 import GroupIcon from '@material-ui/icons/Group';
@@ -18,6 +17,10 @@ import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import update from 'immutability-helper';
+import SettingsIcon from '@material-ui/icons/Settings';
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 
 import useEvent from '../../../../hooks/useEvent';
 import useUser from '../../../../hooks/useUser';
@@ -32,21 +35,15 @@ import { WebSocketEvents } from '../../../../events';
 
 export const URL = (eventId: string) => `/events/${eventId}/dashboard`;
 
-const RandomGameFab = styled(Fab)`
+interface GameCardProps {
+  played: boolean;
+}
+
+const Settings = styled(SpeedDial)`
   position: fixed !important;
   bottom: 2rem;
   right: 2rem;
 `;
-
-const RandomTeamsFab = styled(Fab)`
-  position: fixed !important;
-  bottom: 2rem;
-  right: 6rem;
-`;
-
-interface GameCardProps {
-  played: boolean;
-}
 
 const GameCard = styled(Card)`
   transition: background-color 0.2s !important;
@@ -81,6 +78,7 @@ const EventDashboardPage: React.FunctionComponent = () => {
   const router = useRouter();
   const [user] = useUser();
   const { data: event } = useEvent(router.query.id as string);
+  const [isSpeedDialOpen, setIsSpeedDialOpen] = useState(false);
 
   const games =
     event?.votes.reduce<Record<string, string[]>>((games, vote) => {
@@ -270,48 +268,65 @@ const EventDashboardPage: React.FunctionComponent = () => {
         </Grid>
       </Grid>
       {isUserAdmin(user?.username) && (
-        <RandomGameFab
-          color="primary"
-          onClick={() => {
-            const unplayedGames = Object.fromEntries(
-              Object.entries(games).filter(([name]) => {
-                return !event.alreadyPlayedGames.includes(name);
-              }),
-            );
+        <Settings
+          ariaLabel="Settings"
+          icon={<SpeedDialIcon openIcon={<SettingsIcon />} />}
+          onClose={() => {
+            setIsSpeedDialOpen(false);
+          }}
+          onOpen={() => {
+            setIsSpeedDialOpen(true);
+          }}
+          open={isSpeedDialOpen}
+        >
+          {[
+            {
+              icon: <CasinoIcon />,
+              name: 'Random Game',
+              onClick: () => {
+                const unplayedGames = Object.fromEntries(
+                  Object.entries(games).filter(([name]) => {
+                    return !event.alreadyPlayedGames.includes(name);
+                  }),
+                );
 
-            console.info(
-              `Selected random game alogorithm: ${process.env.NEXT_PUBLIC_RANDOM_GAME_IMPLEMENTATION}`,
-            );
-            switch (process.env.NEXT_PUBLIC_RANDOM_GAME_IMPLEMENTATION) {
-              case 'linear':
-                socket.emit(
-                  WebSocketEvents.RANDOM_GAME,
-                  linearWeightedRandomGame(unplayedGames),
+                console.info(
+                  `Selected random game alogorithm: ${process.env.NEXT_PUBLIC_RANDOM_GAME_IMPLEMENTATION}`,
                 );
-                break;
-              case 'exponential':
-                socket.emit(
-                  WebSocketEvents.RANDOM_GAME,
-                  exponentialWeightedRandomGame(unplayedGames),
-                );
-                break;
-              default:
-                console.error('No valid random game algorithm selected');
-            }
-          }}
-        >
-          <CasinoIcon />
-        </RandomGameFab>
-      )}
-      {isUserAdmin(user?.username) && (
-        <RandomTeamsFab
-          color="primary"
-          onClick={() => {
-            socket.emit(WebSocketEvents.RANDOM_TEAMS, randomTeams(players));
-          }}
-        >
-          <GroupIcon />
-        </RandomTeamsFab>
+                switch (process.env.NEXT_PUBLIC_RANDOM_GAME_IMPLEMENTATION) {
+                  case 'linear':
+                    socket.emit(
+                      WebSocketEvents.RANDOM_GAME,
+                      linearWeightedRandomGame(unplayedGames),
+                    );
+                    break;
+                  case 'exponential':
+                    socket.emit(
+                      WebSocketEvents.RANDOM_GAME,
+                      exponentialWeightedRandomGame(unplayedGames),
+                    );
+                    break;
+                  default:
+                    console.error('No valid random game algorithm selected');
+                }
+              },
+            },
+            {
+              icon: <GroupIcon />,
+              name: 'Random Teams',
+              onClick: () => {
+                socket.emit(WebSocketEvents.RANDOM_TEAMS, randomTeams(players));
+              },
+            },
+          ].map((action) => (
+            <SpeedDialAction
+              icon={action.icon}
+              key={action.name}
+              onClick={action.onClick}
+              tooltipTitle={action.name}
+            />
+          ))}
+        </Settings>
       )}
     </Page>
   );
