@@ -17,6 +17,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import GamesIcon from '@material-ui/icons/Games';
+import SettingsIcon from '@material-ui/icons/Settings';
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 
 import { useRouter } from 'next/router';
 
@@ -35,16 +39,10 @@ import { URL as PREPARE_EVENT_URL } from './[id]/prepare';
 
 export const URL = '/events';
 
-const AddEventFab = styled(Fab)`
+const Settings = styled(SpeedDial)`
   position: fixed !important;
   bottom: 2rem;
   right: 2rem;
-`;
-
-const GamesFab = styled(Fab)`
-  position: fixed !important;
-  bottom: 2rem;
-  right: 6rem;
 `;
 
 const EventsPage: NextPage = () => {
@@ -52,6 +50,7 @@ const EventsPage: NextPage = () => {
   const { data: events } = useEvents();
   const [user] = useUser();
 
+  const [isSpeedDialOpen, setIsSpeedDialOpen] = useState(false);
   const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
   const [
     isRemoveEventConfirmationModalOpen,
@@ -224,24 +223,41 @@ const EventsPage: NextPage = () => {
         </DialogActions>
       </Dialog>
       {isUserAdmin(user?.username) && (
-        <AddEventFab
-          color="primary"
-          onClick={() => {
-            setIsCreateEventModalOpen(true);
+        <Settings
+          ariaLabel="Settings"
+          icon={<SpeedDialIcon openIcon={<SettingsIcon />} />}
+          onClose={() => {
+            setIsSpeedDialOpen(false);
           }}
-        >
-          <AddIcon />
-        </AddEventFab>
-      )}
-      {isUserAdmin(user?.username) && (
-        <GamesFab
-          color="primary"
-          onClick={() => {
-            router.push(GAMES_URL);
+          onOpen={() => {
+            setIsSpeedDialOpen(true);
           }}
+          open={isSpeedDialOpen}
         >
-          <GamesIcon />
-        </GamesFab>
+          {[
+            {
+              icon: <AddIcon />,
+              name: 'Create event',
+              onClick: () => {
+                setIsCreateEventModalOpen(true);
+              },
+            },
+            {
+              icon: <GamesIcon />,
+              name: 'Games',
+              onClick: () => {
+                router.push(GAMES_URL);
+              },
+            },
+          ].map((action) => (
+            <SpeedDialAction
+              icon={action.icon}
+              key={action.name}
+              onClick={action.onClick}
+              tooltipTitle={action.name}
+            />
+          ))}
+        </Settings>
       )}
       <CreateEventModal
         onClose={() => {
