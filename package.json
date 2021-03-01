@@ -10,7 +10,8 @@
     "start": "NODE_ENV=production node dist",
     "lint": "eslint '.' --ext .js --ext .jsx --ext .ts --ext .tsx",
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@date-io/date-fns": "1.3.13",
