@@ -98,8 +98,8 @@ const PrepareEventPage: React.FunctionComponent = () => {
   };
 
   const renderScoreForTerm = (usernames: string[], votes: EventTypeVote[]) => {
-    const score = eventTypes.reduce<Record<string, number>>(
-      (score, eventType) => {
+    const score =
+      eventTypes?.reduce<Record<string, number>>((score, eventType) => {
         score[eventType] = votes.filter((vote) => {
           return (
             vote.type === eventType &&
@@ -108,9 +108,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
         }).length;
 
         return score;
-      },
-      {},
-    );
+      }, {}) ?? {};
 
     return (
       <>
