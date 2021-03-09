@@ -8,6 +8,7 @@ DOCKER_RUN = docker run \
 	--volume ${PWD}:/app \
 	--workdir /app \
 	--user ${USERID} \
+	--env-file .env \
 	--tty \
 	--interactive \
 	--rm
