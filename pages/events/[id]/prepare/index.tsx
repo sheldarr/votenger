@@ -226,6 +226,7 @@ const PrepareEventPage: React.FunctionComponent = () => {
                   <Grid item>
                     <Tooltip
                       arrow
+                      enterTouchDelay={0}
                       title={renderScoreForTerm(
                         possibleTerm.usernames,
                         event?.preparation.eventTypeVotes,
