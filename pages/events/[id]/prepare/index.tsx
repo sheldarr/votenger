@@ -8,18 +8,22 @@ import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import { DatePicker } from '@material-ui/pickers';
 import { format } from 'date-fns';
 import { green } from '@material-ui/core/colors';
 import styled from 'styled-components';
 import CheckIcon from '@material-ui/icons/Check';
 import GroupIcon from '@material-ui/icons/Group';
+import StarIcon from '@material-ui/icons/Star';
 
 import useEvent from '../../../../hooks/useEvent';
 import Page from '../../../../components/Page';
 import useUser from '../../../../hooks/useUser';
 import useEventTypes from '../../../../hooks/useEventTypes';
 import { isUserAdmin } from '../../../../auth';
+import { EventTypeVote } from '../../../../getDb/events';
 
 export const URL = (eventId: string) => `/events/${eventId}/prepare`;
 
@@ -91,6 +95,34 @@ const PrepareEventPage: React.FunctionComponent = () => {
     axios.put(`/api/events/${router.query.id}/preparation`, {
       switchSelectedEventType: eventType,
     });
+  };
+
+  const renderScoreForTerm = (usernames: string[], votes: EventTypeVote[]) => {
+    const score = eventTypes.reduce<Record<string, number>>(
+      (score, eventType) => {
+        score[eventType] = votes.filter((vote) => {
+          return (
+            vote.type === eventType &&
+            usernames.some((username) => username === vote.username)
+          );
+        }).length;
+
+        return score;
+      },
+      {},
+    );
+
+    return (
+      <>
+        {Object.entries(score)
+          .sort(([, scoreA], [, scoreB]) => {
+            return scoreB - scoreA;
+          })
+          .map(([type, score]) => (
+            <div key={type}>{`${type}: ${score}`}</div>
+          ))}
+      </>
+    );
   };
 
   return (
@@ -192,6 +224,19 @@ const PrepareEventPage: React.FunctionComponent = () => {
                       }
                       label={format(new Date(possibleTerm.date), 'dd.MM.yyyy')}
                     />
+                  </Grid>
+                  <Grid item>
+                    <Tooltip
+                      arrow
+                      title={renderScoreForTerm(
+                        possibleTerm.usernames,
+                        event?.preparation.eventTypeVotes,
+                      )}
+                    >
+                      <IconButton>
+                        <StarIcon />
+                      </IconButton>
+                    </Tooltip>
                   </Grid>
                   {isUserAdmin(user?.username) &&
                     !event?.preparation.appliedAt && (
