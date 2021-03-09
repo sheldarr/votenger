@@ -22,6 +22,9 @@ const getDb = () => {
       'LAN Party',
       'Night Trip',
       'RPG',
+      'Sleigh ride',
+      'Warhammer 40k',
+      'Zwardoń',
     ],
     events: [],
     games: [
